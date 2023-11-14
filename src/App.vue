@@ -18,10 +18,10 @@ export default {
 body {
   background-color: #001f25;
   text-align: center;
+  font-family: Jost, sans-serif;
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -30,5 +30,10 @@ body {
   height: 100%;
   width: 50%;
   margin: 0 auto;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
 }
 </style>
