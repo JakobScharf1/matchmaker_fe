@@ -1,26 +1,34 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <img alt="MatchMaker logo" src="./assets/logo.png">
+  <MatchIDInput></MatchIDInput>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MatchIDInput from './components/MatchIDInput.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    MatchIDInput
   }
 }
 </script>
 
 <style>
+body {
+  background-color: #001f25;
+  text-align: center;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #fff;
+  padding-top: 60px;
+  height: 100%;
+  width: 50%;
+  margin: 0 auto;
 }
 </style>
