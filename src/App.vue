@@ -5,6 +5,7 @@
 
 <script>
 import MatchIDInput from './components/MatchIDInput.vue'
+
 export default {
   name: 'App',
   components: {
