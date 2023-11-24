@@ -8,9 +8,12 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^1.6.2",
     "bootstrap": "^5.3.2",
     "core-js": "^3.8.3",
-    "vue": "^3.2.13"
+    "vue": "^3.2.13",
+    "vue-google-oauth2": "^1.5.10",
+    "vue3-google-login": "^2.0.25"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
