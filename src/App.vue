@@ -20,7 +20,6 @@ body {
   text-align: center;
   font-family: Jost, sans-serif;
 }
-
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -31,7 +30,6 @@ body {
   width: 50%;
   margin: 0 auto;
 }
-
 img {
   height: auto;
   max-width: 100%;
