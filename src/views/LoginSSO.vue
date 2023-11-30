@@ -29,11 +29,11 @@ export default {
               scope: "email profile openid",
               redirect_uri: "http://localhost:8080/auth/callback",
               callback: response => {
-                console.log("Callback erhalten")
                 if (response.code) {
-                  console.log("IF-Schleife aufgerufen")
+                  localStorage.setItem("Auth", response.code)
+                  /*axios.put("Auth",response.code)*/
+                  router.replace("/home")
                   /*this.sendCodeToBackend(response.code)*/
-                  router.replace('/home')
                 }
               }
             })
