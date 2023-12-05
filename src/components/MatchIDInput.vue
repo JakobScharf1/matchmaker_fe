@@ -3,7 +3,7 @@
     <div class="input-group mb-3">
       <input id="MatchID" type="number" name="Match ID" v-model="matchIDField" class="form-control" aria-describedby="basic-addon2">
       <div class="input-group-append">
-        <button class="btn btn-secondary"><b>Bestätigen</b></button> <!-- @click="" hinzufügen -->
+        <button class="btn btn-primary" @click="confirmClick"><b>Bestätigen</b></button>
       </div>
     </div>
   <div class="valueTable">
@@ -58,19 +58,36 @@
       </tbody>
     </table>
   </div>
-  <button class="btn btn-outline-secondary" @click="goToChooseTemplate"><b>Weiter</b></button>
+  <button class="btn" v-bind:class="{'weiter-button': !confirmed, 'btn-primary': confirmed}" @click="goToChooseTemplate"><b>Weiter</b></button><br />
+  <button id="logoutButton" class="btn btn-outline-primary" @click="logout"><b>Logout</b></button>
 </template>
 
 <script>
+import router from "@/router";
+
 export default {
   name: 'MatchIDInput',
+  data() {
+    return {
+      confirmed: false
+    }
+  },
   methods: {
     checkForm: function () {
     },
 
+    confirmClick() {
+      this.confirmed = true;
+    },
+
     goToChooseTemplate() {
-      this.$router.push('chooseTemplate');
-    }
+      router.push('chooseTemplate');
+    },
+    logout(){
+      localStorage.clear();
+      localStorage.setItem('userInfo', "");
+      router.push('/');
+    },
   }
 }
 </script>
@@ -78,25 +95,49 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
+#logoutButton {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
 .input-group {
   width: 300px;
   margin: 0 auto;
 }
 
-.btn-secondary {
+.btn-primary {
+  background-color: #007772;
+  border-color: #007772;
+}
+
+.btn-primary:hover {
+  background-color: transparent;
+}
+
+.btn-primary:active {
+  box-shadow: #007772;
+}
+
+.btn-outline-primary {
+  color: #007772;
+  border-color: #007772;
+}
+
+.btn-outline-primary:hover {
+  color: white;
   background-color: #007772;
 }
 
-.btn-secondary:hover {
-  background-color: #fff;
-  color: #000;
-}
-
-.btn-outline-secondary:hover {
-  background-color: #007772;
-}
 .valueTable {
   text-align: left;
+}
+
+.weiter-button {
+  background-color: transparent;
+  border-color: #007772;
+  color: #007772;
+  pointer-events: none;
 }
 
 /*Pre-generated*/

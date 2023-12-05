@@ -1,18 +1,23 @@
 import { createRouter, createWebHistory } from "vue-router";
 import MatchIDInput from "@/components/MatchIDInput.vue";
 import LoginSSO from "@/views/LoginSSO.vue";
+import chooseTemplate from "@/components/chooseTemplate.vue";
 
 const routes = [
     {
         path: '/home',
         component: MatchIDInput,
-        /*meta: {
+        meta: {
             requiresAuth: true
-        }*/
+        }
     },
     {
         path: '/',
         component: LoginSSO
+    },
+    {
+        path: "/chooseTemplate",
+        component: chooseTemplate
     }
 ]
 

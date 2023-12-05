@@ -9,6 +9,7 @@
 /*import MatchIDInput from "@/components/MatchIDInput.vue";*/
 /*import LoginSSO from "@/views/LoginSSO.vue";*/
 import router from "@/router";
+/*import {googleLogout} from "vue3-google-login";*/
 
 export default {
   name: 'App',
@@ -21,6 +22,12 @@ export default {
       return router
     }
   },
+  mounted() {
+    const userInfo = localStorage.getItem('userInfo');
+    console.log("userInfo: " + userInfo);
+    if(userInfo.length === 0){
+      router.push('/')
+    }},
   data () {
     return {
       googleSignInParams: {

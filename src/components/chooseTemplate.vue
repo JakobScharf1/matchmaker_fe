@@ -26,14 +26,39 @@
   <input type="radio" id="p-rv-ohneNach" value="p-rv-ohneNach">
   <label for="p-rv-ohneNach">Rahmenvertrag ohne Nachbesetzung</label>
  -->
+  <button id="logoutButton" class="btn btn-outline-primary" @click="logout"><b>Logout</b></button>
 </template>
 
 <script>
+import router from "@/router";
+
 export default {
-  name: "chooseTemplate"
+  name: "chooseTemplate",
+  methods: {
+    logout(){
+      localStorage.clear();
+      localStorage.setItem('userInfo', "");
+      router.push('/');
+    },
+  }
 }
 </script>
 
 <style scoped>
+  #logoutButton {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+  }
+
+  .btn-outline-primary {
+    color: #007772;
+    border-color: #007772;
+  }
+
+  .btn-outline-primary:hover {
+    color: white;
+    background-color: #007772;
+  }
 
 </style>

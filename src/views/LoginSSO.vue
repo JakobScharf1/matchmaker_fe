@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="login()">Login mit Google</button>
+    <button class="btn btn-primary" @click="login()">Login mit Google</button>
     <!--<div v-if="userDetails">
       <h2>Benutzerdaten</h2>
       <p>Name: {{ userDetails.name }}</p>
@@ -14,13 +14,15 @@
 
 <script>
 import {googleSdkLoaded} from "vue3-google-login";
-import axios from "axios";
+/* import axios from "axios"; */
 import router from "@/router";
 
 export default {
   name: "LoginSSO",
+
   methods: {
-    login() {
+
+    async login() {
       googleSdkLoaded(google => {
         google.accounts.oauth2
             .initCodeClient({
@@ -29,10 +31,10 @@ export default {
               scope: "email profile openid",
               redirect_uri: "http://localhost:8080/auth/callback",
               callback: response => {
-                console.log("Callback erhalten")
                 if (response.code) {
-                  console.log("IF-Schleife aufgerufen")
                   /*this.sendCodeToBackend(response.code)*/
+                  console.log(response.authuser)
+                  localStorage.setItem("userInfo", JSON.stringify(response.code))
                   router.replace('/home')
                 }
               }
@@ -40,6 +42,16 @@ export default {
             .requestCode();
       });
     },
+
+    mounted(){
+      const userData = localStorage.getItem('userData');
+      const accessToken = localStorage.getItem('accessToken');
+      localStorage.setItem('userType', "G");
+      this.$store.dispatch('setLoggedUser', userData);
+      this.$store.dispatch('setAccessToken', accessToken);
+    }
+
+    /*
     async sendCodeToBackend(code) {
       try {
         const response = await axios.post("https://oauth.googleapis.com/token", {
@@ -76,10 +88,18 @@ export default {
         console.error("Failed to send authorization code:", error);
       }
     }
+    */
   }
 }
 </script>
 
 <style scoped>
+  .btn-primary {
+    background-color: #007772;
+    border-color: #007772;
+  }
 
+  .btn-primary:hover {
+    background-color: transparent;
+  }
 </style>

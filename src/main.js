@@ -1,5 +1,5 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
 import vue3GoogleLogin from "vue3-google-login";
 import router from "@/router";
 
