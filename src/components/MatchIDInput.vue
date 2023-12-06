@@ -7,6 +7,35 @@
       </div>
     </div>
   <div class="valueTable">
+    <table class="table table-striped">
+      <thead>
+        <th>Projektpartner</th>
+        <th>Kunde</th>
+        <th>Ansprechpartner Kunde</th>
+        <th>Adresse Kunde</th>
+        <th>Startdatum</th>
+        <th>Enddatum</th>
+        <th>EK-Preis</th>
+        <th>VK-Preis</th>
+        <th>Position</th>
+        <th>Aufgabenbeschreibung</th>
+      </thead>
+      <tbody>
+        <tr v-for="match in matches" v-bind:key="match.id">
+          <td>{{match.projektpartner}}</td>
+          <td>{{match.kunde}}</td>
+          <td>{{match.ansprechpartnerKunde}}</td>
+          <td>{{match.adresseKunde}}</td>
+          <td>{{match.startdatum}}</td>
+          <td>{{match.enddatum}}</td>
+          <td>{{match.ek}}</td>
+          <td>{{match.vk}}</td>
+          <td>{{match.ppPosition}}</td>
+          <td>{{match.aufgabenbeschreibung}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <!--
     <table>
       <thead>
       <tr>
@@ -56,7 +85,7 @@
         <td>{{ matchIDField }}</td>
       </tr>
       </tbody>
-    </table>
+    </table>-->
   </div>
   <button class="btn" v-bind:class="{'weiter-button': !confirmed, 'btn-primary': confirmed}" @click="goToChooseTemplate"><b>Weiter</b></button><br />
   <button id="logoutButton" class="btn btn-outline-primary" @click="logout"><b>Logout</b></button>
@@ -64,15 +93,23 @@
 
 <script>
 import router from "@/router";
+import BackendService from "@/services/BackendService";
 
 export default {
   name: 'MatchIDInput',
   data() {
     return {
+      matches: [],
       confirmed: false
     }
   },
   methods: {
+    getMatch(){
+      BackendService.getMatch().then((response) => {
+        this.matches = response.data;
+      });
+    },
+
     checkForm: function () {
     },
 
@@ -88,7 +125,11 @@ export default {
       localStorage.setItem('userInfo', "");
       router.push('/');
     },
-  }
+  },
+
+  created() {
+    this.getMatch();
+  },
 }
 </script>
 
