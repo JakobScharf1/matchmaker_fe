@@ -1,5 +1,5 @@
 <template>
-  <label for="MatchID">1. Bitte gib die ID des Matches ein</label>
+  <h2 for="MatchID">1. Bitte gib die ID des Matches ein</h2>
     <div class="input-group mb-3">
       <input id="MatchID" type="number" name="Match ID" v-model="matchIDField" class="form-control" aria-describedby="basic-addon2">
       <div class="input-group-append">
@@ -135,6 +135,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+h2 {
+  font-size: 1.5rem;
+}
 
 #logoutButton {
   position: fixed;
