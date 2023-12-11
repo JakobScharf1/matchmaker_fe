@@ -3,11 +3,11 @@
     <div class="input-group mb-3">
       <input id="MatchID" type="number" name="Match ID" class="form-control" aria-describedby="basic-addon2">
       <div class="input-group-append">
-        <button class="btn btn-primary" @click="confirmClick; getMatch"><b>Bestätigen</b></button>
+        <button class="btn btn-primary" @click="() => { confirmClick(); getMatch();}"><b>Bestätigen</b></button>
       </div>
     </div>
   <div class="valueTable">
-    <table class="table table-striped">
+    <!--<table class="table table-striped">
       <thead>
         <th>Projektpartner</th>
         <th>Kunde</th>
@@ -34,8 +34,7 @@
           <td>{{match.aufgabenbeschreibung}}</td>
         </tr>
       </tbody>
-    </table>
-    <!--
+    </table>-->
     <table>
       <thead>
       <tr>
@@ -43,49 +42,50 @@
         <th>Wert</th>
       </tr>
       </thead>
-      <tbody>
+     <tbody>
       <tr>
         <td>Projektpartner:</td>
-        <td>{{ matchIDField }}</td>
+        <td>{{matches.length > 0 ? matches[0].projektpartner : '' }}</td>
       </tr>
       <tr>
         <td>Kunde:</td>
-        <td>{{ matchIDField }}</td>
+        <td>{{matches.length > 0 ? matches[0].kunde : '' }}</td>
       </tr>
       <tr>
         <td>Ansprechpartner Kunde:</td>
-        <td>{{ matchIDField }}</td>
+        <td>{{matches.length > 0 ? matches[0].ansprechpartnerKunde : '' }}</td>
+        <!--<td v-for="match in matches" v-bind:key="match.id">{{match.ansprechpartnerKunde}}</td>-->
       </tr>
       <tr>
         <td>Adresse Kunde:</td>
-        <td>{{ matchIDField }}</td>
+        <td>{{matches.length > 0 ? matches[0].adresseKunde : '' }}</td>
       </tr>
       <tr>
         <td>Startdatum:</td>
-        <td>{{ matchIDField }}</td>
+        <td>{{matches.length > 0 ? matches[0].startdatum : '' }}</td>
       </tr>
       <tr>
         <td>Enddatum:</td>
-        <td>{{ matchIDField }}</td>
+        <td>{{matches.length > 0 ? matches[0].enddatum : '' }}</td>
       </tr>
       <tr>
         <td>EK-Preis:</td>
-        <td>{{ matchIDField }}</td>
+        <td>{{matches.length > 0 ? matches[0].ek : '' }}</td>
       </tr>
       <tr>
         <td>VK-Preis:</td>
-        <td>{{ matchIDField }}</td>
+        <td>{{matches.length > 0 ? matches[0].vk : '' }}</td>
       </tr>
       <tr>
         <td>Position:</td>
-        <td>{{ matchIDField }}</td>
+        <td>{{matches.length > 0 ? matches[0].ppPosition : '' }}</td>
       </tr>
       <tr>
         <td>Aufgabenbeschreibung:</td>
-        <td>{{ matchIDField }}</td>
+        <td>{{matches.length > 0 ? matches[0].aufgabenbeschreibung : '' }}</td>
       </tr>
       </tbody>
-    </table>-->
+    </table>
   </div>
   <button class="btn" v-bind:class="{'weiter-button': !confirmed, 'btn-primary': confirmed}" @click="goToChooseTemplate"><b>Weiter</b></button><br />
   <button id="logoutButton" class="btn btn-outline-primary" @click="logout"><b>Logout</b></button>
@@ -127,6 +127,21 @@ export default {
     },
   },
 
+  /*mounted(){
+    this.matches.push({
+      projektpartner: this.matches.projektpartner,
+      kunde: this.matches.kunde,
+      ansprechpartnerKunde: this.matches.ansprechpartnerKunde,
+      adresseKunde: this.matches.adresseKunde,
+      startdatum: this.matches.startdatum,
+      enddatum: this.matches.enddatum,
+      ek: this.matches.ek,
+      vk: this.matches.vk,
+      ppPosition: this.matches.ppPosition,
+      aufgabenbeschreibung: this.matches.aufgabenbeschreibung
+    });
+  },*/
+
   created() {
     this.getMatch();
   },
@@ -135,6 +150,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+td {
+  width: fit-content;
+  padding-right: 10px;
+}
 
 h2 {
   font-size: 1.5rem;
