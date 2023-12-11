@@ -1,9 +1,9 @@
 <template>
   <h2 for="MatchID">1. Bitte gib die ID des Matches ein</h2>
     <div class="input-group mb-3">
-      <input id="MatchID" type="number" name="Match ID" v-model="matchIDField" class="form-control" aria-describedby="basic-addon2">
+      <input id="MatchID" type="number" name="Match ID" class="form-control" aria-describedby="basic-addon2">
       <div class="input-group-append">
-        <button class="btn btn-primary" @click="confirmClick"><b>Bestätigen</b></button>
+        <button class="btn btn-primary" @click="confirmClick; getMatch"><b>Bestätigen</b></button>
       </div>
     </div>
   <div class="valueTable">
