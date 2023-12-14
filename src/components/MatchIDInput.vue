@@ -100,25 +100,6 @@ export default {
       router.push('/');
     },
   },
-
-  /*mounted(){
-    this.matches.push({
-      projektpartner: this.matches.projektpartner,
-      kunde: this.matches.kunde,
-      ansprechpartnerKunde: this.matches.ansprechpartnerKunde,
-      adresseKunde: this.matches.adresseKunde,
-      startdatum: this.matches.startdatum,
-      enddatum: this.matches.enddatum,
-      ek: this.matches.ek,
-      vk: this.matches.vk,
-      ppPosition: this.matches.ppPosition,
-      aufgabenbeschreibung: this.matches.aufgabenbeschreibung
-    });
-  },*/
-
-  created() {
-    this.getMatch();
-  },
 }
 </script>
 

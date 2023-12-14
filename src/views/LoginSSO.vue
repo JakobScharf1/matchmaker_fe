@@ -33,7 +33,6 @@ export default {
               callback: response => {
                 if (response.code) {
                   /*this.sendCodeToBackend(response.code)*/
-                  console.log(response.authuser)
                   localStorage.setItem("userInfo", JSON.stringify(response.code))
                   router.replace('/home')
                 }
