@@ -1,40 +1,12 @@
 <template>
   <h2 for="MatchID">1. Bitte gib die ID des Matches ein</h2>
     <div class="input-group mb-3">
-      <input id="MatchID" type="number" name="Match ID" class="form-control" aria-describedby="basic-addon2">
+      <input v-model="matchIdFromInput" id="MatchID" type="number" name="Match ID" class="form-control" aria-describedby="basic-addon2">
       <div class="input-group-append">
         <button class="btn btn-primary" @click="() => { confirmClick(); getMatch();}"><b>Bestätigen</b></button>
       </div>
     </div>
   <div class="valueTable">
-    <!--<table class="table table-striped">
-      <thead>
-        <th>Projektpartner</th>
-        <th>Kunde</th>
-        <th>Ansprechpartner Kunde</th>
-        <th>Adresse Kunde</th>
-        <th>Startdatum</th>
-        <th>Enddatum</th>
-        <th>EK-Preis</th>
-        <th>VK-Preis</th>
-        <th>Position</th>
-        <th>Aufgabenbeschreibung</th>
-      </thead>
-      <tbody>
-        <tr v-for="match in matches" v-bind:key="match.id">
-          <td>{{match.projektpartner}}</td>
-          <td>{{match.kunde}}</td>
-          <td>{{match.ansprechpartnerKunde}}</td>
-          <td>{{match.adresseKunde}}</td>
-          <td>{{match.startdatum}}</td>
-          <td>{{match.enddatum}}</td>
-          <td>{{match.ek}}</td>
-          <td>{{match.vk}}</td>
-          <td>{{match.ppPosition}}</td>
-          <td>{{match.aufgabenbeschreibung}}</td>
-        </tr>
-      </tbody>
-    </table>-->
     <table>
       <thead>
       <tr>
@@ -99,14 +71,16 @@ export default {
   name: 'MatchIDInput',
   data() {
     return {
+      matchIdFromInput: "",
       matches: [],
       confirmed: false
     }
   },
   methods: {
     getMatch(){
-      BackendService.getMatch().then((response) => {
+      BackendService.getMatch(this.matchIdFromInput).then((response) => {
         this.matches = response.data;
+        console.log(this.matches);
       });
     },
 
