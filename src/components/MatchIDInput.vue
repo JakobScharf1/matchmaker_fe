@@ -77,15 +77,26 @@ export default {
     }
   },
   methods: {
-    getMatch(){
+    getMatch() {
       BackendService.getMatch(this.matchIdFromInput).then((response) => {
         this.matches = response.data;
         console.log(this.matches);
       });
     },
-
-    checkForm: function () {
-    },
+     /* const endpoint = "http://localhost:8081/match/" + this.matchIdFromInput;
+      const requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+        //headers: {'Content-Type': 'application/json'},
+      };
+      fetch(endpoint, requestOptions)
+          .then(response => response.json())
+          .then(result => {
+            this.matches = result;
+            console.log(this.matches);
+          })
+          .catch(error => console.log('error', error));
+    },*/
 
     confirmClick() {
       this.confirmed = true;
@@ -100,6 +111,14 @@ export default {
       router.push('/');
     },
   },
+  beforeMount() {
+    const userInfo = localStorage.getItem('userInfo');
+    console.log("userInfo Prüfung: " + userInfo);
+    if(userInfo === "null" || userInfo === "" || userInfo === null){
+      router.push('/')
+    }
+  }
+  //TODO mounted Methode hinzufügen, dass Login gecheckt wird
 }
 </script>
 
