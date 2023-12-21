@@ -17,11 +17,15 @@
      <tbody>
       <tr>
         <td>Projektpartner:</td>
-        <td>{{matches.length > 0 ? matches[0].projektpartner : '' }}</td>
+        <td>{{projektpartnerName}}</td>
+      </tr>
+      <tr>
+        <td>Projektpartner Gesellschaft:</td>
+        <td>{{projektpartnerName}}</td>
       </tr>
       <tr>
         <td>Kunde:</td>
-        <td>{{matches.length > 0 ? matches[0].kunde : '' }}</td>
+        <td>{{matches.at(2)}}</td>
       </tr>
       <tr>
         <td>Ansprechpartner Kunde:</td>
@@ -34,27 +38,47 @@
       </tr>
       <tr>
         <td>Startdatum:</td>
-        <td>{{matches.length > 0 ? matches[0].startdatum : '' }}</td>
+        <td>{{matches.at(11)}}</td>
       </tr>
       <tr>
         <td>Enddatum:</td>
-        <td>{{matches.length > 0 ? matches[0].enddatum : '' }}</td>
+        <td>{{matches.at(12) }}</td>
+      </tr>
+      <tr>
+        <td>Kündigungsfrist PP:</td>
+        <td>{{matches.at(12) }}</td>
+      </tr>
+      <tr>
+        <td>Kündigungsfrist Kunde:</td>
+        <td>{{matches.at(12) }}</td>
+      </tr>
+      <tr>
+        <td>Zahlungsziel PP:</td>
+        <td>{{matches.at(3)}}</td>
+      </tr>
+      <tr>
+        <td>Zahlungsziel Kunde:</td>
+        <td>{{matches.at(4)}}</td>
+      </tr>
+      <tr>
+        <td>Vergütungssatz:</td>
+        <td>{{matches.at(5)}}</td>
       </tr>
       <tr>
         <td>EK-Preis:</td>
-        <td>{{matches.length > 0 ? matches[0].ek : '' }}</td>
+        <td>{{matches.at(6)}}</td>
       </tr>
       <tr>
         <td>VK-Preis:</td>
-        <td>{{matches.length > 0 ? matches[0].vk : '' }}</td>
+        <td>{{matches.at(7)}}</td>
       </tr>
       <tr>
         <td>Position:</td>
-        <td>{{matches.length > 0 ? matches[0].ppPosition : '' }}</td>
+        <td>{{matches.at(13)}}</td>
       </tr>
       <tr>
         <td>Aufgabenbeschreibung:</td>
-        <td>{{matches.length > 0 ? matches[0].aufgabenbeschreibung : '' }}</td>
+        <td>{{matches.at(8)}}</td>
       </tr>
       </tbody>
     </table>
@@ -73,13 +97,15 @@ export default {
     return {
       matchIdFromInput: "",
       matches: [],
-      confirmed: false
+      confirmed: false,
+      projektpartnerName: ""
     }
   },
   methods: {
     getMatch() {
       BackendService.getMatch(this.matchIdFromInput).then((response) => {
         this.matches = response.data;
+        this.projektpartnerName = this.matches.at(0) + " " + this.matches.at(1);
         console.log(this.matches);
       });
     },
