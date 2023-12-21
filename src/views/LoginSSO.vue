@@ -13,9 +13,8 @@
 </template>
 
 <script>
-import {googleSdkLoaded} from "vue3-google-login";
-/* import axios from "axios"; */
-import router from "@/router";
+//import {googleSdkLoaded} from "vue3-google-login";
+import {login} from "@/firebase-config";
 
 export default {
   name: "LoginSSO",
@@ -23,6 +22,10 @@ export default {
   methods: {
 
     async login() {
+      login();
+    },
+
+    /*async login() {
       googleSdkLoaded(google => {
         google.accounts.oauth2
             .initCodeClient({
@@ -32,7 +35,7 @@ export default {
               redirect_uri: "http://localhost:8080/auth/callback",
               callback: response => {
                 if (response.code) {
-                  /*this.sendCodeToBackend(response.code)*/
+                  //this.sendCodeToBackend(response.code)
                   localStorage.setItem("userInfo", JSON.stringify(response.code))
                   router.replace('/home')
                 }
@@ -40,7 +43,7 @@ export default {
             })
             .requestCode();
       });
-    },
+    },*/
   },
 }
 </script>

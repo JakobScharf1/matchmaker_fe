@@ -5,14 +5,15 @@ import chooseTemplate from "@/components/chooseTemplate.vue";
 
 const routes = [
     {
-        path: '/home',
-        component: MatchIDInput,
-        meta: {
-            requiresAuth: true
-        }
+      path: '/',
+      redirect: '/login'
     },
     {
-        path: '/',
+        path: '/home',
+        component: MatchIDInput,
+    },
+    {
+        path: '/login',
         component: LoginSSO
     },
     {

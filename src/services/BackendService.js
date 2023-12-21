@@ -1,15 +1,14 @@
 import axios from "axios";
 
 const BACKEND_BASE_URL = "http://localhost:8081"
-//const accessToken = localStorage.getItem("userInfo");
-//const headers = {Authorization: "Bearer " + accessToken};
+const token = localStorage.getItem("idToken");
+const headers = {Authorization: "Bearer " + token};
 
 class BackendService{
     getMatch(matchId){
-        console.log("Übermittelt match ID: " + matchId);
         const requestURI = BACKEND_BASE_URL + "/match/" + matchId;
         console.log("Übermittelt an: " + requestURI);
-        return axios.get(requestURI/*, {headers: headers}*/);
+        return axios.get(requestURI, {headers: headers});
     }
 }
 

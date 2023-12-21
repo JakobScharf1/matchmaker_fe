@@ -107,18 +107,19 @@ export default {
     },
     logout(){
       localStorage.clear();
-      localStorage.setItem('userInfo', "");
-      router.push('/');
+      localStorage.setItem('idToken', "");
+      router.push('/login');
     },
   },
   beforeMount() {
-    const userInfo = localStorage.getItem('userInfo');
-    console.log("userInfo Prüfung: " + userInfo);
-    if(userInfo === "null" || userInfo === "" || userInfo === null){
-      router.push('/')
+    const token = localStorage.getItem('idToken');
+    console.log("userInfo Prüfung: " + token);
+    if(token === "null" || token === "" || token === null){
+      router.push('/login')
+    } else {
+      router.push('/home')
     }
   }
-  //TODO mounted Methode hinzufügen, dass Login gecheckt wird
 }
 </script>
 
