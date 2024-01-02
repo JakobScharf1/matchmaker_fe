@@ -6,7 +6,7 @@
 <h2>2. Wähle den Vertrag aus, den du erstellen willst:</h2>
   <h3>Contracts</h3>
   <input type="radio" id="c-rv-pp" value="c-rv-pp" name="radio" @click="confirmClick()">
-  <label for="c-rv-pp">Rahmenvereinbarung Projektpartner</label><br/>
+  <label for="c-rv-pp" @click="confirmClick()">Rahmenvereinbarung Projektpartner</label><br/>
   <input type="radio" id="c-ev-pp" value="c-ev-pp" name="radio" @click="confirmClick()">
   <label for="c-ev-pp" @click="confirmClick()">Projekteinzelauftrag Projektpartner</label><br/>
 
@@ -15,6 +15,26 @@
   <label for="c-rv-pp-eng" @click="confirmClick()">Rahmenvereinbarung Projektpartner</label><br/>
   <input type="radio" id="c-ev-pp-eng" value="c-ev-pp-eng" name="radio" @click="confirmClick()">
   <label for="c-ev-pp-eng" @click="confirmClick()">Projekteinzelauftrag Projektpartner</label><br/>
+
+  <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
+
+  <h3>Vertrag Absender</h3>
+  <label for="absender_mail">E-Mail:</label>
+  <input v-model="wematchAnsprechpartnerMail" type="email" id="absender_mail">
+  <label for="absender_name">Name:</label>
+  <input v-model="wematchAnsprechpartnerName" type="text" id="absender_mail"><br />
+
+  <h3>Vertrag Empfänger</h3>
+  <label for="empfaenger_mail">E-Mail:</label>
+  <input v-model="projektpartnerMail" type="email" id="empfaenger_mail">
+  <label for="empfaenger_name">Name:</label>
+  <input v-model="projektpartnerName" type="text" id="empfaenger_mail"><br />
+
+  <h3>Consultant in CC</h3>
+  <label for="cc_mail">E-Mail:</label>
+  <input type="email" id="cc_mail">
+  <label for="cc_name">Name:</label>
+  <input type="text" id="cc_name"><br />
 <!--
   <h3>IT Perm</h3>
   <input type="radio" id="p-rv-mitNach" value="p-rv-mitNach">
@@ -42,7 +62,17 @@ export default {
   data() {
     return {
       confirmed: false,
-      powerFormsURL: ""
+      powerFormsURL: "",
+      finalURL: "",
+      match: localStorage.getItem('match'),
+      projektpartnerName: localStorage.getItem('projektpartnerName'),
+      projektpartnerMail: "",
+      wematchAnsprechpartnerName: localStorage.getItem('wematchAnsprechpartner'),
+      wematchAnsprechpartnerMail: "",
+      tagessatz: "X",
+      stundensatz: "X",
+      festpreis: "X",
+      vergutungsart: localStorage.getItem('vergutungsart')
     }
   },
   methods: {
@@ -58,11 +88,41 @@ export default {
       this.confirmed = true;
     },
     chooseTemplate(){
+      if(this.vergutungsart === "Stundensatz"){
+        this.stundensatz = this.match.at(6);
+      } else if(this.vergutungsart === "Tagessatz"){
+        this.tagessatz = this.match.at(6);
+      } else if(this.vergutungsart === "Festpreis"){
+        this.festpreis = this.match.at(6);
+      }
+
       if(document.getElementById('c-rv-pp').checked){
         this.powerFormsURL = "";
       }
       else if(document.getElementById('c-ev-pp').checked){
-        this.powerFormsURL = "";
+
+        //TODO: Absender_Email und Projektpartner_Email Index-ID korrigieren
+        this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=90f5f8f0-1e48-4e4c-a4c2-611e5de2cd80&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
+        this.finalURL = this.powerFormsURL +
+            "&Absender_UserName=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
+            "&Absender_Email=" + encodeURIComponent(this.wematchAnsprechpartnerMail) +
+            "&Projektpartner_UserName=" + encodeURIComponent(this.projektpartnerName) +
+            "&Projektpartner_Email=" + encodeURIComponent(this.projektpartnerMail) +
+            "&Consultant_in_cc_UserName=" + encodeURIComponent(this.cc_name) +
+            "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
+            "&Projektpartner=" + encodeURIComponent(this.match.at(2)) + " " + encodeURIComponent(this.projektpartnerName) +
+            "&Startdatum=" + encodeURIComponent(this.match.at(11)) +
+            "&Enddatum=" + encodeURIComponent(this.match.at(12)) +
+            "&Kuendigungsfrist=" + encodeURIComponent(this.match.at(13)) +
+            "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
+            "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
+            "&Festpreis=" + encodeURIComponent(this.festpreis) +
+            "&Endkunde=" + encodeURIComponent(this.match.at(15)) +
+            "&Endkunde_Adresse=" + encodeURIComponent(this.match.at(16)) +
+            "&Einsatzort=" + encodeURIComponent(this.match.at(17)) +
+            "&Position=" + encodeURIComponent(this.match.at(13)) +
+            "&Aufgabenbeschreibung=" + encodeURIComponent(this.match.at(8))
+        ;
       }
       else if(document.getElementById('c-rv-pp-eng').checked){
         this.powerFormsURL = "";
@@ -70,18 +130,61 @@ export default {
       else if(document.getElementById('c-ev-pp-eng').checked){
         this.powerFormsURL = "";
       }
+
+      window.open(this.finalURL, "_blank");
     }
   },
+
+  watch: {
+    projektpartnerName(newValue, oldValue){
+      console.log("Wert geändert von " + oldValue + " zu " + newValue);
+      localStorage.setItem('projektpartnerName', newValue);
+    },
+    projektpartnerMail(newValue, oldValue){
+      console.log("Wert geändert von " + oldValue + " zu " + newValue);
+      localStorage.setItem('projektpartnerMail', newValue);
+    },
+    wematchAnsprechpartnerName(newValue, oldValue){
+      console.log("Wert geändert von " + oldValue + " zu " + newValue);
+      localStorage.setItem('wematchAnsprechpartnerName', newValue);
+    },
+    wematchAnsprechpartnerMail(newValue, oldValue){
+      console.log("Wert geändert von " + oldValue + " zu " + newValue);
+      localStorage.setItem('wematchAnsprechpartnerMail', newValue);
+    }
+  },
+
+  mounted() { //TODO: Index-ID korrigieren
+    try {
+      this.projektpartnerMail = this.match.at(3);
+      this.wematchAnsprechpartnerMail = this.match.at(4);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 </script>
 
 <style scoped>
-.btn-primary {
-  background-color: #007772;
-  border-color: #007772;
-}
+  [type="email"] {
+    margin-left: 0.5rem;
+    margin-right: 2rem;
+  }
+
+  [type="text"] {
+    margin-left: 0.5rem;
+  }
+
+  .btn-primary {
+    background-color: #007772;
+    border-color: #007772;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
 
   .bestatigen-button {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
     pointer-events: none;
   }
 

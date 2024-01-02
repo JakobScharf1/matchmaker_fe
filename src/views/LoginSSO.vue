@@ -24,26 +24,6 @@ export default {
     async login() {
       login();
     },
-
-    /*async login() {
-      googleSdkLoaded(google => {
-        google.accounts.oauth2
-            .initCodeClient({
-              client_id:
-                  "171953949131-p1nuuduug3qtvu70rlarkaot7252264p.apps.googleusercontent.com",
-              scope: "email profile openid",
-              redirect_uri: "http://localhost:8080/auth/callback",
-              callback: response => {
-                if (response.code) {
-                  //this.sendCodeToBackend(response.code)
-                  localStorage.setItem("userInfo", JSON.stringify(response.code))
-                  router.replace('/home')
-                }
-              }
-            })
-            .requestCode();
-      });
-    },*/
   },
 }
 </script>

@@ -15,6 +15,10 @@
       </tr>
       </thead>
      <tbody>
+     <tr>
+       <td>WeMatch Ansprechpartner:</td>
+       <td>{{wematchAnsprechpartner}}</td>
+     </tr>
       <tr>
         <td>Projektpartner:</td>
         <td>{{projektpartnerName}}</td>
@@ -98,7 +102,8 @@ export default {
       matchIdFromInput: "",
       matches: [],
       confirmed: false,
-      projektpartnerName: ""
+      projektpartnerName: "",
+      wematchAnsprechpartnerName: ""
     }
   },
   methods: {
@@ -106,23 +111,13 @@ export default {
       BackendService.getMatch(this.matchIdFromInput).then((response) => {
         this.matches = response.data;
         this.projektpartnerName = this.matches.at(0) + " " + this.matches.at(1);
+        this.wematchAnsprechpartnerName = this.matches.at(9) + " " + this.matches.at(10);
         console.log(this.matches);
+        localStorage.setItem('match', this.matches);
+        localStorage.setItem('projektpartnerName', this.projektpartnerName);
+        localStorage.setItem('wematchAnsprechpartnerName', this.wematchAnsprechpartnerName);
       });
     },
-     /* const endpoint = "http://localhost:8081/match/" + this.matchIdFromInput;
-      const requestOptions = {
-        method: 'GET',
-        redirect: 'follow',
-        //headers: {'Content-Type': 'application/json'},
-      };
-      fetch(endpoint, requestOptions)
-          .then(response => response.json())
-          .then(result => {
-            this.matches = result;
-            console.log(this.matches);
-          })
-          .catch(error => console.log('error', error));
-    },*/
 
     confirmClick() {
       this.confirmed = true;

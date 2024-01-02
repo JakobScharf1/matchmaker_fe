@@ -25,9 +25,14 @@ export default {
   mounted() {
     const userInfo = localStorage.getItem('userInfo');
     console.log("userInfo: " + userInfo);
-    if(userInfo.length === 0){
-      router.push('/')
-    }},
+    try {
+      if (userInfo.length === 0) {
+        router.push('/')
+      }
+    } catch (error) {
+      console.error(error);
+    }
+      },
   data () {
     return {
       googleSignInParams: {

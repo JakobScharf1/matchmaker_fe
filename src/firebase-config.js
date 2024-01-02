@@ -14,6 +14,7 @@ function login() {
             const url = `http://localhost:8081/private/saveUser`;
             saveUser(url, token);
         })
+            .then(router.push("/home"))
     }) .catch((error) => {
         console.log("error", error);
     });
@@ -25,7 +26,6 @@ function saveUser(url, token) {
             console.log("response", response);
             if(response.status === 200){
                 alert("Logged-In successfully")
-                router.push('/home');
             } else {
                 console.log("Login failed")
                 alert("Login failed")
@@ -33,6 +33,7 @@ function saveUser(url, token) {
         }).catch(error => {
         console.log("error", error);
     })
+        .then(router.push("/home"))
 }
 
 export { login };
