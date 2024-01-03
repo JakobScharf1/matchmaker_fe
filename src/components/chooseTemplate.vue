@@ -101,25 +101,26 @@ export default {
       }
       else if(document.getElementById('c-ev-pp').checked){
 
-        //TODO: Absender_Email und Projektpartner_Email Index-ID korrigieren
+        //TODO: Kündigungsfrist und Einsatzort Index-ID korrigieren
         this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=90f5f8f0-1e48-4e4c-a4c2-611e5de2cd80&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
         this.finalURL = this.powerFormsURL +
             "&Absender_UserName=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
             "&Absender_Email=" + encodeURIComponent(this.wematchAnsprechpartnerMail) +
             "&Projektpartner_UserName=" + encodeURIComponent(this.projektpartnerName) +
             "&Projektpartner_Email=" + encodeURIComponent(this.projektpartnerMail) +
-            "&Consultant_in_cc_UserName=" + encodeURIComponent(this.cc_name) +
+            "&Consultant%20in%20cc_UserName=" + encodeURIComponent(this.cc_name) +
+            "&Consultant%20in%20cc_Email=" + encodeURIComponent(this.cc_mail) +
             "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
             "&Projektpartner=" + encodeURIComponent(this.match.at(2)) + " " + encodeURIComponent(this.projektpartnerName) +
             "&Startdatum=" + encodeURIComponent(this.match.at(11)) +
             "&Enddatum=" + encodeURIComponent(this.match.at(12)) +
-            "&Kuendigungsfrist=" + encodeURIComponent(this.match.at(13)) +
+            "&Kuendigungsfrist=" + encodeURIComponent(this.match.at(0)) +
             "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
             "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
             "&Festpreis=" + encodeURIComponent(this.festpreis) +
             "&Endkunde=" + encodeURIComponent(this.match.at(15)) +
             "&Endkunde_Adresse=" + encodeURIComponent(this.match.at(16)) +
-            "&Einsatzort=" + encodeURIComponent(this.match.at(17)) +
+            "&Einsatzort=" + encodeURIComponent(this.match.at(0)) +
             "&Position=" + encodeURIComponent(this.match.at(13)) +
             "&Aufgabenbeschreibung=" + encodeURIComponent(this.match.at(8))
         ;
@@ -136,28 +137,30 @@ export default {
   },
 
   watch: {
-    projektpartnerName(newValue, oldValue){
-      console.log("Wert geändert von " + oldValue + " zu " + newValue);
+    projektpartnerName(newValue){
       localStorage.setItem('projektpartnerName', newValue);
     },
-    projektpartnerMail(newValue, oldValue){
-      console.log("Wert geändert von " + oldValue + " zu " + newValue);
+    projektpartnerMail(newValue){
       localStorage.setItem('projektpartnerMail', newValue);
     },
-    wematchAnsprechpartnerName(newValue, oldValue){
-      console.log("Wert geändert von " + oldValue + " zu " + newValue);
+    wematchAnsprechpartnerName(newValue){
       localStorage.setItem('wematchAnsprechpartnerName', newValue);
     },
-    wematchAnsprechpartnerMail(newValue, oldValue){
-      console.log("Wert geändert von " + oldValue + " zu " + newValue);
+    wematchAnsprechpartnerMail(newValue){
       localStorage.setItem('wematchAnsprechpartnerMail', newValue);
+    },
+    cc_name(newValue){
+      localStorage.setItem('cc_name', newValue);
+    },
+    cc_mail(newValue){
+      localStorage.setItem('cc_mail', newValue);
     }
   },
 
-  mounted() { //TODO: Index-ID korrigieren
+  mounted() { //TODO: Index-IDs korrigieren (beide)
     try {
-      this.projektpartnerMail = this.match.at(3);
-      this.wematchAnsprechpartnerMail = this.match.at(4);
+      this.projektpartnerMail = this.match.at(0);
+      this.wematchAnsprechpartnerMail = this.match.at(0);
     } catch (error) {
       console.error(error);
     }
