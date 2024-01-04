@@ -66,9 +66,9 @@ export default {
       finalURL: "",
       match: localStorage.getItem('match'),
       projektpartnerName: localStorage.getItem('projektpartnerName'),
-      projektpartnerMail: "",
-      wematchAnsprechpartnerName: localStorage.getItem('wematchAnsprechpartner'),
-      wematchAnsprechpartnerMail: "",
+      projektpartnerMail: localStorage.getItem('projektpartnerMail'),
+      wematchAnsprechpartnerName: localStorage.getItem('wematchAnsprechpartnerName'),
+      wematchAnsprechpartnerMail: localStorage.getItem('wematchAnsprechpartnerMail'),
       tagessatz: "X",
       stundensatz: "X",
       festpreis: "X",
@@ -101,7 +101,6 @@ export default {
       }
       else if(document.getElementById('c-ev-pp').checked){
 
-        //TODO: Kündigungsfrist und Einsatzort Index-ID korrigieren
         this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=90f5f8f0-1e48-4e4c-a4c2-611e5de2cd80&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
         this.finalURL = this.powerFormsURL +
             "&Absender_UserName=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
@@ -114,13 +113,13 @@ export default {
             "&Projektpartner=" + encodeURIComponent(this.match.at(2)) + " " + encodeURIComponent(this.projektpartnerName) +
             "&Startdatum=" + encodeURIComponent(this.match.at(11)) +
             "&Enddatum=" + encodeURIComponent(this.match.at(12)) +
-            "&Kuendigungsfrist=" + encodeURIComponent(this.match.at(0)) +
+            "&Kuendigungsfrist=" + encodeURIComponent(this.match.at(18)) +
             "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
             "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
             "&Festpreis=" + encodeURIComponent(this.festpreis) +
             "&Endkunde=" + encodeURIComponent(this.match.at(15)) +
             "&Endkunde_Adresse=" + encodeURIComponent(this.match.at(16)) +
-            "&Einsatzort=" + encodeURIComponent(this.match.at(0)) +
+            "&Einsatzort=" + encodeURIComponent(this.match.at(19)) +
             "&Position=" + encodeURIComponent(this.match.at(13)) +
             "&Aufgabenbeschreibung=" + encodeURIComponent(this.match.at(8))
         ;
@@ -154,15 +153,6 @@ export default {
     },
     cc_mail(newValue){
       localStorage.setItem('cc_mail', newValue);
-    }
-  },
-
-  mounted() { //TODO: Index-IDs korrigieren (beide)
-    try {
-      this.projektpartnerMail = this.match.at(0);
-      this.wematchAnsprechpartnerMail = this.match.at(0);
-    } catch (error) {
-      console.error(error);
     }
   }
 }

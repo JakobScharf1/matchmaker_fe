@@ -17,7 +17,7 @@
      <tbody>
      <tr>
        <td>WeMatch Ansprechpartner:</td>
-       <td>{{wematchAnsprechpartner}}</td>
+       <td>{{wematchAnsprechpartnerName}}</td>
      </tr>
       <tr>
         <td>Projektpartner:</td>
@@ -25,36 +25,35 @@
       </tr>
       <tr>
         <td>Projektpartner Gesellschaft:</td>
-        <td>{{projektpartnerName}}</td>
-      </tr>
-      <tr>
-        <td>Kunde:</td>
         <td>{{matches.at(2)}}</td>
       </tr>
       <tr>
+        <td>Kunde:</td>
+        <td>{{matches.at(14)}}</td>
+      </tr>
+      <tr>
         <td>Ansprechpartner Kunde:</td>
-        <td>{{matches.length > 0 ? matches[0].ansprechpartnerKunde : '' }}</td>
-        <!--<td v-for="match in matches" v-bind:key="match.id">{{match.ansprechpartnerKunde}}</td>-->
+        <td>NOCH NICHT VORHANDEN</td>
       </tr>
       <tr>
         <td>Adresse Kunde:</td>
-        <td>{{matches.length > 0 ? matches[0].adresseKunde : '' }}</td>
+        <td>{{adresseKunde}}</td>
       </tr>
       <tr>
         <td>Startdatum:</td>
-        <td>{{matches.at(11)}}</td>
+        <td>{{startdatum}}</td>
       </tr>
       <tr>
         <td>Enddatum:</td>
-        <td>{{matches.at(12) }}</td>
+        <td>{{enddatum}}</td>
       </tr>
       <tr>
         <td>Kündigungsfrist PP:</td>
-        <td>{{matches.at(12) }}</td>
+        <td>{{matches.at(19) }}</td>
       </tr>
       <tr>
         <td>Kündigungsfrist Kunde:</td>
-        <td>{{matches.at(12) }}</td>
+        <td>{{matches.at(20) }}</td>
       </tr>
       <tr>
         <td>Zahlungsziel PP:</td>
@@ -70,12 +69,16 @@
       </tr>
       <tr>
         <td>EK-Preis:</td>
-        <td>{{matches.at(6)}}</td>
+        <td>{{ek}}</td>
       </tr>
       <tr>
         <td>VK-Preis:</td>
-        <td>{{matches.at(7)}}</td>
+        <td>{{vk}}</td>
       </tr>
+     <tr>
+       <td>Einsatzort:</td>
+       <td>{{matches.at(21)}}</td>
+     </tr>
       <tr>
         <td>Position:</td>
         <td>{{matches.at(13)}}</td>
@@ -103,7 +106,14 @@ export default {
       matches: [],
       confirmed: false,
       projektpartnerName: "",
-      wematchAnsprechpartnerName: ""
+      wematchAnsprechpartnerName: "",
+      adresseKunde: "",
+      startdatum: "",
+      enddatum: "",
+      ek: "",
+      vk: "",
+      projektpartnerMail: "",
+      wematchAnsprechpartnerMail: ""
     }
   },
   methods: {
@@ -112,10 +122,19 @@ export default {
         this.matches = response.data;
         this.projektpartnerName = this.matches.at(0) + " " + this.matches.at(1);
         this.wematchAnsprechpartnerName = this.matches.at(9) + " " + this.matches.at(10);
-        console.log(this.matches);
+        this.adresseKunde = this.matches.at(15) + ", " + this.matches.at(16) + ", " + this.matches.at(18) + " " + this.matches.at(17);
+        this.startdatum = this.dateFormatter(this.matches.at(11));
+        this.enddatum = this.dateFormatter(this.matches.at(12));
+        this.ek = this.preisFormatter(this.matches.at(6));
+        this.vk = this.preisFormatter(this.matches.at(7));
+
         localStorage.setItem('match', this.matches);
         localStorage.setItem('projektpartnerName', this.projektpartnerName);
-        localStorage.setItem('wematchAnsprechpartnerName', this.wematchAnsprechpartnerName);
+        localStorage.setItem('wematchAnsprechpartnerName', this.wematchAnsprechpartnerName)
+        localStorage.setItem('projektpartnerMail', this.matches.at(22));
+        localStorage.setItem('wematchAnsprechpartnerMail', this.matches.at(23));
+
+        console.log(this.matches);
       });
     },
 
@@ -131,6 +150,24 @@ export default {
       localStorage.setItem('idToken', "");
       router.push('/login');
     },
+    dateFormatter(timestamp){
+        const date = new Date(parseInt(timestamp));
+        const formatedDate = date.toLocaleDateString('de-DE', {day: '2-digit', month: '2-digit', year: 'numeric'});
+        return formatedDate;
+    },
+
+    preisFormatter(preis){
+      let formatedValue = preis.toString().replace(/\./g, ',');
+      if (formatedValue.indexOf(',') !== -1) {
+        const nachkomma = formatedValue.split(',')[1].length;
+        if(nachkomma === 1){
+          formatedValue = formatedValue + "0";
+        } else if(nachkomma === 0) {
+          formatedValue += "00";
+        }
+      }
+      return formatedValue;
+    }
   },
   beforeMount() {
     const token = localStorage.getItem('idToken');
