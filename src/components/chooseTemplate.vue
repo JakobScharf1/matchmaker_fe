@@ -20,21 +20,21 @@
 
   <h3>Vertrag Absender</h3>
   <label for="absender_mail">E-Mail:</label>
-  <input v-model="wematchAnsprechpartnerMail" type="email" id="absender_mail">
+  <input v-model="absenderMail" type="email" id="absender_mail">
   <label for="absender_name">Name:</label>
-  <input v-model="wematchAnsprechpartnerName" type="text" id="absender_mail"><br />
+  <input v-model="absenderName" type="text" id="absender_mail"><br />
 
   <h3>Vertrag Empfänger</h3>
   <label for="empfaenger_mail">E-Mail:</label>
-  <input v-model="projektpartnerMail" type="email" id="empfaenger_mail">
+  <input v-model="empfaengerMail" type="email" id="empfaenger_mail">
   <label for="empfaenger_name">Name:</label>
-  <input v-model="projektpartnerName" type="text" id="empfaenger_mail"><br />
+  <input v-model="empfaengerName" type="text" id="empfaenger_mail"><br />
 
   <h3>Consultant in CC</h3>
   <label for="cc_mail">E-Mail:</label>
-  <input type="email" id="cc_mail">
+  <input v-model="ccMail" type="email" id="cc_mail">
   <label for="cc_name">Name:</label>
-  <input type="text" id="cc_name"><br />
+  <input v-model="ccName" type="text" id="cc_name"><br />
 <!--
   <h3>IT Perm</h3>
   <input type="radio" id="p-rv-mitNach" value="p-rv-mitNach">
@@ -64,6 +64,10 @@ export default {
       confirmed: false,
       powerFormsURL: "",
       finalURL: "",
+      absenderMail: localStorage.getItem('wematchAnsprechpartnerMail'),
+      absenderName: localStorage.getItem('wematchAnsprechpartnerName'),
+      empfaengerMail: localStorage.getItem('projektpartnerMail'),
+      empfaengerName: localStorage.getItem('projektpartnerName'),
       match: localStorage.getItem('match'),
       projektpartnerName: localStorage.getItem('projektpartnerName'),
       projektpartnerMail: localStorage.getItem('projektpartnerMail'),
@@ -72,7 +76,27 @@ export default {
       tagessatz: "X",
       stundensatz: "X",
       festpreis: "X",
-      vergutungsart: localStorage.getItem('vergutungsart')
+      verguetungssatz: localStorage.getItem('verguetungssatz'),
+      startdatum: localStorage.getItem('startdatum'),
+      enddatum: localStorage.getItem('enddatum'),
+      adresseKunde: localStorage.getItem('adresseKunde'),
+      ppGesellschaft: localStorage.getItem('ppGesellschaft'),
+      kunde: localStorage.getItem('kunde'),
+      kuendigungsfristPP: localStorage.getItem('kuendigungsfristPP'),
+      kuendigungsfristKunde: localStorage.getItem('kuendigungsfristKunde'),
+      zahlungszielPP: localStorage.getItem('zahlungszielPP'),
+      zahlungszielKunde: localStorage.getItem('zahlungszielKunde'),
+      einsatzort: localStorage.getItem('einsatzort'),
+      position: localStorage.getItem('position'),
+      aufgabenbeschreibung: localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "),
+      ek: localStorage.getItem('ek'),
+      vk: localStorage.getItem('vk'),
+      ansprechpartnerKunde: localStorage.getItem('ansprechpartnerKunde'),
+      matchID: localStorage.getItem('matchID'),
+      ccMail: "",
+      ccName: "",
+      ppStreet: localStorage.getItem('ppStreet'),
+      ppCity: localStorage.getItem('ppCity'),
     }
   },
   methods: {
@@ -88,45 +112,65 @@ export default {
       this.confirmed = true;
     },
     chooseTemplate(){
-      if(this.vergutungsart === "Stundensatz"){
-        this.stundensatz = this.match.at(6);
-      } else if(this.vergutungsart === "Tagessatz"){
-        this.tagessatz = this.match.at(6);
-      } else if(this.vergutungsart === "Festpreis"){
-        this.festpreis = this.match.at(6);
+      if(this.verguetungssatz === "Stundensatz"){
+        this.stundensatz = this.ek;
+      } else if(this.verguetungssatz === "Tagessatz"){
+        this.tagessatz = this.ek;
+      } else if(this.verguetungssatz === "Festpreis"){
+        this.festpreis = this.ek;
       }
 
+      // -- Projektpartner Rahmenvertrag --
       if(document.getElementById('c-rv-pp').checked){
-        this.powerFormsURL = "";
+        this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=c5d592c2-f5da-4d17-95b0-4a336edfd32b&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
+        this.finalURL = this.powerFormsURL +
+            "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+            "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+            "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+            "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+            "&CC_UserName=" + encodeURIComponent(this.ccName) +
+            "&CC_Email=" + encodeURIComponent(this.ccMail) +
+            "&PPName=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
+            "&Adresse1=" + encodeURIComponent(this.ppStreet) +
+            "&Adresse2=" + encodeURIComponent(this.ppCity);
+        console.log("finalURL: " + this.finalURL);
       }
+
+      // -- Projektpartner Einzelvertrag --
       else if(document.getElementById('c-ev-pp').checked){
 
         this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=90f5f8f0-1e48-4e4c-a4c2-611e5de2cd80&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
         this.finalURL = this.powerFormsURL +
-            "&Absender_UserName=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
-            "&Absender_Email=" + encodeURIComponent(this.wematchAnsprechpartnerMail) +
-            "&Projektpartner_UserName=" + encodeURIComponent(this.projektpartnerName) +
-            "&Projektpartner_Email=" + encodeURIComponent(this.projektpartnerMail) +
-            "&Consultant%20in%20cc_UserName=" + encodeURIComponent(this.cc_name) +
-            "&Consultant%20in%20cc_Email=" + encodeURIComponent(this.cc_mail) +
+            "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+            "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+            "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+            "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+            "&CC_UserName=" + encodeURIComponent(this.ccName) +
+            "&CC_Email=" + encodeURIComponent(this.ccMail) +
             "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
-            "&Projektpartner=" + encodeURIComponent(this.match.at(2)) + " " + encodeURIComponent(this.projektpartnerName) +
-            "&Startdatum=" + encodeURIComponent(this.match.at(11)) +
-            "&Enddatum=" + encodeURIComponent(this.match.at(12)) +
-            "&Kuendigungsfrist=" + encodeURIComponent(this.match.at(18)) +
+            "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
+            "&Startdatum=" + encodeURIComponent(this.startdatum) +
+            "&Enddatum=" + encodeURIComponent(this.enddatum) +
+            "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristPP) +
             "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
             "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
             "&Festpreis=" + encodeURIComponent(this.festpreis) +
-            "&Endkunde=" + encodeURIComponent(this.match.at(15)) +
-            "&Endkunde_Adresse=" + encodeURIComponent(this.match.at(16)) +
-            "&Einsatzort=" + encodeURIComponent(this.match.at(19)) +
-            "&Position=" + encodeURIComponent(this.match.at(13)) +
-            "&Aufgabenbeschreibung=" + encodeURIComponent(this.match.at(8))
+            "&Endkunde=" + encodeURIComponent(this.kunde) +
+            "&Endkunde_Adresse=" + encodeURIComponent(this.adresseKunde) +
+            "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
+            "&Position=" + encodeURIComponent(this.position) +
+            "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung) +
+            "&MatchID=" + encodeURIComponent(this.matchID)
         ;
+        console.log("finalURL: " + this.finalURL);
       }
+
+      // -- Projektpartner Rahmenvertrag englisch --
       else if(document.getElementById('c-rv-pp-eng').checked){
         this.powerFormsURL = "";
       }
+
+      // -- Projektpartner Einzelvertrag englisch --
       else if(document.getElementById('c-ev-pp-eng').checked){
         this.powerFormsURL = "";
       }
@@ -136,23 +180,23 @@ export default {
   },
 
   watch: {
-    projektpartnerName(newValue){
-      localStorage.setItem('projektpartnerName', newValue);
+    empfaengerName(newValue){
+      localStorage.setItem('empfaengerName', newValue);
     },
-    projektpartnerMail(newValue){
-      localStorage.setItem('projektpartnerMail', newValue);
+    empfaengerMail(newValue){
+      localStorage.setItem('empfaengerMail', newValue);
     },
-    wematchAnsprechpartnerName(newValue){
-      localStorage.setItem('wematchAnsprechpartnerName', newValue);
+    absenderName(newValue){
+      localStorage.setItem('absenderName', newValue);
     },
-    wematchAnsprechpartnerMail(newValue){
-      localStorage.setItem('wematchAnsprechpartnerMail', newValue);
+    absenderMail(newValue){
+      localStorage.setItem('absenderMail', newValue);
     },
-    cc_name(newValue){
-      localStorage.setItem('cc_name', newValue);
+    ccName(newValue){
+      localStorage.setItem('ccName', newValue);
     },
-    cc_mail(newValue){
-      localStorage.setItem('cc_mail', newValue);
+    ccMail(newValue){
+      localStorage.setItem('ccMail', newValue);
     }
   }
 }

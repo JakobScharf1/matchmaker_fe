@@ -27,11 +27,10 @@ function saveUser(url, token) {
             if(response.status === 200){
                 alert("Logged-In successfully")
             } else {
-                console.log("Login failed")
-                alert("Login failed")
+                router.push("/login").then(r =>  console.log("Login failed!",r))
             }
         }).catch(error => {
-        console.log("error", error);
+        router.push("/login").then(r =>  console.log("error", error,r))
     })
         .then(router.push("/home"))
 }
