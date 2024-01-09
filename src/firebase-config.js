@@ -13,6 +13,7 @@ function login() {
             const token = "Bearer " + idToken
             const url = `http://localhost:8081/private/saveUser`;
             saveUser(url, token);
+            localStorage.setItem("userMail", result.user.email.toString())
         })
             .then(router.push("/home"))
     }) .catch((error) => {
@@ -23,7 +24,6 @@ function login() {
 function saveUser(url, token) {
     axios.get(url, { 'headers': { 'Authorization': token } })
         .then(response => {
-            console.log("response", response);
             if(response.status === 200){
                 alert("Logged-In successfully")
             } else {

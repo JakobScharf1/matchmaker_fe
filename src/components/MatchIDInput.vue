@@ -36,7 +36,7 @@
         </tr>
         <tr>
           <td>Adresse Kunde:</td>
-          <td>{{adresseKunde}}</td>
+          <td>{{adresseKundeStr + ", " + adresseKundeCity}}</td>
         </tr>
         <tr>
           <td>Startdatum:</td>
@@ -108,7 +108,8 @@ export default {
       wematchAnsprechpartnerName: "",
       projektpartnerMail: "",
       wematchAnsprechpartnerMail: "",
-      adresseKunde: "",
+      adresseKundeStr: "",
+      adresseKundeCity: "",
       startdatum: "",
       enddatum: "",
       ek: "",
@@ -127,6 +128,7 @@ export default {
       ppStreet: "",
       ppCity: "",
       ppAdresse: "",
+      auslastung: "",
     }
   },
   methods: {
@@ -142,7 +144,8 @@ export default {
 
         this.projektpartnerName = this.matches.at(0) + " " + this.matches.at(1);
         this.wematchAnsprechpartnerName = this.matches.at(9) + " " + this.matches.at(10);
-        this.adresseKunde = this.matches.at(15) + ", " + this.matches.at(16) + ", " + this.matches.at(18) + " " + this.matches.at(17);
+        this.adresseKundeStr = this.matches.at(15) + ", " + this.matches.at(16);
+        this.adresseKundeCity = this.matches.at(18) + " " + this.matches.at(17);
         this.startdatum = this.dateFormatter(this.matches.at(11));
         this.enddatum = this.dateFormatter(this.matches.at(12));
         this.ek = this.preisFormatter(this.matches.at(6));
@@ -160,6 +163,7 @@ export default {
         this.aufgabenbeschreibung = this.matches.at(8);
         this.ppStreet = this.matches.at(26) + " " + this.matches.at(27);
         this.ppCity = this.matches.at(28) + " " + this.matches.at(29);
+        this.auslastung = this.matches.at(30);
 
         localStorage.setItem('match', this.matches);
         localStorage.setItem('projektpartnerName', this.projektpartnerName);
@@ -168,7 +172,8 @@ export default {
         localStorage.setItem('wematchAnsprechpartnerMail', this.matches.at(23));
         localStorage.setItem('startdatum', this.startdatum);
         localStorage.setItem('enddatum', this.enddatum);
-        localStorage.setItem('adresseKunde', this.adresseKunde);
+        localStorage.setItem('adresseKundeStr', this.adresseKundeStr);
+        localStorage.setItem('adresseKundeCity', this.adresseKundeCity);
         localStorage.setItem('ppGesellschaft', this.ppGesellschaft);
         localStorage.setItem('kunde', this.kunde);
         localStorage.setItem('kuendigungsfristPP', this.kuendigungsfristPP);
@@ -185,6 +190,7 @@ export default {
         localStorage.setItem('matchID', this.matchIdFromInput);
         localStorage.setItem('ppStreet', this.ppStreet);
         localStorage.setItem('ppCity', this.ppCity);
+        localStorage.setItem('auslastung', this.auslastung);
 
         this.ppAdresse = this.ppStreet + ", " + this.ppCity;
 
@@ -197,7 +203,14 @@ export default {
     },
 
     goToChooseTemplate() {
-      router.push('chooseTemplate');
+      const legalMail = "j.scharf@wematch.de";
+      const userMail = localStorage.getItem("userMail");
+      if(userMail === legalMail){
+        console.log("User: " + userMail);
+        router.push('chooseTemplateType');
+      } else {
+        router.push('chooseTemplate');
+      }
     },
     logout(){
       localStorage.clear();
@@ -224,7 +237,6 @@ export default {
   },
   beforeMount() {
     const token = localStorage.getItem('idToken');
-    console.log("userInfo Prüfung: " + token);
     if(token === "null" || token === "" || token === null){
       router.push('/login')
     } else {

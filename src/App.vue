@@ -1,22 +1,13 @@
 <template>
   <img alt="MatchMaker logo" src="./assets/logo.png">
   <RouterView/>
-  <!--<LoginSSO></LoginSSO>-->
-  <!--<MatchIDInput></MatchIDInput>-->
 </template>
 
 <script>
-/*import MatchIDInput from "@/components/MatchIDInput.vue";*/
-/*import LoginSSO from "@/views/LoginSSO.vue";*/
 import router from "@/router";
-/*import {googleLogout} from "vue3-google-login";*/
 
 export default {
   name: 'App',
-  components: {
-    /*MatchIDInput,*/
-    /*LoginSSO,*/
-  },
   methods: {
     router() {
       return router
