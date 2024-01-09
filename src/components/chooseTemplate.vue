@@ -167,12 +167,48 @@ export default {
 
       // -- Projektpartner Rahmenvertrag englisch --
       else if(document.getElementById('c-rv-pp-eng').checked){
-        this.powerFormsURL = "";
+        // --- Finale URL ---
+        this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=c08a5ab7-7f6a-4780-9803-e1e88e6ec1b1&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
+        this.finalURL = this.powerFormsURL +
+            "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+            "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+            "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+            "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+            "&CC_UserName=" + encodeURIComponent(this.ccName) +
+            "&CC_Email=" + encodeURIComponent(this.ccMail) +
+            "&PPName=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
+            "&Adresse1=" + encodeURIComponent(this.ppStreet) +
+            "&Adresse2=" + encodeURIComponent(this.ppCity);
+        console.log("finalURL: " + this.finalURL);
       }
 
       // -- Projektpartner Einzelvertrag englisch --
       else if(document.getElementById('c-ev-pp-eng').checked){
-        this.powerFormsURL = "";
+        // --- Finale URL ---
+        this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=d0a99cc2-6b16-4ebb-81a9-2c5a4415822d&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
+        this.finalURL = this.powerFormsURL +
+            "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+            "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+            "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+            "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+            "&CC_UserName=" + encodeURIComponent(this.ccName) +
+            "&CC_Email=" + encodeURIComponent(this.ccMail) +
+            "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
+            "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
+            "&Startdatum=" + encodeURIComponent(this.startdatum) +
+            "&Enddatum=" + encodeURIComponent(this.enddatum) +
+            "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristPP) +
+            "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
+            "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
+            "&Festpreis=" + encodeURIComponent(this.festpreis) +
+            "&Endkunde=" + encodeURIComponent(this.kunde) +
+            "&Endkunde_Adresse=" + encodeURIComponent(this.adresseKunde) +
+            "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
+            "&Position=" + encodeURIComponent(this.position) +
+            "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung) +
+            "&MatchID=" + encodeURIComponent(this.matchID)
+        ;
+        console.log("finalURL: " + this.finalURL);
       }
 
       window.open(this.finalURL, "_blank");
