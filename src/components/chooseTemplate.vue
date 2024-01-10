@@ -100,160 +100,161 @@ export default {
       ccMail: "",
       ccName: "",
       ppStreet: localStorage.getItem('ppStreet'),
-      ppCity: localStorage.getItem('ppCity'),
+      ppCity: localStorage.getItem('ppCity')
     }
   },
   methods: {
-    logout(){
+    logout() {
       localStorage.clear();
       localStorage.setItem('userInfo', "");
       router.push('/');
     },
-    pageBack(){
+    pageBack() {
       router.go(-1);
     },
     confirmClick() {
       this.confirmed = true;
     },
-    chooseTemplate(){
-      if(this.verguetungssatz === "Stundensatz"){
+    chooseTemplate() {
+      if (this.verguetungssatz === "Stundensatz") {
         this.stundensatz = this.ek;
-      } else if(this.verguetungssatz === "Tagessatz"){
+      } else if (this.verguetungssatz === "Tagessatz") {
         this.tagessatz = this.ek;
-      } else if(this.verguetungssatz === "Festpreis"){
+      } else if (this.verguetungssatz === "Festpreis") {
         this.festpreis = this.ek;
       }
 
-      if(this.kuendigungsfristPP === "0 Tage"){
+      if (this.kuendigungsfristPP === "0 Tage") {
         this.kuendigungsfristPPEnglisch = "0 days";
-      } else if(this.kuendigungsfristPP === "7 Tage"){
+      } else if (this.kuendigungsfristPP === "7 Tage") {
         this.kuendigungsfristPPEnglisch = "7 days";
-      } else if(this.kuendigungsfristPP === "14 Tage"){
+      } else if (this.kuendigungsfristPP === "14 Tage") {
         this.kuendigungsfristPPEnglisch = "14 days";
-      } else if(this.kuendigungsfristPP === "14 zum Monatsende"){
+      } else if (this.kuendigungsfristPP === "14 zum Monatsende") {
         this.kuendigungsfristPPEnglisch = "14 days to month end";
-      } else if(this.kuendigungsfristPP === "30 Tage"){
+      } else if (this.kuendigungsfristPP === "30 Tage") {
         this.kuendigungsfristPPEnglisch = "30 days";
-      } else if(this.kuendigungsfristPP === "6 Wochen"){
+      } else if (this.kuendigungsfristPP === "6 Wochen") {
         this.kuendigungsfristPPEnglisch = "6 weeks";
-      } else if(this.kuendigungsfristPP === "12 Wochen"){
+      } else if (this.kuendigungsfristPP === "12 Wochen") {
         this.kuendigungsfristPPEnglisch = "12 weeks";
 
-      // -- Projektpartner Rahmenvertrag --
-      if(document.getElementById('c-rv-pp').checked){
-        this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=c5d592c2-f5da-4d17-95b0-4a336edfd32b&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
-        this.finalURL = this.powerFormsURL +
-            "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-            "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-            "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-            "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-            "&CC_UserName=" + encodeURIComponent(this.ccName) +
-            "&CC_Email=" + encodeURIComponent(this.ccMail) +
-            "&PPName=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-            "&Adresse1=" + encodeURIComponent(this.ppStreet) +
-            "&Adresse2=" + encodeURIComponent(this.ppCity);
-        console.log("finalURL: " + this.finalURL);
+        // -- Projektpartner Rahmenvertrag --
+        if (document.getElementById('c-rv-pp').checked) {
+          this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=c5d592c2-f5da-4d17-95b0-4a336edfd32b&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
+          this.finalURL = this.powerFormsURL +
+              "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+              "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+              "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+              "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+              "&CC_UserName=" + encodeURIComponent(this.ccName) +
+              "&CC_Email=" + encodeURIComponent(this.ccMail) +
+              "&PPName=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
+              "&Adresse1=" + encodeURIComponent(this.ppStreet) +
+              "&Adresse2=" + encodeURIComponent(this.ppCity);
+          console.log("finalURL: " + this.finalURL);
+        }
+
+        // -- Projektpartner Einzelvertrag --
+        else if (document.getElementById('c-ev-pp').checked) {
+
+          this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=90f5f8f0-1e48-4e4c-a4c2-611e5de2cd80&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
+          this.adresseKunde = this.adresseKundeStr + ", " + this.adresseKundeCity;
+          this.finalURL = this.powerFormsURL +
+              "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+              "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+              "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+              "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+              "&CC_UserName=" + encodeURIComponent(this.ccName) +
+              "&CC_Email=" + encodeURIComponent(this.ccMail) +
+              "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
+              "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
+              "&Startdatum=" + encodeURIComponent(this.startdatum) +
+              "&Enddatum=" + encodeURIComponent(this.enddatum) +
+              "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristPP) +
+              "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
+              "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
+              "&Festpreis=" + encodeURIComponent(this.festpreis) +
+              "&Endkunde=" + encodeURIComponent(this.kunde) +
+              "&Endkunde_Adresse=" + this.adresseKunde +
+              "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
+              "&Position=" + encodeURIComponent(this.position) +
+              "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung) +
+              "&MatchID=" + encodeURIComponent(this.matchID)
+          ;
+          console.log("finalURL: " + this.finalURL);
+        }
+
+        // -- Projektpartner Rahmenvertrag englisch --
+        else if (document.getElementById('c-rv-pp-eng').checked) {
+          // --- Finale URL ---
+          this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=c08a5ab7-7f6a-4780-9803-e1e88e6ec1b1&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
+          this.finalURL = this.powerFormsURL +
+              "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+              "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+              "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+              "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+              "&CC_UserName=" + encodeURIComponent(this.ccName) +
+              "&CC_Email=" + encodeURIComponent(this.ccMail) +
+              "&PPName=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
+              "&Adresse1=" + encodeURIComponent(this.ppStreet) +
+              "&Adresse2=" + encodeURIComponent(this.ppCity);
+          console.log("finalURL: " + this.finalURL);
+        }
+
+        // -- Projektpartner Einzelvertrag englisch --
+        else if (document.getElementById('c-ev-pp-eng').checked) {
+          // --- Finale URL ---
+          this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=d0a99cc2-6b16-4ebb-81a9-2c5a4415822d&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
+          this.adresseKunde = this.adresseKundeStr + ", " + this.adresseKundeCity;
+          this.finalURL = this.powerFormsURL +
+              "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+              "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+              "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+              "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+              "&CC_UserName=" + encodeURIComponent(this.ccName) +
+              "&CC_Email=" + encodeURIComponent(this.ccMail) +
+              "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
+              "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
+              "&Startdatum=" + encodeURIComponent(this.startdatum) +
+              "&Enddatum=" + encodeURIComponent(this.enddatum) +
+              "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristPPEnglisch) +
+              "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
+              "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
+              "&Festpreis=" + encodeURIComponent(this.festpreis) +
+              "&Endkunde=" + encodeURIComponent(this.kunde) +
+              "&Endkunde_Adresse=" + this.adresseKunde +
+              "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
+              "&Position=" + encodeURIComponent(this.position) +
+              "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung) +
+              "&MatchID=" + encodeURIComponent(this.matchID)
+          ;
+          console.log("finalURL: " + this.finalURL);
+        }
+
+        window.open(this.finalURL, "_blank");
       }
+    },
 
-      // -- Projektpartner Einzelvertrag --
-      else if(document.getElementById('c-ev-pp').checked){
-
-        this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=90f5f8f0-1e48-4e4c-a4c2-611e5de2cd80&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
-        this.adresseKunde = this.adresseKundeStr + ", " + this.adresseKundeCity;
-        this.finalURL = this.powerFormsURL +
-            "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-            "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-            "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-            "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-            "&CC_UserName=" + encodeURIComponent(this.ccName) +
-            "&CC_Email=" + encodeURIComponent(this.ccMail) +
-            "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
-            "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-            "&Startdatum=" + encodeURIComponent(this.startdatum) +
-            "&Enddatum=" + encodeURIComponent(this.enddatum) +
-            "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristPP) +
-            "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
-            "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
-            "&Festpreis=" + encodeURIComponent(this.festpreis) +
-            "&Endkunde=" + encodeURIComponent(this.kunde) +
-            "&Endkunde_Adresse=" + this.adresseKunde +
-            "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
-            "&Position=" + encodeURIComponent(this.position) +
-            "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung) +
-            "&MatchID=" + encodeURIComponent(this.matchID)
-        ;
-        console.log("finalURL: " + this.finalURL);
+    watch: {
+      empfaengerName(newValue) {
+        localStorage.setItem('empfaengerName', newValue);
+      },
+      empfaengerMail(newValue) {
+        localStorage.setItem('empfaengerMail', newValue);
+      },
+      absenderName(newValue) {
+        localStorage.setItem('absenderName', newValue);
+      },
+      absenderMail(newValue) {
+        localStorage.setItem('absenderMail', newValue);
+      },
+      ccName(newValue) {
+        localStorage.setItem('ccName', newValue);
+      },
+      ccMail(newValue) {
+        localStorage.setItem('ccMail', newValue);
       }
-
-      // -- Projektpartner Rahmenvertrag englisch --
-      else if(document.getElementById('c-rv-pp-eng').checked){
-        // --- Finale URL ---
-        this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=c08a5ab7-7f6a-4780-9803-e1e88e6ec1b1&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
-        this.finalURL = this.powerFormsURL +
-            "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-            "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-            "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-            "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-            "&CC_UserName=" + encodeURIComponent(this.ccName) +
-            "&CC_Email=" + encodeURIComponent(this.ccMail) +
-            "&PPName=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-            "&Adresse1=" + encodeURIComponent(this.ppStreet) +
-            "&Adresse2=" + encodeURIComponent(this.ppCity);
-        console.log("finalURL: " + this.finalURL);
-      }
-
-      // -- Projektpartner Einzelvertrag englisch --
-      else if(document.getElementById('c-ev-pp-eng').checked){
-        // --- Finale URL ---
-        this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=d0a99cc2-6b16-4ebb-81a9-2c5a4415822d&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
-        this.adresseKunde = this.adresseKundeStr + ", " + this.adresseKundeCity;
-        this.finalURL = this.powerFormsURL +
-            "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-            "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-            "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-            "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-            "&CC_UserName=" + encodeURIComponent(this.ccName) +
-            "&CC_Email=" + encodeURIComponent(this.ccMail) +
-            "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
-            "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-            "&Startdatum=" + encodeURIComponent(this.startdatum) +
-            "&Enddatum=" + encodeURIComponent(this.enddatum) +
-            "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristPPEnglisch) +
-            "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
-            "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
-            "&Festpreis=" + encodeURIComponent(this.festpreis) +
-            "&Endkunde=" + encodeURIComponent(this.kunde) +
-            "&Endkunde_Adresse=" + this.adresseKunde +
-            "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
-            "&Position=" + encodeURIComponent(this.position) +
-            "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung) +
-            "&MatchID=" + encodeURIComponent(this.matchID)
-        ;
-        console.log("finalURL: " + this.finalURL);
-      }
-
-      window.open(this.finalURL, "_blank");
-    }
-  },
-
-  watch: {
-    empfaengerName(newValue){
-      localStorage.setItem('empfaengerName', newValue);
-    },
-    empfaengerMail(newValue){
-      localStorage.setItem('empfaengerMail', newValue);
-    },
-    absenderName(newValue){
-      localStorage.setItem('absenderName', newValue);
-    },
-    absenderMail(newValue){
-      localStorage.setItem('absenderMail', newValue);
-    },
-    ccName(newValue){
-      localStorage.setItem('ccName', newValue);
-    },
-    ccMail(newValue){
-      localStorage.setItem('ccMail', newValue);
     }
   }
 }

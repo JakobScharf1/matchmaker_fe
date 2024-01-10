@@ -75,6 +75,10 @@
           <td>{{vk}}</td>
         </tr>
        <tr>
+         <td>Auslastung:</td>
+         <td>{{auslastung}}</td>
+       </tr>
+       <tr>
          <td>Einsatzort:</td>
          <td>{{einsatzort}}</td>
        </tr>
@@ -129,6 +133,9 @@ export default {
       ppCity: "",
       ppAdresse: "",
       auslastung: "",
+      tageProWoche: "",
+      stundenProTag: "",
+
     }
   },
   methods: {
@@ -141,6 +148,7 @@ export default {
         } else {
 
           this.confirmClick();
+
 
         this.projektpartnerName = this.matches.at(0) + " " + this.matches.at(1);
         this.wematchAnsprechpartnerName = this.matches.at(9) + " " + this.matches.at(10);
@@ -163,7 +171,10 @@ export default {
         this.aufgabenbeschreibung = this.matches.at(8);
         this.ppStreet = this.matches.at(26) + " " + this.matches.at(27);
         this.ppCity = this.matches.at(28) + " " + this.matches.at(29);
-        this.auslastung = this.matches.at(30);
+        this.tageProWoche = this.matches.at(30);
+        this.stundenProTag = this.matches.at(31);
+
+        this.auslastung = this.stundenProTag * this.tageProWoche + " Stunden pro Woche";
 
         localStorage.setItem('match', this.matches);
         localStorage.setItem('projektpartnerName', this.projektpartnerName);
