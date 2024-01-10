@@ -160,7 +160,8 @@ export default {
 
       // -- Rahmenvertrag englisch --
       else if(document.getElementById('c-rv-k-eng').checked){
-        this.powerFormsURL = "";
+        // -- Finale URL --
+        this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=9bafb00b-f36f-4623-ae99-1a5fe6f1027b&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
         this.finalURL = this.powerFormsURL +
             "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
             "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
@@ -168,15 +169,16 @@ export default {
             "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
             "&CC_UserName=" + encodeURIComponent(this.ccName) +
             "&CC_Email=" + encodeURIComponent(this.ccMail) +
-            "&PPName=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-            "&Adresse1=" + encodeURIComponent(this.ppStreet) +
-            "&Adresse2=" + encodeURIComponent(this.ppCity);
+            "&Kunde=" + encodeURIComponent(this.kunde) +
+            "&KundeAdresse1" + encodeURIComponent(this.adresseKundeStr) +
+            "&KundeAdresse2" + encodeURIComponent(this.adresseKundeCity);
         console.log("finalURL: " + this.finalURL);
       }
 
       // -- Einzelvertrag englisch --
       else if(document.getElementById('c-ev-k-eng').checked){
-        this.powerFormsURL = "";
+        // -- Finale URL --
+        this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=16495b41-9e93-466b-923d-c31dd8eca80b&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
         this.finalURL = this.powerFormsURL +
             "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
             "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
