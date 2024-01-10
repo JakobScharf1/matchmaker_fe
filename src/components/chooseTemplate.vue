@@ -86,6 +86,8 @@ export default {
       kunde: localStorage.getItem('kunde'),
       kuendigungsfristPP: localStorage.getItem('kuendigungsfristPP'),
       kuendigungsfristKunde: localStorage.getItem('kuendigungsfristKunde'),
+      kuendigungsfristPPEnglisch: "",
+      kuendigungsfristKundeEnglisch: "",
       zahlungszielPP: localStorage.getItem('zahlungszielPP'),
       zahlungszielKunde: localStorage.getItem('zahlungszielKunde'),
       einsatzort: localStorage.getItem('einsatzort'),
@@ -121,6 +123,21 @@ export default {
       } else if(this.verguetungssatz === "Festpreis"){
         this.festpreis = this.ek;
       }
+
+      if(this.kuendigungsfristPP === "0 Tage"){
+        this.kuendigungsfristPPEnglisch = "0 days";
+      } else if(this.kuendigungsfristPP === "7 Tage"){
+        this.kuendigungsfristPPEnglisch = "7 days";
+      } else if(this.kuendigungsfristPP === "14 Tage"){
+        this.kuendigungsfristPPEnglisch = "14 days";
+      } else if(this.kuendigungsfristPP === "14 zum Monatsende"){
+        this.kuendigungsfristPPEnglisch = "14 days to month end";
+      } else if(this.kuendigungsfristPP === "30 Tage"){
+        this.kuendigungsfristPPEnglisch = "30 days";
+      } else if(this.kuendigungsfristPP === "6 Wochen"){
+        this.kuendigungsfristPPEnglisch = "6 weeks";
+      } else if(this.kuendigungsfristPP === "12 Wochen"){
+        this.kuendigungsfristPPEnglisch = "12 weeks";
 
       // -- Projektpartner Rahmenvertrag --
       if(document.getElementById('c-rv-pp').checked){
@@ -201,7 +218,7 @@ export default {
             "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
             "&Startdatum=" + encodeURIComponent(this.startdatum) +
             "&Enddatum=" + encodeURIComponent(this.enddatum) +
-            "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristPP) +
+            "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristPPEnglisch) +
             "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
             "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
             "&Festpreis=" + encodeURIComponent(this.festpreis) +
