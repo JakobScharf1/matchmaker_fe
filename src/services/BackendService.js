@@ -10,6 +10,12 @@ class BackendService{
         console.log("Übermittelt an: " + requestURI);
         return axios.get(requestURI, {headers: headers});
     }
+
+    getPowerForm(powerFormId){
+        const requestURI = BACKEND_BASE_URL + "/powerforms/" + powerFormId;
+        console.log("Übermittelt an: " + requestURI);
+        return axios.get(requestURI, {headers: headers});
+    }
 }
 
 export default new BackendService()

@@ -56,6 +56,7 @@
 
 <script>
 import router from "@/router";
+import BackendService from "@/services/BackendService";
 
 export default {
   name: "chooseTemplate",
@@ -100,7 +101,7 @@ export default {
       ccMail: "",
       ccName: "",
       ppStreet: localStorage.getItem('ppStreet'),
-      ppCity: localStorage.getItem('ppCity')
+      ppCity: localStorage.getItem('ppCity'),
     }
   },
   methods: {
@@ -116,32 +117,50 @@ export default {
       this.confirmed = true;
     },
     chooseTemplate() {
-      if (this.verguetungssatz === "Stundensatz") {
-        this.stundensatz = this.ek;
-      } else if (this.verguetungssatz === "Tagessatz") {
-        this.tagessatz = this.ek;
-      } else if (this.verguetungssatz === "Festpreis") {
-        this.festpreis = this.ek;
+
+      switch (this.verguetungssatz){
+        case "Stundensatz":
+          this.stundensatz = this.ek;
+          break;
+        case "Tagessatz":
+          this.tagessatz = this.ek;
+          break;
+        case "Festpreis":
+          this.festpreis = this.ek;
+          break;
       }
 
-      if (this.kuendigungsfristPP === "0 Tage") {
-        this.kuendigungsfristPPEnglisch = "0 days";
-      } else if (this.kuendigungsfristPP === "7 Tage") {
-        this.kuendigungsfristPPEnglisch = "7 days";
-      } else if (this.kuendigungsfristPP === "14 Tage") {
-        this.kuendigungsfristPPEnglisch = "14 days";
-      } else if (this.kuendigungsfristPP === "14 zum Monatsende") {
-        this.kuendigungsfristPPEnglisch = "14 days to month end";
-      } else if (this.kuendigungsfristPP === "30 Tage") {
-        this.kuendigungsfristPPEnglisch = "30 days";
-      } else if (this.kuendigungsfristPP === "6 Wochen") {
-        this.kuendigungsfristPPEnglisch = "6 weeks";
-      } else if (this.kuendigungsfristPP === "12 Wochen") {
-        this.kuendigungsfristPPEnglisch = "12 weeks";
+      switch (this.kuendigungsfristPP) {
+        case "0 Tage":
+          this.kuendigungsfristPPEnglisch = "0 days";
+          break;
+        case "7 Tage":
+          this.kuendigungsfristPPEnglisch = "7 days";
+          break;
+        case "14 Tage":
+          this.kuendigungsfristPPEnglisch = "14 days";
+          break;
+        case "14 Tage zum Monatsende":
+          this.kuendigungsfristPPEnglisch = "14 days to month end";
+          break;
+        case "30 Tage":
+          this.kuendigungsfristPPEnglisch = "30 days";
+          break;
+        case "6 Wochen":
+          this.kuendigungsfristPPEnglisch = "6 weeks";
+          break;
+        case "12 Wochen":
+          this.kuendigungsfristPPEnglisch = "12 weeks";
+          break;
       }
+
         // -- Projektpartner Rahmenvertrag --
       if (document.getElementById('c-rv-pp').checked) {
-        this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=c5d592c2-f5da-4d17-95b0-4a336edfd32b&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
+
+        const response  = BackendService.getPowerForm("crvpp");
+        console.log("PowerForms URL Request Response: " + response.toString());
+
+        /*this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=c5d592c2-f5da-4d17-95b0-4a336edfd32b&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
         this.finalURL = this.powerFormsURL +
             "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
             "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
@@ -151,7 +170,7 @@ export default {
             "&CC_Email=" + encodeURIComponent(this.ccMail) +
             "&PPName=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
             "&Adresse1=" + encodeURIComponent(this.ppStreet) +
-            "&Adresse2=" + encodeURIComponent(this.ppCity);
+            "&Adresse2=" + encodeURIComponent(this.ppCity);*/
         console.log("finalURL: " + this.finalURL);
       }
 
