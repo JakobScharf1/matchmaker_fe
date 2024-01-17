@@ -157,8 +157,11 @@ export default {
         // -- Projektpartner Rahmenvertrag --
       if (document.getElementById('c-rv-pp').checked) {
 
-        const response  = BackendService.getPowerForm("crvpp");
-        console.log("PowerForms URL Request Response: " + response.toString());
+        BackendService.getPowerForm("c-rv-pp").then(response =>{ const powerFormsURL = response.data
+        console.log( "URL: " + powerFormsURL);});
+
+
+
 
         /*this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=c5d592c2-f5da-4d17-95b0-4a336edfd32b&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
         this.finalURL = this.powerFormsURL +
