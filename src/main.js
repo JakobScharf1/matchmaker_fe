@@ -3,6 +3,7 @@ import App from './App.vue';
 import vue3GoogleLogin from "vue3-google-login";
 import router from "@/router";
 import cors from 'cors';
+import DotLoader from 'vue-spinner/src/PulseLoader.vue';
 
 // Import the functions you need from the SDKs you need
 import firebase from "firebase/compat/app";
@@ -27,4 +28,5 @@ createApp(App)
     .use(vue3GoogleLogin, {
         clientId: '171953949131-p1nuuduug3qtvu70rlarkaot7252264p.apps.googleusercontent.com'
     })
+    .component('dot-loader', DotLoader)
     .mount('#app',)

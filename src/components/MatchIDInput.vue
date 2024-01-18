@@ -7,7 +7,10 @@
         <button class="btn btn-primary" @click="() => { getMatch();}"><b>Bestätigen</b></button>
       </div>
     </div>
-  <div class="valueTable">
+  <div class="loading-div">
+    <dot-loader :loading="isLoading" :color="'#007772'"></dot-loader>
+  </div>
+  <div class="valueTable" v-if="!isLoading">
     <table>
      <tbody>
        <tr>
@@ -36,7 +39,7 @@
         </tr>
         <tr>
           <td>Adresse Kunde:</td>
-          <td>{{adresseKundeStr + ", " + adresseKundeCity}}</td>
+          <td>{{adresseKunde}}</td>
         </tr>
         <tr>
           <td>Startdatum:</td>
@@ -105,15 +108,20 @@ export default {
   name: 'MatchIDInput',
   data() {
     return {
+      // Helfer-Variablen
       matchIdFromInput: "",
       matches: [],
       confirmed: false,
+      isLoading: false,
+
+      // Variablen zur Datenverarbeitung
       projektpartnerName: "",
       wematchAnsprechpartnerName: "",
       projektpartnerMail: "",
       wematchAnsprechpartnerMail: "",
       adresseKundeStr: "",
       adresseKundeCity: "",
+      adresseKunde: "",
       startdatum: "",
       enddatum: "",
       ek: "",
@@ -140,73 +148,77 @@ export default {
   },
   methods: {
     getMatch() {
-      BackendService.getMatch(this.matchIdFromInput).then((response) => {
-        this.matches = response.data;
+      this.isLoading = true;
+      setTimeout(() => {
+        BackendService.getMatch(this.matchIdFromInput).then((response) => {
+          this.matches = response.data;
 
-        if (this.matches.includes("DOCTYPE html")){
-          alert("Die Match-ID ist nicht korrekt. Bitte gib die ID erneut ein.");
-        } else {
+          if (this.matches.includes("DOCTYPE html")){
+            alert("Die Match-ID ist nicht korrekt. Bitte gib die ID erneut ein.");
+          } else {
+            this.confirmClick();
 
-          this.confirmClick();
+            this.projektpartnerName = this.matches.at(0) + " " + this.matches.at(1);
+            this.wematchAnsprechpartnerName = this.matches.at(9) + " " + this.matches.at(10);
+            this.adresseKundeStr = this.matches.at(15) + ", " + this.matches.at(16);
+            this.adresseKundeCity = this.matches.at(18) + " " + this.matches.at(17);
+            this.adresseKunde = this.adresseKundeStr + ", " + this.adresseKundeCity;
+            this.startdatum = this.dateFormatter(this.matches.at(11));
+            this.enddatum = this.dateFormatter(this.matches.at(12));
+            this.ek = this.preisFormatter(this.matches.at(6));
+            this.vk = this.preisFormatter(this.matches.at(7));
+            this.ansprechpartnerKunde = this.matches.at(24) + " " + this.matches.at(25);
+            this.ppGesellschaft = this.matches.at(2);
+            this.kunde = this.matches.at(14);
+            this.kuendigungsfristPP = this.matches.at(19);
+            this.kuendigungsfristKunde = this.matches.at(20);
+            this.zahlungszielPP = this.matches.at(3);
+            this.zahlungszielKunde = this.matches.at(4);
+            this.verguetungssatz = this.matches.at(5);
+            this.einsatzort = this.matches.at(21);
+            this.position = this.matches.at(13);
+            this.aufgabenbeschreibung = this.matches.at(8);
+            this.ppStreet = this.matches.at(26) + " " + this.matches.at(27);
+            this.ppCity = this.matches.at(28) + " " + this.matches.at(29);
+            this.tageProWoche = this.matches.at(30);
+            this.stundenProTag = this.matches.at(31);
 
+            this.auslastung = this.stundenProTag * this.tageProWoche + " Stunden pro Woche";
 
-        this.projektpartnerName = this.matches.at(0) + " " + this.matches.at(1);
-        this.wematchAnsprechpartnerName = this.matches.at(9) + " " + this.matches.at(10);
-        this.adresseKundeStr = this.matches.at(15) + ", " + this.matches.at(16);
-        this.adresseKundeCity = this.matches.at(18) + " " + this.matches.at(17);
-        this.startdatum = this.dateFormatter(this.matches.at(11));
-        this.enddatum = this.dateFormatter(this.matches.at(12));
-        this.ek = this.preisFormatter(this.matches.at(6));
-        this.vk = this.preisFormatter(this.matches.at(7));
-        this.ansprechpartnerKunde = this.matches.at(24) + " " + this.matches.at(25);
-        this.ppGesellschaft = this.matches.at(2);
-        this.kunde = this.matches.at(14);
-        this.kuendigungsfristPP = this.matches.at(19);
-        this.kuendigungsfristKunde = this.matches.at(20);
-        this.zahlungszielPP = this.matches.at(3);
-        this.zahlungszielKunde = this.matches.at(4);
-        this.verguetungssatz = this.matches.at(5);
-        this.einsatzort = this.matches.at(21);
-        this.position = this.matches.at(13);
-        this.aufgabenbeschreibung = this.matches.at(8);
-        this.ppStreet = this.matches.at(26) + " " + this.matches.at(27);
-        this.ppCity = this.matches.at(28) + " " + this.matches.at(29);
-        this.tageProWoche = this.matches.at(30);
-        this.stundenProTag = this.matches.at(31);
+            localStorage.setItem('match', this.matches);
+            localStorage.setItem('projektpartnerName', this.projektpartnerName);
+            localStorage.setItem('wematchAnsprechpartnerName', this.wematchAnsprechpartnerName)
+            localStorage.setItem('projektpartnerMail', this.matches.at(22));
+            localStorage.setItem('wematchAnsprechpartnerMail', this.matches.at(23));
+            localStorage.setItem('startdatum', this.startdatum);
+            localStorage.setItem('enddatum', this.enddatum);
+            localStorage.setItem('adresseKundeStr', this.adresseKundeStr);
+            localStorage.setItem('adresseKundeCity', this.adresseKundeCity);
+            localStorage.setItem('ppGesellschaft', this.ppGesellschaft);
+            localStorage.setItem('kunde', this.kunde);
+            localStorage.setItem('kuendigungsfristPP', this.kuendigungsfristPP);
+            localStorage.setItem('kuendigungsfristKunde', this.kuendigungsfristKunde);
+            localStorage.setItem('zahlungszielPP', this.zahlungszielPP);
+            localStorage.setItem('zahlungszielKunde', this.zahlungszielKunde);
+            localStorage.setItem('verguetungssatz', this.verguetungssatz);
+            localStorage.setItem('einsatzort', this.einsatzort);
+            localStorage.setItem('position', this.position);
+            localStorage.setItem('aufgabenbeschreibung', this.aufgabenbeschreibung);
+            localStorage.setItem('ek', this.ek);
+            localStorage.setItem('vk', this.vk);
+            localStorage.setItem('ansprechpartnerKunde', this.ansprechpartnerKunde);
+            localStorage.setItem('matchID', this.matchIdFromInput);
+            localStorage.setItem('ppStreet', this.ppStreet);
+            localStorage.setItem('ppCity', this.ppCity);
+            localStorage.setItem('auslastung', this.auslastung);
 
-        this.auslastung = this.stundenProTag * this.tageProWoche + " Stunden pro Woche";
+            this.ppAdresse = this.ppStreet + ", " + this.ppCity;
 
-        localStorage.setItem('match', this.matches);
-        localStorage.setItem('projektpartnerName', this.projektpartnerName);
-        localStorage.setItem('wematchAnsprechpartnerName', this.wematchAnsprechpartnerName)
-        localStorage.setItem('projektpartnerMail', this.matches.at(22));
-        localStorage.setItem('wematchAnsprechpartnerMail', this.matches.at(23));
-        localStorage.setItem('startdatum', this.startdatum);
-        localStorage.setItem('enddatum', this.enddatum);
-        localStorage.setItem('adresseKundeStr', this.adresseKundeStr);
-        localStorage.setItem('adresseKundeCity', this.adresseKundeCity);
-        localStorage.setItem('ppGesellschaft', this.ppGesellschaft);
-        localStorage.setItem('kunde', this.kunde);
-        localStorage.setItem('kuendigungsfristPP', this.kuendigungsfristPP);
-        localStorage.setItem('kuendigungsfristKunde', this.kuendigungsfristKunde);
-        localStorage.setItem('zahlungszielPP', this.zahlungszielPP);
-        localStorage.setItem('zahlungszielKunde', this.zahlungszielKunde);
-        localStorage.setItem('verguetungssatz', this.verguetungssatz);
-        localStorage.setItem('einsatzort', this.einsatzort);
-        localStorage.setItem('position', this.position);
-        localStorage.setItem('aufgabenbeschreibung', this.aufgabenbeschreibung);
-        localStorage.setItem('ek', this.ek);
-        localStorage.setItem('vk', this.vk);
-        localStorage.setItem('ansprechpartnerKunde', this.ansprechpartnerKunde);
-        localStorage.setItem('matchID', this.matchIdFromInput);
-        localStorage.setItem('ppStreet', this.ppStreet);
-        localStorage.setItem('ppCity', this.ppCity);
-        localStorage.setItem('auslastung', this.auslastung);
-
-        this.ppAdresse = this.ppStreet + ", " + this.ppCity;
-
-        console.log(this.matches);
-      }});
+            console.log(this.matches);
+            this.isLoading = false;
+          }
+        });
+      }, 3000);
     },
 
     confirmClick() {
