@@ -63,7 +63,6 @@ export default {
   data() {
     return {
       confirmed: false,
-      powerFormsURL: "",
       finalURL: "",
       absenderMail: localStorage.getItem('wematchAnsprechpartnerMail'),
       absenderName: localStorage.getItem('wematchAnsprechpartnerName'),
@@ -153,23 +152,22 @@ export default {
           this.kuendigungsfristPPEnglisch = "12 weeks";
           break;
       }
-
         // -- Projektpartner Rahmenvertrag --
       if (document.getElementById('c-rv-pp').checked) {
-
-        BackendService.getPowerForm("c-rv-pp").then(response =>{ this.powerFormsURL = response.data});
-          //console.log( "URL: " + this.powerFormsURL);
-
-        this.finalURL = this.powerFormsURL +
-            "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-            "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-            "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-            "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-            "&CC_UserName=" + encodeURIComponent(this.ccName) +
-            "&CC_Email=" + encodeURIComponent(this.ccMail) +
-            "&PPName=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-            "&Adresse1=" + encodeURIComponent(this.ppStreet) +
-            "&Adresse2=" + encodeURIComponent(this.ppCity);
+        BackendService.getPowerForm("c-rv-pp")
+            .then(response =>{
+              this.finalURL = response.data.toString() +
+                "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+                "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+                "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+                "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+                "&CC_UserName=" + encodeURIComponent(this.ccName) +
+                "&CC_Email=" + encodeURIComponent(this.ccMail) +
+                "&PPName=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
+                "&Adresse1=" + encodeURIComponent(this.ppStreet) +
+                "&Adresse2=" + encodeURIComponent(this.ppCity);
+              window.open(this.finalURL, "_blank");
+            });
       }
 
       // -- Projektpartner Einzelvertrag --
@@ -244,12 +242,8 @@ export default {
             "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
             "&Position=" + encodeURIComponent(this.position) +
             "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung) +
-            "&MatchID=" + encodeURIComponent(this.matchID)
-        ;
-        console.log("finalURL: " + this.finalURL);
+            "&MatchID=" + encodeURIComponent(this.matchID);
       }
-
-      window.open(this.finalURL, "_blank");
     }
   },
   watch: {

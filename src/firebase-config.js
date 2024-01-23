@@ -11,7 +11,7 @@ function login() {
         firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
             localStorage.setItem("idToken", idToken);
             const token = "Bearer " + idToken
-            const url = `http://localhost:8081/private/saveUser`;
+            const url = process.env.VUE_APP_BACKEND_URL +  `/private/saveUser`;
             saveUser(url, token);
             localStorage.setItem("userMail", result.user.email.toString())
         })

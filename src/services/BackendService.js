@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BACKEND_BASE_URL = "http://localhost:8081";
+const BACKEND_BASE_URL = process.env.VUE_APP_BACKEND_URL;
 const token = localStorage.getItem("idToken");
 const headers = {Authorization: "Bearer " + token};
 
