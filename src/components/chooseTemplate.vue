@@ -79,7 +79,6 @@ export default {
       verguetungssatz: localStorage.getItem('verguetungssatz'),
       startdatum: localStorage.getItem('startdatum'),
       enddatum: localStorage.getItem('enddatum'),
-      adresseKunde: "",
       adresseKundeStr: localStorage.getItem('adresseKundeStr'),
       adresseKundeCity: localStorage.getItem('adresseKundeCity'),
       ppGesellschaft: localStorage.getItem('ppGesellschaft'),
@@ -116,6 +115,10 @@ export default {
       this.confirmed = true;
     },
     chooseTemplate() {
+
+      this.adresseKundeStr = this.matches.at(15) + ", " + this.matches.at(16);
+      this.adresseKundeCity = this.matches.at(18) + " " + this.matches.at(17);
+      this.adresseKunde = this.adresseKundeStr + ", " + this.adresseKundeCity;
 
       switch (this.verguetungssatz){
         case "Stundensatz":
@@ -171,80 +174,82 @@ export default {
       }
 
       // -- Projektpartner Einzelvertrag --
-      else if (document.getElementById('c-ev-pp').checked) {
-
-        BackendService.getPowerForm("c-ev-pp").then(response =>{ this.powerFormsURL = response.data});
-
-        this.adresseKunde = this.adresseKundeStr + ", " + this.adresseKundeCity;
-        this.finalURL = this.powerFormsURL +
-            "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-            "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-            "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-            "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-            "&CC_UserName=" + encodeURIComponent(this.ccName) +
-            "&CC_Email=" + encodeURIComponent(this.ccMail) +
-            "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
-            "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-            "&Startdatum=" + encodeURIComponent(this.startdatum) +
-            "&Enddatum=" + encodeURIComponent(this.enddatum) +
-            "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristPP) +
-            "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
-            "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
-            "&Festpreis=" + encodeURIComponent(this.festpreis) +
-            "&Endkunde=" + encodeURIComponent(this.kunde) +
-            "&Endkunde_Adresse=" + this.adresseKunde +
-            "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
-            "&Position=" + encodeURIComponent(this.position) +
-            "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung) +
-            "&MatchID=" + encodeURIComponent(this.matchID);
+      if (document.getElementById('c-ev-pp').checked) {
+        BackendService.getPowerForm("c-ev-pp")
+            .then(response =>{
+              this.finalURL = response.data.toString() +
+                  "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+                  "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+                  "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+                  "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+                  "&CC_UserName=" + encodeURIComponent(this.ccName) +
+                  "&CC_Email=" + encodeURIComponent(this.ccMail) +
+                  "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
+                  "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
+                  "&Startdatum=" + encodeURIComponent(this.startdatum) +
+                  "&Enddatum=" + encodeURIComponent(this.enddatum) +
+                  "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristPP) +
+                  "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
+                  "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
+                  "&Festpreis=" + encodeURIComponent(this.festpreis) +
+                  "&Endkunde=" + encodeURIComponent(this.kunde) +
+                  "&Endkunde_Adresse=" + this.adresseKunde +
+                  "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
+                  "&Position=" + encodeURIComponent(this.position) +
+                  "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung) +
+                  "&MatchID=" + encodeURIComponent(this.matchID);
+              window.open(this.finalURL, "_blank");
+            });
       }
-
       // -- Projektpartner Rahmenvertrag englisch --
-      else if (document.getElementById('c-rv-pp-eng').checked) {
-
-        BackendService.getPowerForm("c-rv-pp-eng").then(response =>{ this.powerFormsURL = response.data});
-
-        this.finalURL = this.powerFormsURL +
-            "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-            "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-            "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-            "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-            "&CC_UserName=" + encodeURIComponent(this.ccName) +
-            "&CC_Email=" + encodeURIComponent(this.ccMail) +
-            "&PPName=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-            "&Adresse1=" + encodeURIComponent(this.ppStreet) +
-            "&Adresse2=" + encodeURIComponent(this.ppCity);
+      if (document.getElementById('c-rv-pp-eng').checked) {
+        BackendService.getPowerForm("c-rv-pp-eng")
+            .then(response =>{
+              this.finalURL = response.data.toString() +
+                  "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+                  "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+                  "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+                  "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+                  "&CC_UserName=" + encodeURIComponent(this.ccName) +
+                  "&CC_Email=" + encodeURIComponent(this.ccMail) +
+                  "&PPName=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
+                  "&Adresse1=" + encodeURIComponent(this.ppStreet) +
+                  "&Adresse2=" + encodeURIComponent(this.ppCity);
+              window.open(this.finalURL, "_blank");
+            });
       }
 
       // -- Projektpartner Einzelvertrag englisch --
-      else if (document.getElementById('c-ev-pp-eng').checked) {
-
-        BackendService.getPowerForm("c-ev-pp-eng").then(response =>{ this.powerFormsURL = response.data});
-
-        this.adresseKunde = this.adresseKundeStr + ", " + this.adresseKundeCity;
-        this.finalURL = this.powerFormsURL +
-            "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-            "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-            "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-            "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-            "&CC_UserName=" + encodeURIComponent(this.ccName) +
-            "&CC_Email=" + encodeURIComponent(this.ccMail) +
-            "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
-            "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-            "&Startdatum=" + encodeURIComponent(this.startdatum) +
-            "&Enddatum=" + encodeURIComponent(this.enddatum) +
-            "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristPPEnglisch) +
-            "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
-            "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
-            "&Festpreis=" + encodeURIComponent(this.festpreis) +
-            "&Endkunde=" + encodeURIComponent(this.kunde) +
-            "&Endkunde_Adresse=" + this.adresseKunde +
-            "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
-            "&Position=" + encodeURIComponent(this.position) +
-            "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung) +
-            "&MatchID=" + encodeURIComponent(this.matchID);
+      if (document.getElementById('c-ev-pp-eng').checked) {
+        BackendService.getPowerForm("c-ev-pp-eng")
+            .then(response =>{
+              this.finalURL = response.data.toString() +
+                  "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+                  "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+                  "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+                  "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+                  "&CC_UserName=" + encodeURIComponent(this.ccName) +
+                  "&CC_Email=" + encodeURIComponent(this.ccMail) +
+                  "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
+                  "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
+                  "&Startdatum=" + encodeURIComponent(this.startdatum) +
+                  "&Enddatum=" + encodeURIComponent(this.enddatum) +
+                  "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristPPEnglisch) +
+                  "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
+                  "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
+                  "&Festpreis=" + encodeURIComponent(this.festpreis) +
+                  "&Endkunde=" + encodeURIComponent(this.kunde) +
+                  "&Endkunde_Adresse=" + this.adresseKunde +
+                  "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
+                  "&Position=" + encodeURIComponent(this.position) +
+                  "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung) +
+                  "&MatchID=" + encodeURIComponent(this.matchID);
+              window.open(this.finalURL, "_blank");
+              console.log("PowerForms URL: " + response.data.toString());
+              console.log("finalURL: " + this.finalURL);
+            });
       }
-    }
+      }
   },
   watch: {
       empfaengerName(newValue) {

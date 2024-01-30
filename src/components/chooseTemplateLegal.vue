@@ -42,6 +42,7 @@
 
 <script>
 import router from "@/router";
+import BackendService from "@/services/BackendService";
 
 export default {
   name: 'chooseTemplateLegal',
@@ -127,104 +128,105 @@ export default {
 
         // --- Rahmenvertrag ---
         if (document.getElementById('c-rv-k').checked) {
-
-          // -- Finale URL --
-          this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=e68cf399-73d4-4c77-a38c-d6c732651b3c&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
-          this.finalURL = this.powerFormsURL +
-              "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-              "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-              "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-              "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-              "&CC_UserName=" + encodeURIComponent(this.ccName) +
-              "&CC_Email=" + encodeURIComponent(this.ccMail) +
-              "&KundeName=" + encodeURIComponent(this.kunde) +
-              "&Adresse1=" + encodeURIComponent(this.adresseKundeStr) +
-              "&Adresse2=" + encodeURIComponent(this.adresseKundeCity);
-          console.log("finalURL: " + this.finalURL);
+          BackendService.getPowerForm("c-rv-k")
+              .then(response => {
+                this.finalURL = response.data.toString() +
+                    "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+                    "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+                    "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+                    "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+                    "&CC_UserName=" + encodeURIComponent(this.ccName) +
+                    "&CC_Email=" + encodeURIComponent(this.ccMail) +
+                    "&KundeName=" + encodeURIComponent(this.kunde) +
+                    "&Adresse1=" + encodeURIComponent(this.adresseKundeStr) +
+                    "&Adresse2=" + encodeURIComponent(this.adresseKundeCity);
+                window.open(this.finalURL, "_blank");
+              });
         }
 
         // --- Einzelvertrag ---
         else if (document.getElementById('c-ev-k').checked) {
-          // -- Finale URL --
-          this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=2d8e2436-2caa-4739-84f7-54da386f2a8a&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
-          this.finalURL = this.powerFormsURL +
-              "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-              "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-              "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-              "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-              "&CC_UserName=" + encodeURIComponent(this.ccName) +
-              "&CC_Email=" + encodeURIComponent(this.ccMail) +
-              "&Kunde=" + encodeURIComponent(this.kunde) +
-              "&KundeAdresse1" + encodeURIComponent(this.adresseKundeStr) +
-              "&KundeAdresse2" + encodeURIComponent(this.adresseKundeCity) +
-              "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
-              "&Ansprechpartner_Kunde=" + encodeURIComponent(this.ansprechpartnerKunde) +
-              "&MatchID=" + encodeURIComponent(this.matchID) +
-              "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
-              "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
-              "&Festpreis=" + encodeURIComponent(this.festpreis) +
-              "&Startdatum=" + encodeURIComponent(this.startdatum) +
-              "&Enddatum=" + encodeURIComponent(this.enddatum) +
-              "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristKunde) +
-              "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-              "&Auslastung=" + encodeURIComponent(this.auslastung) +
-              "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
-              "&Position=" + encodeURIComponent(this.position) +
-              "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung)
-          ;
-          console.log("finalURL: " + this.finalURL);
+          BackendService.getPowerForm("c-ev-k")
+              .then(response => {
+                this.finalURL = response.data.toString() +
+                    "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+                    "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+                    "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+                    "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+                    "&CC_UserName=" + encodeURIComponent(this.ccName) +
+                    "&CC_Email=" + encodeURIComponent(this.ccMail) +
+                    "&Kunde=" + encodeURIComponent(this.kunde) +
+                    "&KundeAdresse1" + encodeURIComponent(this.adresseKundeStr) +
+                    "&KundeAdresse2" + encodeURIComponent(this.adresseKundeCity) +
+                    "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
+                    "&Ansprechpartner_Kunde=" + encodeURIComponent(this.ansprechpartnerKunde) +
+                    "&MatchID=" + encodeURIComponent(this.matchID) +
+                    "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
+                    "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
+                    "&Festpreis=" + encodeURIComponent(this.festpreis) +
+                    "&Startdatum=" + encodeURIComponent(this.startdatum) +
+                    "&Enddatum=" + encodeURIComponent(this.enddatum) +
+                    "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristKunde) +
+                    "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
+                    "&Auslastung=" + encodeURIComponent(this.auslastung) +
+                    "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
+                    "&Position=" + encodeURIComponent(this.position) +
+                    "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung)
+                ;
+                window.open(this.finalURL, "_blank");
+              });
         }
 
         // -- Rahmenvertrag englisch --
         else if (document.getElementById('c-rv-k-eng').checked) {
-          // -- Finale URL --
-          this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=9bafb00b-f36f-4623-ae99-1a5fe6f1027b&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
-          this.finalURL = this.powerFormsURL +
-              "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-              "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-              "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-              "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-              "&CC_UserName=" + encodeURIComponent(this.ccName) +
-              "&CC_Email=" + encodeURIComponent(this.ccMail) +
-              "&Kunde=" + encodeURIComponent(this.kunde) +
-              "&KundeAdresse1" + encodeURIComponent(this.adresseKundeStr) +
-              "&KundeAdresse2" + encodeURIComponent(this.adresseKundeCity);
-          console.log("finalURL: " + this.finalURL);
+          BackendService.getPowerForm("c-rv-k-eng")
+              .then(response => {
+                this.finalURL = response.data.toString() +
+                    "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+                    "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+                    "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+                    "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+                    "&CC_UserName=" + encodeURIComponent(this.ccName) +
+                    "&CC_Email=" + encodeURIComponent(this.ccMail) +
+                    "&Kunde=" + encodeURIComponent(this.kunde) +
+                    "&KundeAdresse1" + encodeURIComponent(this.adresseKundeStr) +
+                    "&KundeAdresse2" + encodeURIComponent(this.adresseKundeCity);
+                window.open(this.finalURL, "_blank");
+              });
         }
 
         // -- Einzelvertrag englisch --
         else if (document.getElementById('c-ev-k-eng').checked) {
-          // -- Finale URL --
-          this.powerFormsURL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=16495b41-9e93-466b-923d-c31dd8eca80b&env=na4&acct=8c292057-41c5-41bd-8966-3d233e7af0bc&v=2";
-          this.finalURL = this.powerFormsURL +
-              "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-              "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-              "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-              "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-              "&CC_UserName=" + encodeURIComponent(this.ccName) +
-              "&CC_Email=" + encodeURIComponent(this.ccMail) +
-              "&Kunde=" + encodeURIComponent(this.kunde) +
-              "&KundeAdresse1" + encodeURIComponent(this.adresseKundeStr) +
-              "&KundeAdresse2" + encodeURIComponent(this.adresseKundeCity) +
-              "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
-              "&Ansprechpartner_Kunde=" + encodeURIComponent(this.ansprechpartnerKunde) +
-              "&MatchID=" + encodeURIComponent(this.matchID) +
-              "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
-              "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
-              "&Festpreis=" + encodeURIComponent(this.festpreis) +
-              "&Startdatum=" + encodeURIComponent(this.startdatum) +
-              "&Enddatum=" + encodeURIComponent(this.enddatum) +
-              "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristKundeEnglisch) +
-              "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-              "&Auslastung=" + encodeURIComponent(this.auslastung) +
-              "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
-              "&Position=" + encodeURIComponent(this.position) +
-              "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung)
-          ;
-          console.log("finalURL: " + this.finalURL);
+          BackendService.getPowerForm("c-ev-k-eng")
+              .then(response => {
+                this.finalURL = response.data.toString() +
+                    "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+                    "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+                    "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+                    "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+                    "&CC_UserName=" + encodeURIComponent(this.ccName) +
+                    "&CC_Email=" + encodeURIComponent(this.ccMail) +
+                    "&Kunde=" + encodeURIComponent(this.kunde) +
+                    "&KundeAdresse1" + encodeURIComponent(this.adresseKundeStr) +
+                    "&KundeAdresse2" + encodeURIComponent(this.adresseKundeCity) +
+                    "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
+                    "&Ansprechpartner_Kunde=" + encodeURIComponent(this.ansprechpartnerKunde) +
+                    "&MatchID=" + encodeURIComponent(this.matchID) +
+                    "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
+                    "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
+                    "&Festpreis=" + encodeURIComponent(this.festpreis) +
+                    "&Startdatum=" + encodeURIComponent(this.startdatum) +
+                    "&Enddatum=" + encodeURIComponent(this.enddatum) +
+                    "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristKundeEnglisch) +
+                    "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
+                    "&Auslastung=" + encodeURIComponent(this.auslastung) +
+                    "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
+                    "&Position=" + encodeURIComponent(this.position) +
+                    "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung)
+                ;
+                window.open(this.finalURL, "_blank");
+              });
         }
-
-        window.open(this.finalURL, "_blank");
       }
     },
     watch: {

@@ -12,7 +12,11 @@ function login() {
             localStorage.setItem("idToken", idToken);
             const token = "Bearer " + idToken
             const url = process.env.VUE_APP_BACKEND_URL +  `/private/saveUser`;
-            saveUser(url, token);
+            const requestBody = {
+                email: result.user.email.toString(),
+                //TODO Token ergänzen und im BE Logik zum Prüfen hinterlegen
+            }
+            saveUser(url, token, requestBody);
             localStorage.setItem("userMail", result.user.email.toString())
         })
             .then(router.push("/home"))
@@ -21,18 +25,18 @@ function login() {
     });
 }
 
-function saveUser(url, token) {
-    axios.get(url, { 'headers': { 'Authorization': token } })
+function saveUser(url, token, requestBody) {
+    axios.post(url, requestBody, { 'headers': { 'Authorization': token } })
         .then(response => {
             if(response.status === 200){
-                alert("Logged-In successfully")
+                router.push("/home")
             } else {
-                router.push("/login").then(r =>  console.log("Login failed!",r))
+                router.push("/login")
+                alert("Login failed.")
             }
         }).catch(error => {
         router.push("/login").then(r =>  console.log("error", error,r))
     })
-        .then(router.push("/home"))
 }
 
 export { login };

@@ -155,6 +155,8 @@ export default {
 
           if (this.matches.includes("DOCTYPE html")){
             alert("Die Match-ID ist nicht korrekt. Bitte gib die ID erneut ein.");
+            console.log(this.matches);
+            this.isLoading = false;
           } else {
             this.confirmClick();
 
