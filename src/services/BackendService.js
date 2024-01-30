@@ -16,6 +16,11 @@ class BackendService{
         console.log("Übermittelt an: " + requestURI);
         return axios.get(requestURI, {headers: headers});
     }
+
+    postDocData(docId, dataList){
+        docId
+        dataList //TODO fertig machen
+    }
 }
 
 export default new BackendService()

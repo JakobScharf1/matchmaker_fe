@@ -16,6 +16,12 @@
   <input type="radio" id="c-ev-k-eng" value="c-ev-k-eng" name="radio" @click="confirmClick()">
   <label for="c-ev-k-eng" @click="confirmClick()">Projekteinzelauftrag Kunde</label><br/>
 
+  <h3>Individuelle DOCX-Verträge</h3>
+  <input type="radio" id="doc-rv" value="doc-rv" name="radio" @click="confirmClick()">
+  <label for="c-rv-k" @click="confirmClick()">Rahmenvereinbarung</label><br/>
+  <input type="radio" id="doc-ev" value="doc-ev" name="radio" @click="confirmClick()">
+  <label for="doc-ev" @click="confirmClick()">Projekteinzelauftrag</label><br/>
+
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
 
   <h3>Vertrag Absender</h3>
@@ -88,6 +94,7 @@ export default {
       ppStreet: localStorage.getItem('ppStreet'),
       ppCity: localStorage.getItem('ppCity'),
       auslastung: localStorage.getItem('auslastung'),
+      docxData: []
     }
   },
   methods: {
@@ -226,6 +233,40 @@ export default {
                 ;
                 window.open(this.finalURL, "_blank");
               });
+        }
+
+        else if (document.getElementById('doc-rv').checked) {
+          this.docxData = [
+            this.matchID,
+            this.projektpartnerName,
+            this.wematchAnsprechpartnerName,
+            this.tagessatz,
+            this.stundensatz,
+            this.festpreis,
+            this.verguetungssatz,
+            this.startdatum,
+            this.enddatum,
+            this.adresseKundeStr,
+            this.adresseKundeCity,
+            this.ppGesellschaft,
+            this.kunde,
+            this.kuendigungsfristPP,
+            this.kuendigungsfristKunde,
+            this.zahlungszielPP,
+            this.zahlungszielKunde,
+            this.einsatzort,
+            this.position,
+            this.aufgabenbeschreibung,
+            this.ek,
+            this.vk,
+            this.ansprechpartnerKunde,
+            this.ppStreet,
+            this.ppCity,
+            this.auslastung,
+          ]
+
+          BackendService.postDocData("doc-rv", this.docxData)
+          window.open(this.finalURL, "_blank");
         }
       }
     },
