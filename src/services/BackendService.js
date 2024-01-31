@@ -18,8 +18,10 @@ class BackendService{
     }
 
     postDocData(docId, dataList){
-        docId
-        dataList //TODO fertig machen
+        const requestData = [docId, dataList];
+        const requestURI = BACKEND_BASE_URL + "/generateDoc";
+        console.log("Übermittelt an: " + requestURI);
+        return axios.post(requestURI, requestData);
     }
 }
 
