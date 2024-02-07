@@ -117,11 +117,6 @@ export default {
       this.confirmed = true;
     },
     chooseTemplate() {
-
-      this.adresseKundeStr = this.matches.at(15) + ", " + this.matches.at(16);
-      this.adresseKundeCity = this.matches.at(18) + " " + this.matches.at(17);
-      this.adresseKunde = this.adresseKundeStr + ", " + this.adresseKundeCity;
-
       switch (this.verguetungssatz){
         case "Stundensatz":
           this.stundensatz = this.ek;
@@ -157,6 +152,7 @@ export default {
           this.kuendigungsfristPPEnglisch = "12 weeks";
           break;
       }
+
         // -- Projektpartner Rahmenvertrag --
       if (document.getElementById('c-rv-pp').checked) {
         BackendService.getPowerForm("c-rv-pp")
@@ -247,30 +243,28 @@ export default {
                   "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung) +
                   "&MatchID=" + encodeURIComponent(this.matchID);
               window.open(this.finalURL, "_blank");
-              console.log("PowerForms URL: " + response.data.toString());
-              console.log("finalURL: " + this.finalURL);
             });
       }
       }
   },
   watch: {
       empfaengerName(newValue) {
-        localStorage.setItem('empfaengerName', newValue);
+        localStorage.setItem("empfaengerName", newValue);
       },
       empfaengerMail(newValue) {
-        localStorage.setItem('empfaengerMail', newValue);
+        localStorage.setItem("empfaengerMail", newValue);
       },
       absenderName(newValue) {
-        localStorage.setItem('absenderName', newValue);
+        localStorage.setItem("absenderName", newValue);
       },
       absenderMail(newValue) {
-        localStorage.setItem('absenderMail', newValue);
+        localStorage.setItem("absenderMail", newValue);
       },
       ccName(newValue) {
-        localStorage.setItem('ccName', newValue);
+        localStorage.setItem("ccName", newValue);
       },
       ccMail(newValue) {
-        localStorage.setItem('ccMail', newValue);
+        localStorage.setItem("ccMail", newValue);
       }
     }
 }

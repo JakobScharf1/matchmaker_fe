@@ -42,7 +42,7 @@
   <label for="cc_name">Name:</label>
   <input v-model="ccName" type="text" id="cc_name"><br />
 
-  <button class="btn" v-bind:class="{'bestatigen-button btn-outline-primary': !confirmed, 'btn-primary': confirmed}" @click="chooseTemplate">Bestätigen</button>
+  <button class="btn" v-bind:class="{'bestatigen-button btn-outline-primary': !confirmed, 'btn-primary': confirmed}" @click="chooseTemplate()">Bestätigen</button>
   <button id="logoutButton" class="btn btn-outline-primary" @click="logout"><b>Logout</b></button>
 </template>
 
@@ -112,185 +112,196 @@ export default {
       localStorage.clear();
     },
     chooseTemplate() {
-      if (this.verguetungssatz === "Stundensatz") {
-        this.stundensatz = this.vk;
-      } else if (this.verguetungssatz === "Tagessatz") {
-        this.tagessatz = this.vk;
-      } else if (this.verguetungssatz === "Festpreis") {
-        this.festpreis = this.vk;
+      switch (this.verguetungssatz){
+        case "Stundensatz":
+          this.stundensatz = this.ek;
+          break;
+        case "Tagessatz":
+          this.tagessatz = this.ek;
+          break;
+        case "Festpreis":
+          this.festpreis = this.ek;
+          break;
+      }
+      switch (this.kuendigungsfristPP) {
+        case "0 Tage":
+          this.kuendigungsfristPPEnglisch = "0 days";
+          break;
+        case "7 Tage":
+          this.kuendigungsfristPPEnglisch = "7 days";
+          break;
+        case "14 Tage":
+          this.kuendigungsfristPPEnglisch = "14 days";
+          break;
+        case "14 Tage zum Monatsende":
+          this.kuendigungsfristPPEnglisch = "14 days to month end";
+          break;
+        case "30 Tage":
+          this.kuendigungsfristPPEnglisch = "30 days";
+          break;
+        case "6 Wochen":
+          this.kuendigungsfristPPEnglisch = "6 weeks";
+          break;
+        case "12 Wochen":
+          this.kuendigungsfristPPEnglisch = "12 weeks";
+          break;
       }
 
-      if (this.kuendigungsfristKunde === "0 Tage") {
-        this.kuendigungsfristKundeEnglisch = "0 days";
-      } else if (this.kuendigungsfristKunde === "7 Tage") {
-        this.kuendigungsfristKundeEnglisch = "7 days";
-      } else if (this.kuendigungsfristKunde === "14 Tage") {
-        this.kuendigungsfristKundeEnglisch = "14 days";
-      } else if (this.kuendigungsfristKunde === "14 zum Monatsende") {
-        this.kuendigungsfristKundeEnglisch = "14 days to month end";
-      } else if (this.kuendigungsfristKunde === "30 Tage") {
-        this.kuendigungsfristKundeEnglisch = "30 days";
-      } else if (this.kuendigungsfristKunde === "6 Wochen") {
-        this.kuendigungsfristKundeEnglisch = "6 weeks";
-      } else if (this.kuendigungsfristKunde === "12 Wochen") {
-        this.kuendigungsfristKundeEnglisch = "12 weeks";
-
-        // --- Rahmenvertrag ---
-        if (document.getElementById('c-rv-k').checked) {
-          BackendService.getPowerForm("c-rv-k")
-              .then(response => {
-                this.finalURL = response.data.toString() +
-                    "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-                    "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-                    "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-                    "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-                    "&CC_UserName=" + encodeURIComponent(this.ccName) +
-                    "&CC_Email=" + encodeURIComponent(this.ccMail) +
-                    "&KundeName=" + encodeURIComponent(this.kunde) +
-                    "&Adresse1=" + encodeURIComponent(this.adresseKundeStr) +
-                    "&Adresse2=" + encodeURIComponent(this.adresseKundeCity);
-                window.open(this.finalURL, "_blank");
-              });
-        }
-
-        // --- Einzelvertrag ---
-        else if (document.getElementById('c-ev-k').checked) {
-          BackendService.getPowerForm("c-ev-k")
-              .then(response => {
-                this.finalURL = response.data.toString() +
-                    "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-                    "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-                    "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-                    "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-                    "&CC_UserName=" + encodeURIComponent(this.ccName) +
-                    "&CC_Email=" + encodeURIComponent(this.ccMail) +
-                    "&Kunde=" + encodeURIComponent(this.kunde) +
-                    "&KundeAdresse1" + encodeURIComponent(this.adresseKundeStr) +
-                    "&KundeAdresse2" + encodeURIComponent(this.adresseKundeCity) +
-                    "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
-                    "&Ansprechpartner_Kunde=" + encodeURIComponent(this.ansprechpartnerKunde) +
-                    "&MatchID=" + encodeURIComponent(this.matchID) +
-                    "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
-                    "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
-                    "&Festpreis=" + encodeURIComponent(this.festpreis) +
-                    "&Startdatum=" + encodeURIComponent(this.startdatum) +
-                    "&Enddatum=" + encodeURIComponent(this.enddatum) +
-                    "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristKunde) +
-                    "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-                    "&Auslastung=" + encodeURIComponent(this.auslastung) +
-                    "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
-                    "&Position=" + encodeURIComponent(this.position) +
-                    "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung)
-                ;
-                window.open(this.finalURL, "_blank");
-              });
-        }
-
-        // -- Rahmenvertrag englisch --
-        else if (document.getElementById('c-rv-k-eng').checked) {
-          BackendService.getPowerForm("c-rv-k-eng")
-              .then(response => {
-                this.finalURL = response.data.toString() +
-                    "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-                    "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-                    "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-                    "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-                    "&CC_UserName=" + encodeURIComponent(this.ccName) +
-                    "&CC_Email=" + encodeURIComponent(this.ccMail) +
-                    "&Kunde=" + encodeURIComponent(this.kunde) +
-                    "&KundeAdresse1" + encodeURIComponent(this.adresseKundeStr) +
-                    "&KundeAdresse2" + encodeURIComponent(this.adresseKundeCity);
-                window.open(this.finalURL, "_blank");
-              });
-        }
-
-        // -- Einzelvertrag englisch --
-        else if (document.getElementById('c-ev-k-eng').checked) {
-          BackendService.getPowerForm("c-ev-k-eng")
-              .then(response => {
-                this.finalURL = response.data.toString() +
-                    "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-                    "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-                    "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-                    "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-                    "&CC_UserName=" + encodeURIComponent(this.ccName) +
-                    "&CC_Email=" + encodeURIComponent(this.ccMail) +
-                    "&Kunde=" + encodeURIComponent(this.kunde) +
-                    "&KundeAdresse1" + encodeURIComponent(this.adresseKundeStr) +
-                    "&KundeAdresse2" + encodeURIComponent(this.adresseKundeCity) +
-                    "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
-                    "&Ansprechpartner_Kunde=" + encodeURIComponent(this.ansprechpartnerKunde) +
-                    "&MatchID=" + encodeURIComponent(this.matchID) +
-                    "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
-                    "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
-                    "&Festpreis=" + encodeURIComponent(this.festpreis) +
-                    "&Startdatum=" + encodeURIComponent(this.startdatum) +
-                    "&Enddatum=" + encodeURIComponent(this.enddatum) +
-                    "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristKundeEnglisch) +
-                    "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-                    "&Auslastung=" + encodeURIComponent(this.auslastung) +
-                    "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
-                    "&Position=" + encodeURIComponent(this.position) +
-                    "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung)
-                ;
-                window.open(this.finalURL, "_blank");
-              });
-        }
-
-        else if (document.getElementById('doc-rv').checked) {
-          this.docxData = [
-            this.matchID,
-            this.projektpartnerName,
-            this.wematchAnsprechpartnerName,
-            this.tagessatz,
-            this.stundensatz,
-            this.festpreis,
-            this.verguetungssatz,
-            this.startdatum,
-            this.enddatum,
-            this.adresseKundeStr,
-            this.adresseKundeCity,
-            this.ppGesellschaft,
-            this.kunde,
-            this.kuendigungsfristPP,
-            this.kuendigungsfristKunde,
-            this.zahlungszielPP,
-            this.zahlungszielKunde,
-            this.einsatzort,
-            this.position,
-            this.aufgabenbeschreibung,
-            this.ek,
-            this.vk,
-            this.ansprechpartnerKunde,
-            this.ppStreet,
-            this.ppCity,
-            this.auslastung,
-          ]
-
-          BackendService.postDocData("doc-rv", this.docxData)
-          window.open(this.finalURL, "_blank");
-        }
+      // --- Rahmenvertrag ---
+      if (document.getElementById('c-rv-k').checked) {
+        BackendService.getPowerForm("c-rv-k")
+            .then(response => {
+              this.finalURL = response.data.toString() +
+                  "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+                  "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+                  "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+                  "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+                  "&CC_UserName=" + encodeURIComponent(this.ccName) +
+                  "&CC_Email=" + encodeURIComponent(this.ccMail) +
+                  "&KundeName=" + encodeURIComponent(this.kunde) +
+                  "&Adresse1=" + encodeURIComponent(this.adresseKundeStr) +
+                  "&Adresse2=" + encodeURIComponent(this.adresseKundeCity);
+              window.open(this.finalURL, "_blank");
+            });
       }
+
+      // --- Einzelvertrag ---
+      else if (document.getElementById('c-ev-k').checked) {
+        BackendService.getPowerForm("c-ev-k")
+            .then(response => {
+              this.finalURL = response.data.toString() +
+                  "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+                  "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+                  "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+                  "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+                  "&CC_UserName=" + encodeURIComponent(this.ccName) +
+                  "&CC_Email=" + encodeURIComponent(this.ccMail) +
+                  "&Kunde=" + encodeURIComponent(this.kunde) +
+                  "&KundeAdresse1" + encodeURIComponent(this.adresseKundeStr) +
+                  "&KundeAdresse2" + encodeURIComponent(this.adresseKundeCity) +
+                  "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
+                  "&Ansprechpartner_Kunde=" + encodeURIComponent(this.ansprechpartnerKunde) +
+                  "&MatchID=" + encodeURIComponent(this.matchID) +
+                  "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
+                  "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
+                  "&Festpreis=" + encodeURIComponent(this.festpreis) +
+                  "&Startdatum=" + encodeURIComponent(this.startdatum) +
+                  "&Enddatum=" + encodeURIComponent(this.enddatum) +
+                  "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristKunde) +
+                  "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
+                  "&Auslastung=" + encodeURIComponent(this.auslastung) +
+                  "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
+                  "&Position=" + encodeURIComponent(this.position) +
+                  "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung)
+              ;
+              window.open(this.finalURL, "_blank");
+            });
+      }
+
+      // -- Rahmenvertrag englisch --
+      else if (document.getElementById('c-rv-k-eng').checked) {
+        BackendService.getPowerForm("c-rv-k-eng")
+            .then(response => {
+              this.finalURL = response.data.toString() +
+                  "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+                  "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+                  "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+                  "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+                  "&CC_UserName=" + encodeURIComponent(this.ccName) +
+                  "&CC_Email=" + encodeURIComponent(this.ccMail) +
+                  "&Kunde=" + encodeURIComponent(this.kunde) +
+                  "&KundeAdresse1" + encodeURIComponent(this.adresseKundeStr) +
+                  "&KundeAdresse2" + encodeURIComponent(this.adresseKundeCity);
+              window.open(this.finalURL, "_blank");
+            });
+      }
+
+      // -- Einzelvertrag englisch --
+      else if (document.getElementById('c-ev-k-eng').checked) {
+        BackendService.getPowerForm("c-ev-k-eng")
+            .then(response => {
+              this.finalURL = response.data.toString() +
+                  "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
+                  "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
+                  "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
+                  "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
+                  "&CC_UserName=" + encodeURIComponent(this.ccName) +
+                  "&CC_Email=" + encodeURIComponent(this.ccMail) +
+                  "&Kunde=" + encodeURIComponent(this.kunde) +
+                  "&KundeAdresse1" + encodeURIComponent(this.adresseKundeStr) +
+                  "&KundeAdresse2" + encodeURIComponent(this.adresseKundeCity) +
+                  "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
+                  "&Ansprechpartner_Kunde=" + encodeURIComponent(this.ansprechpartnerKunde) +
+                  "&MatchID=" + encodeURIComponent(this.matchID) +
+                  "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
+                  "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
+                  "&Festpreis=" + encodeURIComponent(this.festpreis) +
+                  "&Startdatum=" + encodeURIComponent(this.startdatum) +
+                  "&Enddatum=" + encodeURIComponent(this.enddatum) +
+                  "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristKundeEnglisch) +
+                  "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
+                  "&Auslastung=" + encodeURIComponent(this.auslastung) +
+                  "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
+                  "&Position=" + encodeURIComponent(this.position) +
+                  "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung)
+              ;
+              window.open(this.finalURL, "_blank");
+            });
+        }
+
+      else if (document.getElementById('doc-rv').checked) {
+        this.docxData = [
+          this.matchID,
+          this.projektpartnerName,
+          this.wematchAnsprechpartnerName,
+          this.tagessatz,
+          this.stundensatz,
+          this.festpreis,
+          this.verguetungssatz,
+          this.startdatum,
+          this.enddatum,
+          this.adresseKundeStr,
+          this.adresseKundeCity,
+          this.ppGesellschaft,
+          this.kunde,
+          this.kuendigungsfristPP,
+          this.kuendigungsfristKunde,
+          this.zahlungszielPP,
+          this.zahlungszielKunde,
+          this.einsatzort,
+          this.position,
+          this.aufgabenbeschreibung,
+          this.ek,
+          this.vk,
+          this.ansprechpartnerKunde,
+          this.ppStreet,
+          this.ppCity,
+          this.auslastung,
+        ]
+
+        BackendService.postDocData("doc-rv", this.docxData)
+        window.open(this.finalURL, "_blank");
+      }
+    }
+  },
+  watch: {
+    empfaengerName(newValue){
+      localStorage.setItem('empfaengerName', newValue);
     },
-    watch: {
-      empfaengerName(newValue){
-        localStorage.setItem('empfaengerName', newValue);
-      },
-      empfaengerMail(newValue){
-        localStorage.setItem('empfaengerMail', newValue);
-      },
-      absenderName(newValue){
-        localStorage.setItem('absenderName', newValue);
-      },
-      absenderMail(newValue){
-        localStorage.setItem('absenderMail', newValue);
-      },
-      ccName(newValue){
-        localStorage.setItem('ccName', newValue);
-      },
-      ccMail(newValue){
-        localStorage.setItem('ccMail', newValue);
-      }
+    empfaengerMail(newValue){
+      localStorage.setItem('empfaengerMail', newValue);
+    },
+    absenderName(newValue){
+      localStorage.setItem('absenderName', newValue);
+    },
+    absenderMail(newValue){
+      localStorage.setItem('absenderMail', newValue);
+    },
+    ccName(newValue){
+      localStorage.setItem('ccName', newValue);
+    },
+    ccMail(newValue){
+      localStorage.setItem('ccMail', newValue);
     }
   }
 }
