@@ -40,8 +40,8 @@ function saveUser(url, requestBody) {
     })
 }
 
-function logout(email) {
-    email = encodeURIComponent(email)
+function logout() {
+    const email = encodeURIComponent(localStorage.getItem("userMail"))
     const url = process.env.VUE_APP_BACKEND_URL + '/private/deleteUser/' + email;
     const requestBody = {
         token: localStorage.getItem("token")
@@ -58,6 +58,7 @@ function logout(email) {
         }).catch(error => {
             console.log("error: ",error)
     })
+    localStorage.clear();
 }
 
 export { login };

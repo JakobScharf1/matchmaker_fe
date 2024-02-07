@@ -5,22 +5,22 @@
   <h2>2. Wähle den Vertrag aus, den du erstellen willst:</h2>
 
   <h3>Deutsch</h3>
-  <input type="radio" id="c-rv-k" value="c-rv-k" name="radio" @click="confirmClick()">
-  <label for="c-rv-k" @click="confirmClick()">Rahmenvereinbarung Kunde</label><br/>
-  <input type="radio" id="c-ev-k" value="c-ev-k" name="radio" @click="confirmClick()">
-  <label for="c-ev-k" @click="confirmClick()">Projekteinzelauftrag Kunde</label><br/>
+  <input type="radio" id="c-rv-k" value="c-rv-k" name="radio" @click="confirmed = true">
+  <label for="c-rv-k" @click="confirmed = true">Rahmenvereinbarung Kunde</label><br/>
+  <input type="radio" id="c-ev-k" value="c-ev-k" name="radio" @click="confirmed = true">
+  <label for="c-ev-k" @click="confirmed = true">Projekteinzelauftrag Kunde</label><br/>
 
   <h3>Englisch</h3>
-  <input type="radio" id="c-rv-k-eng" value="c-rv-k-eng" name="radio" @click="confirmClick()">
-  <label for="c-rv-k-eng" @click="confirmClick()">Rahmenvereinbarung Kunde</label><br/>
-  <input type="radio" id="c-ev-k-eng" value="c-ev-k-eng" name="radio" @click="confirmClick()">
-  <label for="c-ev-k-eng" @click="confirmClick()">Projekteinzelauftrag Kunde</label><br/>
+  <input type="radio" id="c-rv-k-eng" value="c-rv-k-eng" name="radio" @click="confirmed = true">
+  <label for="c-rv-k-eng" @click="confirmed = true">Rahmenvereinbarung Kunde</label><br/>
+  <input type="radio" id="c-ev-k-eng" value="c-ev-k-eng" name="radio" @click="confirmed = true">
+  <label for="c-ev-k-eng" @click="confirmed = true">Projekteinzelauftrag Kunde</label><br/>
 
   <h3>Individuelle DOCX-Verträge</h3>
-  <input type="radio" id="doc-rv" value="doc-rv" name="radio" @click="confirmClick()">
-  <label for="c-rv-k" @click="confirmClick()">Rahmenvereinbarung</label><br/>
-  <input type="radio" id="doc-ev" value="doc-ev" name="radio" @click="confirmClick()">
-  <label for="doc-ev" @click="confirmClick()">Projekteinzelauftrag</label><br/>
+  <input type="radio" id="doc-rv" value="doc-rv" name="radio" @click="confirmed = true">
+  <label for="c-rv-k" @click="confirmed = true">Rahmenvereinbarung</label><br/>
+  <input type="radio" id="doc-ev" value="doc-ev" name="radio" @click="confirmed = true">
+  <label for="doc-ev" @click="confirmed = true">Projekteinzelauftrag</label><br/>
 
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
 
@@ -50,6 +50,7 @@
 import router from "@/router";
 import BackendService from "@/services/BackendService";
 import {logout} from "@/firebase-config";
+import {kuendigungsfristTranslator, verguetungssatzSwitch} from "@/services/MethodService";
 
 export default {
   name: 'chooseTemplateLegal',
@@ -99,53 +100,13 @@ export default {
     }
   },
   methods: {
+    logout,
     pageBack(){
       router.go(-1);
     },
-    confirmClick() {
-      this.confirmed = true;
-    },
-    logout(){
-      const userEmail = localStorage.getItem("userMail");
-      const token = localStorage.getItem("token");
-      logout(userEmail, token);
-      localStorage.clear();
-    },
     chooseTemplate() {
-      switch (this.verguetungssatz){
-        case "Stundensatz":
-          this.stundensatz = this.ek;
-          break;
-        case "Tagessatz":
-          this.tagessatz = this.ek;
-          break;
-        case "Festpreis":
-          this.festpreis = this.ek;
-          break;
-      }
-      switch (this.kuendigungsfristPP) {
-        case "0 Tage":
-          this.kuendigungsfristPPEnglisch = "0 days";
-          break;
-        case "7 Tage":
-          this.kuendigungsfristPPEnglisch = "7 days";
-          break;
-        case "14 Tage":
-          this.kuendigungsfristPPEnglisch = "14 days";
-          break;
-        case "14 Tage zum Monatsende":
-          this.kuendigungsfristPPEnglisch = "14 days to month end";
-          break;
-        case "30 Tage":
-          this.kuendigungsfristPPEnglisch = "30 days";
-          break;
-        case "6 Wochen":
-          this.kuendigungsfristPPEnglisch = "6 weeks";
-          break;
-        case "12 Wochen":
-          this.kuendigungsfristPPEnglisch = "12 weeks";
-          break;
-      }
+      this.ek = verguetungssatzSwitch(this.verguetungssatz, this.stundensatz, this.tagessatz. this.festpreis)
+      this.kuendigungsfristPPEnglisch = kuendigungsfristTranslator(this.kuendigungsfristPP)
 
       // --- Rahmenvertrag ---
       if (document.getElementById('c-rv-k').checked) {

@@ -5,16 +5,16 @@
 
 <h2>2. Wähle den Vertrag aus, den du erstellen willst:</h2>
   <h3>Contracts</h3>
-  <input type="radio" id="c-rv-pp" value="c-rv-pp" name="radio" @click="confirmClick()">
-  <label for="c-rv-pp" @click="confirmClick()">Rahmenvereinbarung Projektpartner</label><br/>
-  <input type="radio" id="c-ev-pp" value="c-ev-pp" name="radio" @click="confirmClick()">
-  <label for="c-ev-pp" @click="confirmClick()">Projekteinzelauftrag Projektpartner</label><br/>
+  <input type="radio" id="c-rv-pp" value="c-rv-pp" name="radio" @click="confirmed = true">
+  <label for="c-rv-pp" @click="confirmed = true">Rahmenvereinbarung Projektpartner</label><br/>
+  <input type="radio" id="c-ev-pp" value="c-ev-pp" name="radio" @click="confirmed = true">
+  <label for="c-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
 
   <h3>Contracts - Englisch</h3>
-  <input type="radio" id="c-rv-pp-eng" value="c-rv-pp-eng" name="radio" @click="confirmClick()">
-  <label for="c-rv-pp-eng" @click="confirmClick()">Rahmenvereinbarung Projektpartner</label><br/>
-  <input type="radio" id="c-ev-pp-eng" value="c-ev-pp-eng" name="radio" @click="confirmClick()">
-  <label for="c-ev-pp-eng" @click="confirmClick()">Projekteinzelauftrag Projektpartner</label><br/>
+  <input type="radio" id="c-rv-pp-eng" value="c-rv-pp-eng" name="radio" @click="confirmed = true">
+  <label for="c-rv-pp-eng" @click="confirmed = true">Rahmenvereinbarung Projektpartner</label><br/>
+  <input type="radio" id="c-ev-pp-eng" value="c-ev-pp-eng" name="radio" @click="confirmed = true">
+  <label for="c-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
 
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
 
@@ -57,7 +57,8 @@
 <script>
 import router from "@/router";
 import BackendService from "@/services/BackendService";
-import {logout} from "@/firebase-config";
+import { logout } from "@/firebase-config";
+import {crvpp, kuendigungsfristTranslator, verguetungssatzSwitch} from "@/services/MethodService";
 
 export default {
   name: "chooseTemplate",
@@ -104,57 +105,16 @@ export default {
     }
   },
   methods: {
-    logout() {
-      const userEmail = localStorage.getItem("userMail");
-      const token = localStorage.getItem("token");
-      logout(userEmail, token);
-      localStorage.clear();
-    },
+    logout,
     pageBack() {
       router.go(-1);
     },
-    confirmClick() {
-      this.confirmed = true;
-    },
     chooseTemplate() {
-      switch (this.verguetungssatz){
-        case "Stundensatz":
-          this.stundensatz = this.ek;
-          break;
-        case "Tagessatz":
-          this.tagessatz = this.ek;
-          break;
-        case "Festpreis":
-          this.festpreis = this.ek;
-          break;
-      }
-
-      switch (this.kuendigungsfristPP) {
-        case "0 Tage":
-          this.kuendigungsfristPPEnglisch = "0 days";
-          break;
-        case "7 Tage":
-          this.kuendigungsfristPPEnglisch = "7 days";
-          break;
-        case "14 Tage":
-          this.kuendigungsfristPPEnglisch = "14 days";
-          break;
-        case "14 Tage zum Monatsende":
-          this.kuendigungsfristPPEnglisch = "14 days to month end";
-          break;
-        case "30 Tage":
-          this.kuendigungsfristPPEnglisch = "30 days";
-          break;
-        case "6 Wochen":
-          this.kuendigungsfristPPEnglisch = "6 weeks";
-          break;
-        case "12 Wochen":
-          this.kuendigungsfristPPEnglisch = "12 weeks";
-          break;
-      }
+      this.ek = verguetungssatzSwitch(this.verguetungssatz, this.stundensatz, this.tagessatz, this.festpreis)
+      this.kuendigungsfristPPEnglisch = kuendigungsfristTranslator(this.kuendigungsfristPP)
 
         // -- Projektpartner Rahmenvertrag --
-      if (document.getElementById('c-rv-pp').checked) {
+      /*if (document.getElementById('c-rv-pp').checked) {
         BackendService.getPowerForm("c-rv-pp")
             .then(response =>{
               this.finalURL = response.data.toString() +
@@ -169,6 +129,10 @@ export default {
                 "&Adresse2=" + encodeURIComponent(this.ppCity);
               window.open(this.finalURL, "_blank");
             });
+      }*/
+
+      if (document.getElementById('c-rv-pp').checked) {
+        crvpp(this.ccName, this.ccMail);
       }
 
       // -- Projektpartner Einzelvertrag --
