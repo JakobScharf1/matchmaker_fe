@@ -5,14 +5,14 @@
 
 <h2>2. Wähle den Vertrag aus, den du erstellen willst:</h2>
   <h3>Contracts</h3>
-  <input type="radio" id="c-rv-pp" value="c-rv-pp" name="radio" @click="confirmed = true">
-  <label for="c-rv-pp" @click="confirmed = true">Rahmenvereinbarung Projektpartner</label><br/>
+  <!--<input type="radio" id="c-rv-pp" value="c-rv-pp" name="radio" @click="confirmed = true">
+  <label for="c-rv-pp" @click="confirmed = true">Rahmenvereinbarung Projektpartner</label><br/>-->
   <input type="radio" id="c-ev-pp" value="c-ev-pp" name="radio" @click="confirmed = true">
   <label for="c-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
 
   <h3>Contracts - Englisch</h3>
-  <input type="radio" id="c-rv-pp-eng" value="c-rv-pp-eng" name="radio" @click="confirmed = true">
-  <label for="c-rv-pp-eng" @click="confirmed = true">Rahmenvereinbarung Projektpartner</label><br/>
+  <!--<input type="radio" id="c-rv-pp-eng" value="c-rv-pp-eng" name="radio" @click="confirmed = true">
+  <label for="c-rv-pp-eng" @click="confirmed = true">Rahmenvereinbarung Projektpartner</label><br/>-->
   <input type="radio" id="c-ev-pp-eng" value="c-ev-pp-eng" name="radio" @click="confirmed = true">
   <label for="c-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
 
@@ -35,30 +35,15 @@
   <input v-model="ccMail" type="email" id="cc_mail">
   <label for="cc_name">Name:</label>
   <input v-model="ccName" type="text" id="cc_name"><br />
-<!--
-  <h3>IT Perm</h3>
-  <input type="radio" id="p-rv-mitNach" value="p-rv-mitNach">
-  <label for="p-rv-mitNach">Rahmenvertrag mit Nachbesetzung</label>
-  <input type="radio" id="p-rv-ohneNach" value="p-rv-ohneNach">
-  <label for="p-rv-ohneNach">Rahmenvertrag ohne Nachbesetzung</label>
-  <input type="radio" id="p-rv-mitNachmitVer" value="p-rv-mitNachmitVer">
-  <label for="p-rv-mitNachmitVer">Rahmenvertrag mit Nachbesetzung und Abweichenden Vereinbarungen</label>
-  <input type="radio" id="p-rv-ohneNachmitVer" value="p-rv-ohneNachmitVer">
-  <label for="p-rv-ohneNachmitVer">Rahmenvertrag ohne Nachbesetzung mit Abweichenden Vereinbarungen</label>
-  <input type="radio" id="p-rv-mitRe" value="p-rv-mitRe">
-  <label for="p-rv-mitRe">Rahmenvertrag mit Rückerstattung</label>
-  <input type="radio" id="p-rv-ohneNach" value="p-rv-ohneNach">
-  <label for="p-rv-ohneNach">Rahmenvertrag ohne Nachbesetzung</label>
- -->
+
   <button class="btn" v-bind:class="{'bestatigen-button btn-outline-primary': !confirmed, 'btn-primary': confirmed}" @click="chooseTemplate()">Bestätigen</button>
   <button id="logoutButton" class="btn btn-outline-primary" @click="logout"><b>Logout</b></button>
 </template>
 
 <script>
 import router from "@/router";
-import BackendService from "@/services/BackendService";
 import { logout } from "@/firebase-config";
-import {crvpp, kuendigungsfristTranslator, verguetungssatzSwitch} from "@/services/MethodService";
+import {cevpp, cevppEng, kuendigungsfristTranslator, verguetungssatzSwitch} from "@/services/MethodService";
 
 export default {
   name: "chooseTemplate",
@@ -66,42 +51,18 @@ export default {
     return {
       confirmed: false,
       finalURL: "",
+      verguetungssatzList: [],
       absenderMail: localStorage.getItem('wematchAnsprechpartnerMail'),
       absenderName: localStorage.getItem('wematchAnsprechpartnerName'),
       empfaengerMail: localStorage.getItem('projektpartnerMail'),
       empfaengerName: localStorage.getItem('projektpartnerName'),
-      match: localStorage.getItem('match'),
-      projektpartnerName: localStorage.getItem('projektpartnerName'),
-      projektpartnerMail: localStorage.getItem('projektpartnerMail'),
       wematchAnsprechpartnerName: localStorage.getItem('wematchAnsprechpartnerName'),
       wematchAnsprechpartnerMail: localStorage.getItem('wematchAnsprechpartnerMail'),
       tagessatz: "X",
       stundensatz: "X",
       festpreis: "X",
-      verguetungssatz: localStorage.getItem('verguetungssatz'),
-      startdatum: localStorage.getItem('startdatum'),
-      enddatum: localStorage.getItem('enddatum'),
-      adresseKundeStr: localStorage.getItem('adresseKundeStr'),
-      adresseKundeCity: localStorage.getItem('adresseKundeCity'),
-      ppGesellschaft: localStorage.getItem('ppGesellschaft'),
-      kunde: localStorage.getItem('kunde'),
-      kuendigungsfristPP: localStorage.getItem('kuendigungsfristPP'),
-      kuendigungsfristKunde: localStorage.getItem('kuendigungsfristKunde'),
-      kuendigungsfristPPEnglisch: "",
-      kuendigungsfristKundeEnglisch: "",
-      zahlungszielPP: localStorage.getItem('zahlungszielPP'),
-      zahlungszielKunde: localStorage.getItem('zahlungszielKunde'),
-      einsatzort: localStorage.getItem('einsatzort'),
-      position: localStorage.getItem('position'),
-      aufgabenbeschreibung: localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "),
-      ek: localStorage.getItem('ek'),
-      vk: localStorage.getItem('vk'),
-      ansprechpartnerKunde: localStorage.getItem('ansprechpartnerKunde'),
-      matchID: localStorage.getItem('matchID'),
       ccMail: "",
       ccName: "",
-      ppStreet: localStorage.getItem('ppStreet'),
-      ppCity: localStorage.getItem('ppCity'),
     }
   },
   methods: {
@@ -110,106 +71,31 @@ export default {
       router.go(-1);
     },
     chooseTemplate() {
-      this.ek = verguetungssatzSwitch(this.verguetungssatz, this.stundensatz, this.tagessatz, this.festpreis)
+      this.verguetungssatzList = verguetungssatzSwitch(this.verguetungssatz, this.stundensatz, this.tagessatz, this.festpreis)
+      this.stundensatz = this.verguetungssatzList.at(0)
+      this.tagessatz  = this.verguetungssatzList.at(1)
+      this.festpreis = this.verguetungssatzList.at(2)
       this.kuendigungsfristPPEnglisch = kuendigungsfristTranslator(this.kuendigungsfristPP)
 
-        // -- Projektpartner Rahmenvertrag --
+      //RV Projektpartner
       /*if (document.getElementById('c-rv-pp').checked) {
-        BackendService.getPowerForm("c-rv-pp")
-            .then(response =>{
-              this.finalURL = response.data.toString() +
-                "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-                "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-                "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-                "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-                "&CC_UserName=" + encodeURIComponent(this.ccName) +
-                "&CC_Email=" + encodeURIComponent(this.ccMail) +
-                "&PPName=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-                "&Adresse1=" + encodeURIComponent(this.ppStreet) +
-                "&Adresse2=" + encodeURIComponent(this.ppCity);
-              window.open(this.finalURL, "_blank");
-            });
+        crv(this.ccName, this.ccMail, "c-rv-pp");
       }*/
-
-      if (document.getElementById('c-rv-pp').checked) {
-        crvpp(this.ccName, this.ccMail);
-      }
-
-      // -- Projektpartner Einzelvertrag --
+      //EV Projektpartner
       if (document.getElementById('c-ev-pp').checked) {
-        BackendService.getPowerForm("c-ev-pp")
-            .then(response =>{
-              this.finalURL = response.data.toString() +
-                  "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-                  "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-                  "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-                  "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-                  "&CC_UserName=" + encodeURIComponent(this.ccName) +
-                  "&CC_Email=" + encodeURIComponent(this.ccMail) +
-                  "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
-                  "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-                  "&Startdatum=" + encodeURIComponent(this.startdatum) +
-                  "&Enddatum=" + encodeURIComponent(this.enddatum) +
-                  "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristPP) +
-                  "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
-                  "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
-                  "&Festpreis=" + encodeURIComponent(this.festpreis) +
-                  "&Endkunde=" + encodeURIComponent(this.kunde) +
-                  "&Endkunde_Adresse=" + this.adresseKunde +
-                  "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
-                  "&Position=" + encodeURIComponent(this.position) +
-                  "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung) +
-                  "&MatchID=" + encodeURIComponent(this.matchID);
-              window.open(this.finalURL, "_blank");
-            });
+        cevpp(this.ccName, this.ccMail, this.tagessatz, this.stundensatz, this.festpreis);
       }
-      // -- Projektpartner Rahmenvertrag englisch --
-      if (document.getElementById('c-rv-pp-eng').checked) {
-        BackendService.getPowerForm("c-rv-pp-eng")
-            .then(response =>{
-              this.finalURL = response.data.toString() +
-                  "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-                  "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-                  "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-                  "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-                  "&CC_UserName=" + encodeURIComponent(this.ccName) +
-                  "&CC_Email=" + encodeURIComponent(this.ccMail) +
-                  "&PPName=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-                  "&Adresse1=" + encodeURIComponent(this.ppStreet) +
-                  "&Adresse2=" + encodeURIComponent(this.ppCity);
-              window.open(this.finalURL, "_blank");
-            });
-      }
+
+      //RV Projektpartner Englisch
+      /*if (document.getElementById('c-rv-pp-eng').checked) {
+        crv(this.ccName, this.ccMail, "c-rv-pp-eng")
+      }*/
 
       // -- Projektpartner Einzelvertrag englisch --
       if (document.getElementById('c-ev-pp-eng').checked) {
-        BackendService.getPowerForm("c-ev-pp-eng")
-            .then(response =>{
-              this.finalURL = response.data.toString() +
-                  "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-                  "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-                  "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-                  "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-                  "&CC_UserName=" + encodeURIComponent(this.ccName) +
-                  "&CC_Email=" + encodeURIComponent(this.ccMail) +
-                  "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
-                  "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-                  "&Startdatum=" + encodeURIComponent(this.startdatum) +
-                  "&Enddatum=" + encodeURIComponent(this.enddatum) +
-                  "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristPPEnglisch) +
-                  "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
-                  "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
-                  "&Festpreis=" + encodeURIComponent(this.festpreis) +
-                  "&Endkunde=" + encodeURIComponent(this.kunde) +
-                  "&Endkunde_Adresse=" + this.adresseKunde +
-                  "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
-                  "&Position=" + encodeURIComponent(this.position) +
-                  "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung) +
-                  "&MatchID=" + encodeURIComponent(this.matchID);
-              window.open(this.finalURL, "_blank");
-            });
+        cevppEng(this.ccName, this.ccMail, this.tagessatz, this.stundensatz, this.festpreis, this.kuendigungsfristPPEnglisch)
       }
-      }
+    }
   },
   watch: {
       empfaengerName(newValue) {
