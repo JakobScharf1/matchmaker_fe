@@ -97,12 +97,13 @@
     </table>
   </div>
   <button class="btn weiter-button-gen" v-bind:class="{'weiter-button': !confirmed, 'btn-primary': confirmed}" @click="goToChooseTemplate"><b>Weiter</b></button><br />
-  <button id="logoutButton" class="btn btn-outline-primary" @click="logout"><b>Logout</b></button>
+  <button id="logoutButton" class="btn btn-outline-primary" @click="logout()"><b>Logout</b></button>
 </template>
 
 <script>
 import router from "@/router";
 import BackendService from "@/services/BackendService";
+import {logout} from "@/firebase-config";
 
 export default {
   name: 'MatchIDInput',
@@ -238,9 +239,10 @@ export default {
       }
     },
     logout(){
+      const userEmail = localStorage.getItem("userMail");
+      const token = localStorage.getItem("token");
+      logout(userEmail, token);
       localStorage.clear();
-      localStorage.setItem('idToken', "");
-      router.push('/login');
     },
     dateFormatter(timestamp){
         const date = new Date(parseInt(timestamp));
@@ -260,14 +262,6 @@ export default {
       return formatedValue;
     }
   },
-  beforeMount() {
-    const token = localStorage.getItem('idToken');
-    if(token === "null" || token === "" || token === null){
-      router.push('/login')
-    } else {
-      router.push('/home')
-    }
-  }
 }
 </script>
 

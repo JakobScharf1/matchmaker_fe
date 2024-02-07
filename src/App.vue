@@ -24,13 +24,6 @@ export default {
       console.error(error);
     }
       },
-  data () {
-    return {
-      googleSignInParams: {
-        client_id: '171953949131-p1nuuduug3qtvu70rlarkaot7252264p.apps.googleusercontent.com'
-      }
-    }
-  }
 }
 </script>
 

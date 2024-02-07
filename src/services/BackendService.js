@@ -1,25 +1,34 @@
 import axios from "axios";
 
-const BACKEND_BASE_URL = process.env.VUE_APP_BACKEND_URL;
-const token = localStorage.getItem("idToken");
-const headers = {Authorization: "Bearer " + token};
-
 class BackendService{
+
     getMatch(matchId){
+        const BACKEND_BASE_URL = process.env.VUE_APP_BACKEND_URL;
         const requestURI = BACKEND_BASE_URL + "/match/" + matchId;
-        console.log("Übermittelt an: " + requestURI);
-        return axios.get(requestURI, {headers: headers});
+        const token = localStorage.getItem("token");
+        const requestBody = {
+            token: token
+        }
+        return axios.post(requestURI, requestBody);
     }
 
     getPowerForm(powerFormId){
+        const BACKEND_BASE_URL = process.env.VUE_APP_BACKEND_URL;
         const requestURI = BACKEND_BASE_URL + "/powerforms/" + powerFormId;
-        console.log("Übermittelt an: " + requestURI);
-        return axios.get(requestURI, {headers: headers});
+        const token = localStorage.getItem("token");
+        const requestBody = {
+            token: token
+        }
+        return axios.post(requestURI, requestBody);
     }
 
     postDocData(docId, dataList){
+        const BACKEND_BASE_URL = process.env.VUE_APP_BACKEND_URL;
+        const token = localStorage.getItem("token");
         docId
         dataList //TODO fertig machen
+        BACKEND_BASE_URL
+        token
     }
 }
 

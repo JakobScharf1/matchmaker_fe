@@ -57,6 +57,7 @@
 <script>
 import router from "@/router";
 import BackendService from "@/services/BackendService";
+import {logout} from "@/firebase-config";
 
 export default {
   name: "chooseTemplate",
@@ -104,9 +105,10 @@ export default {
   },
   methods: {
     logout() {
+      const userEmail = localStorage.getItem("userMail");
+      const token = localStorage.getItem("token");
+      logout(userEmail, token);
       localStorage.clear();
-      localStorage.setItem('userInfo', "");
-      router.push('/');
     },
     pageBack() {
       router.go(-1);

@@ -49,6 +49,7 @@
 <script>
 import router from "@/router";
 import BackendService from "@/services/BackendService";
+import {logout} from "@/firebase-config";
 
 export default {
   name: 'chooseTemplateLegal',
@@ -105,9 +106,10 @@ export default {
       this.confirmed = true;
     },
     logout(){
+      const userEmail = localStorage.getItem("userMail");
+      const token = localStorage.getItem("token");
+      logout(userEmail, token);
       localStorage.clear();
-      localStorage.setItem('idToken', "");
-      router.push('/login');
     },
     chooseTemplate() {
       if (this.verguetungssatz === "Stundensatz") {

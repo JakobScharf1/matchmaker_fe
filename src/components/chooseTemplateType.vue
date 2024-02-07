@@ -27,7 +27,7 @@ export default {
     },
     logout(){
       localStorage.clear();
-      localStorage.setItem('idToken', "");
+      localStorage.setItem('token', "");
       router.push('/login');
     },
   }

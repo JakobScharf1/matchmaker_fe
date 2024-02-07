@@ -7,27 +7,28 @@ function login() {
     const provider = new firebase.auth.GoogleAuthProvider();
 
     firebase.auth().signInWithPopup(provider).then((result) => {
-        console.log("result", result);
-        firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
-            localStorage.setItem("idToken", idToken);
-            const token = "Bearer " + idToken
-            const url = process.env.VUE_APP_BACKEND_URL +  `/private/saveUser`;
-            const requestBody = {
-                email: result.user.email.toString(),
-                //TODO Token ergänzen und im BE Logik zum Prüfen hinterlegen
-            }
-            saveUser(url, token, requestBody);
-            localStorage.setItem("userMail", result.user.email.toString())
-        })
-            .then(router.push("/home"))
+
+        const token = result.user.multiFactor.user.accessToken
+
+        const url = process.env.VUE_APP_BACKEND_URL +  `/private/saveUser`;
+        const requestBody = {
+            token: token,
+            email: result.user.email.toString(),
+        }
+        saveUser(url, requestBody);
+        localStorage.setItem("token", token);
+        localStorage.setItem("userMail", result.user.email.toString())
+        .then(router.push("/home"))
+
     }) .catch((error) => {
         console.log("error", error);
     });
 }
 
-function saveUser(url, token, requestBody) {
-    axios.post(url, requestBody, { 'headers': { 'Authorization': token } })
+function saveUser(url, requestBody) {
+    axios.post(url, requestBody)
         .then(response => {
+            console.log("saveUser POST reached with response: ", response.data);
             if(response.status === 200){
                 router.push("/home")
             } else {
@@ -39,5 +40,26 @@ function saveUser(url, token, requestBody) {
     })
 }
 
+function logout(email) {
+    email = encodeURIComponent(email)
+    const url = process.env.VUE_APP_BACKEND_URL + '/private/deleteUser/' + email;
+    const requestBody = {
+        token: localStorage.getItem("token")
+    }
+    console.log("Starting delete call with body: ",requestBody)
+    axios.post(url, requestBody)
+        .then(response => {
+            if(response.status === 200) {
+                console.log("user data deleted in backend")
+                router.push("/login")
+            } else {
+                alert("Something went wrong...")
+            }
+        }).catch(error => {
+            console.log("error: ",error)
+    })
+}
+
 export { login };
 export { saveUser };
+export { logout };
