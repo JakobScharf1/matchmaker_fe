@@ -18,7 +18,7 @@
 
   <h3>Individuelle DOCX-Verträge</h3>
   <input type="radio" id="doc-rv" value="doc-rv" name="radio" @click="confirmed = true">
-  <label for="c-rv-k" @click="confirmed = true">Rahmenvereinbarung</label><br/>
+  <label for="doc-rv" @click="confirmed = true">Rahmenvereinbarung</label><br/>
   <input type="radio" id="doc-ev" value="doc-ev" name="radio" @click="confirmed = true">
   <label for="doc-ev" @click="confirmed = true">Projekteinzelauftrag</label><br/>
 
@@ -105,7 +105,7 @@ export default {
       router.go(-1);
     },
     chooseTemplate() {
-      this.ek = verguetungssatzSwitch(this.verguetungssatz, this.stundensatz, this.tagessatz. this.festpreis)
+      this.ek = verguetungssatzSwitch(this.verguetungssatz, this.stundensatz, this.tagessatz, this.festpreis)
       this.kuendigungsfristPPEnglisch = kuendigungsfristTranslator(this.kuendigungsfristPP)
 
       // --- Rahmenvertrag ---
