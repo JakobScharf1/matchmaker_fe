@@ -16,7 +16,7 @@
   <input type="radio" id="c-ev-k-eng" value="c-ev-k-eng" name="radio" @click="confirmed = true">
   <label for="c-ev-k-eng" @click="confirmed = true">Projekteinzelauftrag Kunde</label><br/>
 
-  <h3>Individuelle DOCX-Verträge</h3>
+  <h3 style="color:red">Individuelle DOCX-Verträge</h3>
   <input type="radio" id="doc-rv" value="doc-rv" name="radio" @click="confirmed = true">
   <label for="doc-rv" @click="confirmed = true">Rahmenvereinbarung</label><br/>
   <input type="radio" id="doc-ev" value="doc-ev" name="radio" @click="confirmed = true">

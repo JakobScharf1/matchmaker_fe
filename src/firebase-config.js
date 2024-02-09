@@ -18,7 +18,7 @@ function login() {
         saveUser(url, requestBody);
         localStorage.setItem("token", token);
         localStorage.setItem("userMail", result.user.email.toString())
-        .then(router.push("/home"))
+        router.push("/home")
 
     }) .catch((error) => {
         console.log("error", error);

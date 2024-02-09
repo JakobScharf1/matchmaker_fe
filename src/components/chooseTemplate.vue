@@ -9,12 +9,20 @@
   <label for="c-rv-pp" @click="confirmed = true">Rahmenvereinbarung Projektpartner</label><br/>-->
   <input type="radio" id="c-ev-pp" value="c-ev-pp" name="radio" @click="confirmed = true">
   <label for="c-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
+  <input type="radio" id="eng-ev-pp" value="eng-ev-pp" name="radio" @click="confirmed = true">
+  <label for="eng-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Engineering</label><br/>
+  <input type="radio" id="proj-ev-pp" value="proj-ev-pp" name="radio" @click="confirmed = true">
+  <label for="proj-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Projects</label><br/>
 
   <h3>Contracts - Englisch</h3>
   <!--<input type="radio" id="c-rv-pp-eng" value="c-rv-pp-eng" name="radio" @click="confirmed = true">
   <label for="c-rv-pp-eng" @click="confirmed = true">Rahmenvereinbarung Projektpartner</label><br/>-->
   <input type="radio" id="c-ev-pp-eng" value="c-ev-pp-eng" name="radio" @click="confirmed = true">
   <label for="c-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
+  <input type="radio" id="eng-ev-pp-eng" value="eng-ev-pp-eng" name="radio" @click="confirmed = true">
+  <label for="eng-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Engineering</label><br/>
+  <input type="radio" id="proj-ev-pp-eng" value="proj-ev-pp-eng" name="radio" @click="confirmed = true">
+  <label for="proj-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Projects</label><br/>
 
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
 
@@ -43,7 +51,7 @@
 <script>
 import router from "@/router";
 import { logout } from "@/firebase-config";
-import {cevpp, cevppEng, kuendigungsfristTranslator, verguetungssatzSwitch} from "@/services/MethodService";
+import {cevpp, cevppEng, engevpp, projevpp, engevppEng, projevppEng, kuendigungsfristTranslator, verguetungssatzSwitch} from "@/services/MethodService";
 
 export default {
   name: "chooseTemplate",
@@ -52,17 +60,15 @@ export default {
       confirmed: false,
       finalURL: "",
       verguetungssatzList: [],
-      absenderMail: localStorage.getItem('wematchAnsprechpartnerMail'),
-      absenderName: localStorage.getItem('wematchAnsprechpartnerName'),
       empfaengerMail: localStorage.getItem('projektpartnerMail'),
       empfaengerName: localStorage.getItem('projektpartnerName'),
-      wematchAnsprechpartnerName: localStorage.getItem('wematchAnsprechpartnerName'),
-      wematchAnsprechpartnerMail: localStorage.getItem('wematchAnsprechpartnerMail'),
+      absenderName: localStorage.getItem('wematchAnsprechpartnerName'),
+      absenderMail: localStorage.getItem('wematchAnsprechpartnerMail'),
+      ccName: "",
+      ccMail: "",
       tagessatz: "X",
       stundensatz: "X",
       festpreis: "X",
-      ccMail: "",
-      ccName: "",
     }
   },
   methods: {
@@ -71,19 +77,27 @@ export default {
       router.go(-1);
     },
     chooseTemplate() {
-      this.verguetungssatzList = verguetungssatzSwitch(this.verguetungssatz, this.stundensatz, this.tagessatz, this.festpreis)
-      this.stundensatz = this.verguetungssatzList.at(0)
-      this.tagessatz  = this.verguetungssatzList.at(1)
-      this.festpreis = this.verguetungssatzList.at(2)
+      verguetungssatzSwitch(this.verguetungssatz, this.stundensatz, this.tagessatz, this.festpreis, this.ek)
       this.kuendigungsfristPPEnglisch = kuendigungsfristTranslator(this.kuendigungsfristPP)
 
       //RV Projektpartner
       /*if (document.getElementById('c-rv-pp').checked) {
         crv(this.ccName, this.ccMail, "c-rv-pp");
       }*/
+
       //EV Projektpartner
       if (document.getElementById('c-ev-pp').checked) {
-        cevpp(this.ccName, this.ccMail, this.tagessatz, this.stundensatz, this.festpreis);
+        cevpp(this.tagessatz, this.stundensatz, this.festpreis);
+      }
+
+      //EV Projektpartner - Engineering
+      if (document.getElementById('eng-ev-pp').checked) {
+        engevpp(this.tagessatz, this.stundensatz, this.festpreis);
+      }
+
+      //EV Projektpartner - Projects
+      if (document.getElementById('proj-ev-pp').checked) {
+        projevpp(this.tagessatz, this.stundensatz, this.festpreis);
       }
 
       //RV Projektpartner Englisch
@@ -91,12 +105,28 @@ export default {
         crv(this.ccName, this.ccMail, "c-rv-pp-eng")
       }*/
 
-      // -- Projektpartner Einzelvertrag englisch --
+      //EV Projektpartner Englisch
       if (document.getElementById('c-ev-pp-eng').checked) {
-        cevppEng(this.ccName, this.ccMail, this.tagessatz, this.stundensatz, this.festpreis, this.kuendigungsfristPPEnglisch)
+        cevppEng(this.tagessatz, this.stundensatz, this.festpreis, this.kuendigungsfristPPEnglisch)
+      }
+      //EV Projektpartner Englisch - Engineering
+      if (document.getElementById('eng-ev-pp-eng').checked) {
+        engevppEng(this.tagessatz, this.stundensatz, this.festpreis, this.kuendigungsfristPPEnglisch)
+      }
+      //EV Projektpartner Englisch - Projects
+      if (document.getElementById('proj-ev-pp-eng').checked) {
+        projevppEng(this.tagessatz, this.stundensatz, this.festpreis, this.kuendigungsfristPPEnglisch)
       }
     }
   },
+
+  mounted() {
+      localStorage.setItem("empfaengerName", this.empfaengerName);
+      localStorage.setItem("empfaengerMail", this.empfaengerMail);
+      localStorage.setItem("absenderName", this.absenderName);
+      localStorage.setItem("absenderMail", this.absenderMail);
+  },
+
   watch: {
       empfaengerName(newValue) {
         localStorage.setItem("empfaengerName", newValue);
