@@ -50,12 +50,8 @@
           <td>{{enddatum}}</td>
         </tr>
         <tr>
-          <td>Kündigungsfrist PP:</td>
-          <td>{{kuendigungsfristPP}}</td>
-        </tr>
-        <tr>
-          <td>Kündigungsfrist Kunde:</td>
-          <td>{{kuendigungsfristKunde}}</td>
+          <td>Kündigungsfrist:</td>
+          <td>{{kuendigungsfrist}}</td>
         </tr>
         <tr>
           <td>Zahlungsziel PP:</td>
@@ -129,8 +125,7 @@ export default {
       vk: "",
       ppGesellschaft: "",
       kunde: "",
-      kuendigungsfristPP: "",
-      kuendigungsfristKunde: "",
+      kuendigungsfrist: "",
       zahlungszielPP: "",
       zahlungszielKunde: "",
       verguetungssatz: "",
@@ -173,8 +168,7 @@ export default {
             this.ansprechpartnerKunde = this.matches.at(24) + " " + this.matches.at(25);
             this.ppGesellschaft = this.matches.at(2);
             this.kunde = this.matches.at(14);
-            this.kuendigungsfristPP = this.matches.at(19);
-            this.kuendigungsfristKunde = this.matches.at(20);
+            this.kuendigungsfrist = this.matches.at(19);
             this.zahlungszielPP = this.matches.at(3);
             this.zahlungszielKunde = this.matches.at(4);
             this.verguetungssatz = this.matches.at(5);
@@ -199,8 +193,7 @@ export default {
             localStorage.setItem('adresseKundeCity', this.adresseKundeCity);
             localStorage.setItem('ppGesellschaft', this.ppGesellschaft);
             localStorage.setItem('kunde', this.kunde);
-            localStorage.setItem('kuendigungsfristPP', this.kuendigungsfristPP);
-            localStorage.setItem('kuendigungsfristKunde', this.kuendigungsfristKunde);
+            localStorage.setItem('kuendigungsfrist', this.kuendigungsfrist);
             localStorage.setItem('zahlungszielPP', this.zahlungszielPP);
             localStorage.setItem('zahlungszielKunde', this.zahlungszielKunde);
             localStorage.setItem('verguetungssatz', this.verguetungssatz);
@@ -246,8 +239,7 @@ export default {
     },
     dateFormatter(timestamp){
         const date = new Date(parseInt(timestamp));
-        const formatedDate = date.toLocaleDateString('de-DE', {day: '2-digit', month: '2-digit', year: 'numeric'});
-        return formatedDate;
+        return date.toLocaleDateString('de-DE', {day: '2-digit', month: '2-digit', year: 'numeric'});
     },
     preisFormatter(preis){
       let formatedValue = preis.toString().replace(/\./g, ',');

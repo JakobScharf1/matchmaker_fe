@@ -50,53 +50,20 @@
 import router from "@/router";
 import BackendService from "@/services/BackendService";
 import {logout} from "@/firebase-config";
-import {kuendigungsfristTranslator, verguetungssatzSwitch} from "@/services/MethodService";
+import {kuendigungsfristTranslator, verguetungssatzSwitch, cevk} from "@/services/MethodService";
 
 export default {
   name: 'chooseTemplateLegal',
   data() {
     return {
       confirmed: false,
-      powerFormsURL: "",
-      finalURL: "",
-      absenderMail: localStorage.getItem('wematchAnsprechpartnerMail'),
-      absenderName: localStorage.getItem('wematchAnsprechpartnerName'),
+      verguetungssatzList: [],
       empfaengerMail: localStorage.getItem('projektpartnerMail'),
       empfaengerName: localStorage.getItem('projektpartnerName'),
-      match: localStorage.getItem('match'),
-      projektpartnerName: localStorage.getItem('projektpartnerName'),
-      projektpartnerMail: localStorage.getItem('projektpartnerMail'),
-      wematchAnsprechpartnerName: localStorage.getItem('wematchAnsprechpartnerName'),
-      wematchAnsprechpartnerMail: localStorage.getItem('wematchAnsprechpartnerMail'),
-      tagessatz: "X",
-      stundensatz: "X",
-      festpreis: "X",
-      verguetungssatz: localStorage.getItem('verguetungssatz'),
-      startdatum: localStorage.getItem('startdatum'),
-      enddatum: localStorage.getItem('enddatum'),
-      adresseKundeStr: localStorage.getItem('adresseKundeStr'),
-      adresseKundeCity: localStorage.getItem('adresseKundeCity'),
-      ppGesellschaft: localStorage.getItem('ppGesellschaft'),
-      kunde: localStorage.getItem('kunde'),
-      kuendigungsfristPP: localStorage.getItem('kuendigungsfristPP'),
-      kuendigungsfristKunde: localStorage.getItem('kuendigungsfristKunde'),
-      kuendigungsfristPPEnglisch: "",
-      kuendigungsfristKundeEnglisch: "",
-      zahlungszielPP: localStorage.getItem('zahlungszielPP'),
-      zahlungszielKunde: localStorage.getItem('zahlungszielKunde'),
-      einsatzort: localStorage.getItem('einsatzort'),
-      position: localStorage.getItem('position'),
-      aufgabenbeschreibung: localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "),
-      ek: localStorage.getItem('ek'),
-      vk: localStorage.getItem('vk'),
-      ansprechpartnerKunde: localStorage.getItem('ansprechpartnerKunde'),
-      matchID: localStorage.getItem('matchID'),
-      ccMail: "",
+      absenderName: localStorage.getItem('wematchAnsprechpartnerName'),
+      absenderMail: localStorage.getItem('wematchAnsprechpartnerMail'),
       ccName: "",
-      ppStreet: localStorage.getItem('ppStreet'),
-      ppCity: localStorage.getItem('ppCity'),
-      auslastung: localStorage.getItem('auslastung'),
-      docxData: []
+      ccMail: "",
     }
   },
   methods: {
@@ -105,77 +72,13 @@ export default {
       router.go(-1);
     },
     chooseTemplate() {
-      this.ek = verguetungssatzSwitch(this.verguetungssatz, this.stundensatz, this.tagessatz, this.festpreis)
-      this.kuendigungsfristPPEnglisch = kuendigungsfristTranslator(this.kuendigungsfristPP)
-
-      // --- Rahmenvertrag ---
-      /*if (document.getElementById('c-rv-k').checked) {
-        BackendService.getPowerForm("c-rv-k")
-            .then(response => {
-              this.finalURL = response.data.toString() +
-                  "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-                  "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-                  "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-                  "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-                  "&CC_UserName=" + encodeURIComponent(this.ccName) +
-                  "&CC_Email=" + encodeURIComponent(this.ccMail) +
-                  "&KundeName=" + encodeURIComponent(this.kunde) +
-                  "&Adresse1=" + encodeURIComponent(this.adresseKundeStr) +
-                  "&Adresse2=" + encodeURIComponent(this.adresseKundeCity);
-              window.open(this.finalURL, "_blank");
-            });
-      }*/
+      verguetungssatzSwitch()
+      kuendigungsfristTranslator()
 
       // --- Einzelvertrag ---
       if (document.getElementById('c-ev-k').checked) {
-        BackendService.getPowerForm("c-ev-k")
-            .then(response => {
-              this.finalURL = response.data.toString() +
-                  "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-                  "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-                  "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-                  "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-                  "&CC_UserName=" + encodeURIComponent(this.ccName) +
-                  "&CC_Email=" + encodeURIComponent(this.ccMail) +
-                  "&Kunde=" + encodeURIComponent(this.kunde) +
-                  "&KundeAdresse1" + encodeURIComponent(this.adresseKundeStr) +
-                  "&KundeAdresse2" + encodeURIComponent(this.adresseKundeCity) +
-                  "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
-                  "&Ansprechpartner_Kunde=" + encodeURIComponent(this.ansprechpartnerKunde) +
-                  "&MatchID=" + encodeURIComponent(this.matchID) +
-                  "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
-                  "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
-                  "&Festpreis=" + encodeURIComponent(this.festpreis) +
-                  "&Startdatum=" + encodeURIComponent(this.startdatum) +
-                  "&Enddatum=" + encodeURIComponent(this.enddatum) +
-                  "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristKunde) +
-                  "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-                  "&Auslastung=" + encodeURIComponent(this.auslastung) +
-                  "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
-                  "&Position=" + encodeURIComponent(this.position) +
-                  "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung)
-              ;
-              window.open(this.finalURL, "_blank");
-            });
+        cevk();
       }
-
-      // -- Rahmenvertrag englisch --
-      /*if (document.getElementById('c-rv-k-eng').checked) {
-        BackendService.getPowerForm("c-rv-k-eng")
-            .then(response => {
-              this.finalURL = response.data.toString() +
-                  "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-                  "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-                  "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-                  "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-                  "&CC_UserName=" + encodeURIComponent(this.ccName) +
-                  "&CC_Email=" + encodeURIComponent(this.ccMail) +
-                  "&Kunde=" + encodeURIComponent(this.kunde) +
-                  "&KundeAdresse1" + encodeURIComponent(this.adresseKundeStr) +
-                  "&KundeAdresse2" + encodeURIComponent(this.adresseKundeCity);
-              window.open(this.finalURL, "_blank");
-            });
-      }*/
 
       // -- Einzelvertrag englisch --
       if (document.getElementById('c-ev-k-eng').checked) {
@@ -193,13 +96,13 @@ export default {
                   "&KundeAdresse2" + encodeURIComponent(this.adresseKundeCity) +
                   "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
                   "&Ansprechpartner_Kunde=" + encodeURIComponent(this.ansprechpartnerKunde) +
-                  "&MatchID=" + encodeURIComponent(this.matchID) +
-                  "&Tagessatz=" + encodeURIComponent(this.tagessatz) +
-                  "&Stundensatz=" + encodeURIComponent(this.stundensatz) +
-                  "&Festpreis=" + encodeURIComponent(this.festpreis) +
+                  "&MatchID=" + encodeURIComponent(localStorage.getItem("matchId")) +
+                  "&Tagessatz=" + encodeURIComponent(localStorage.getItem("tagessatz")) +
+                  "&Stundensatz=" + encodeURIComponent(localStorage.getItem("stundensatz")) +
+                  "&Festpreis=" + encodeURIComponent(localStorage.getItem("festpreis")) +
                   "&Startdatum=" + encodeURIComponent(this.startdatum) +
                   "&Enddatum=" + encodeURIComponent(this.enddatum) +
-                  "&Kuendigungsfrist=" + encodeURIComponent(this.kuendigungsfristKundeEnglisch) +
+                  "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem("kuendigungsfristEnglisch")) +
                   "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
                   "&Auslastung=" + encodeURIComponent(this.auslastung) +
                   "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
@@ -212,12 +115,8 @@ export default {
 
       else if (document.getElementById('doc-rv').checked) {
         this.docxData = [
-          this.matchID,
           this.projektpartnerName,
           this.wematchAnsprechpartnerName,
-          this.tagessatz,
-          this.stundensatz,
-          this.festpreis,
           this.verguetungssatz,
           this.startdatum,
           this.enddatum,
@@ -225,8 +124,7 @@ export default {
           this.adresseKundeCity,
           this.ppGesellschaft,
           this.kunde,
-          this.kuendigungsfristPP,
-          this.kuendigungsfristKunde,
+          this.kuendigungsfrist,
           this.zahlungszielPP,
           this.zahlungszielKunde,
           this.einsatzort,
@@ -238,6 +136,7 @@ export default {
           this.ppStreet,
           this.ppCity,
           this.auslastung,
+            //TODO unvollständig und localStorage.getItem()-Abfragen integrieren
         ]
 
         BackendService.postDocData("doc-rv", this.docxData)

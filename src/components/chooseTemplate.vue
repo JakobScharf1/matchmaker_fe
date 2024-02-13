@@ -58,7 +58,6 @@ export default {
   data() {
     return {
       confirmed: false,
-      finalURL: "",
       verguetungssatzList: [],
       empfaengerMail: localStorage.getItem('projektpartnerMail'),
       empfaengerName: localStorage.getItem('projektpartnerName'),
@@ -66,9 +65,6 @@ export default {
       absenderMail: localStorage.getItem('wematchAnsprechpartnerMail'),
       ccName: "",
       ccMail: "",
-      tagessatz: "X",
-      stundensatz: "X",
-      festpreis: "X",
     }
   },
   methods: {
@@ -77,8 +73,8 @@ export default {
       router.go(-1);
     },
     chooseTemplate() {
-      verguetungssatzSwitch(this.verguetungssatz, this.stundensatz, this.tagessatz, this.festpreis, this.ek)
-      this.kuendigungsfristPPEnglisch = kuendigungsfristTranslator(this.kuendigungsfristPP)
+      verguetungssatzSwitch()
+      kuendigungsfristTranslator()
 
       //RV Projektpartner
       /*if (document.getElementById('c-rv-pp').checked) {
@@ -87,17 +83,17 @@ export default {
 
       //EV Projektpartner
       if (document.getElementById('c-ev-pp').checked) {
-        cevpp(this.tagessatz, this.stundensatz, this.festpreis);
+        cevpp();
       }
 
       //EV Projektpartner - Engineering
       if (document.getElementById('eng-ev-pp').checked) {
-        engevpp(this.tagessatz, this.stundensatz, this.festpreis);
+        engevpp();
       }
 
       //EV Projektpartner - Projects
       if (document.getElementById('proj-ev-pp').checked) {
-        projevpp(this.tagessatz, this.stundensatz, this.festpreis);
+        projevpp();
       }
 
       //RV Projektpartner Englisch
@@ -107,15 +103,15 @@ export default {
 
       //EV Projektpartner Englisch
       if (document.getElementById('c-ev-pp-eng').checked) {
-        cevppEng(this.tagessatz, this.stundensatz, this.festpreis, this.kuendigungsfristPPEnglisch)
+        cevppEng()
       }
       //EV Projektpartner Englisch - Engineering
       if (document.getElementById('eng-ev-pp-eng').checked) {
-        engevppEng(this.tagessatz, this.stundensatz, this.festpreis, this.kuendigungsfristPPEnglisch)
+        engevppEng()
       }
       //EV Projektpartner Englisch - Projects
       if (document.getElementById('proj-ev-pp-eng').checked) {
-        projevppEng(this.tagessatz, this.stundensatz, this.festpreis, this.kuendigungsfristPPEnglisch)
+        projevppEng()
       }
     }
   },
