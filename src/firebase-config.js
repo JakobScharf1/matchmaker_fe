@@ -3,6 +3,12 @@ import "firebase/compat/auth";
 import axios from "axios";
 import router from "@/router";
 
+/**
+ * Führt den Login per Firebase durch.
+ * token: holt sich aus dem Firebase result den user.accessToken welcher bei jeder weiteren Abfrage ans Backend mitgegeben wird.
+ * saveUser: hier wird der Token und die Email vom User an das Backend weitergegeben und anschließend im localStorage für die anderen Methoden hinterlegt.
+ * Anschließend wird man zu chooseTemplate.vue weitergeleitet.
+ */
 function login() {
     const provider = new firebase.auth.GoogleAuthProvider();
 

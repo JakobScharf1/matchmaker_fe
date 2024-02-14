@@ -17,10 +17,8 @@
   <label for="c-ev-k-eng" @click="confirmed = true">Projekteinzelauftrag Kunde</label><br/>
 
   <h3 style="color:red">Individuelle DOCX-Verträge</h3>
-  <input type="radio" id="doc-rv" value="doc-rv" name="radio" @click="confirmed = true">
-  <label for="doc-rv" @click="confirmed = true">Rahmenvereinbarung</label><br/>
-  <input type="radio" id="doc-ev" value="doc-ev" name="radio" @click="confirmed = true">
-  <label for="doc-ev" @click="confirmed = true">Projekteinzelauftrag</label><br/>
+  <input type="radio" id="docx-ev" value="docx-ev" name="radio" @click="confirmed = true">
+  <label for="docx-ev" @click="confirmed = true">Projekteinzelauftrag</label><br/>
 
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
 
@@ -48,16 +46,14 @@
 
 <script>
 import router from "@/router";
-import BackendService from "@/services/BackendService";
 import {logout} from "@/firebase-config";
-import {kuendigungsfristTranslator, verguetungssatzSwitch, cevk} from "@/services/MethodService";
+import {kuendigungsfristTranslator, verguetungssatzSwitch, cevk, cevkEng, docxEv} from "@/services/MethodService";
 
 export default {
   name: 'chooseTemplateLegal',
   data() {
     return {
       confirmed: false,
-      verguetungssatzList: [],
       empfaengerMail: localStorage.getItem('projektpartnerMail'),
       empfaengerName: localStorage.getItem('projektpartnerName'),
       absenderName: localStorage.getItem('wematchAnsprechpartnerName'),
@@ -76,92 +72,39 @@ export default {
       kuendigungsfristTranslator()
 
       // --- Einzelvertrag ---
-      if (document.getElementById('c-ev-k').checked) {
-        cevk();
-      }
+      if (document.getElementById('c-ev-k').checked) { cevk(); }
 
       // -- Einzelvertrag englisch --
-      if (document.getElementById('c-ev-k-eng').checked) {
-        BackendService.getPowerForm("c-ev-k-eng")
-            .then(response => {
-              this.finalURL = response.data.toString() +
-                  "&Absender_UserName=" + encodeURIComponent(this.absenderName) +
-                  "&Absender_Email=" + encodeURIComponent(this.absenderMail) +
-                  "&Projektpartner_UserName=" + encodeURIComponent(this.empfaengerName) +
-                  "&Projektpartner_Email=" + encodeURIComponent(this.empfaengerMail) +
-                  "&CC_UserName=" + encodeURIComponent(this.ccName) +
-                  "&CC_Email=" + encodeURIComponent(this.ccMail) +
-                  "&Kunde=" + encodeURIComponent(this.kunde) +
-                  "&KundeAdresse1" + encodeURIComponent(this.adresseKundeStr) +
-                  "&KundeAdresse2" + encodeURIComponent(this.adresseKundeCity) +
-                  "&Wematch_Ansprechpartner=" + encodeURIComponent(this.wematchAnsprechpartnerName) +
-                  "&Ansprechpartner_Kunde=" + encodeURIComponent(this.ansprechpartnerKunde) +
-                  "&MatchID=" + encodeURIComponent(localStorage.getItem("matchId")) +
-                  "&Tagessatz=" + encodeURIComponent(localStorage.getItem("tagessatz")) +
-                  "&Stundensatz=" + encodeURIComponent(localStorage.getItem("stundensatz")) +
-                  "&Festpreis=" + encodeURIComponent(localStorage.getItem("festpreis")) +
-                  "&Startdatum=" + encodeURIComponent(this.startdatum) +
-                  "&Enddatum=" + encodeURIComponent(this.enddatum) +
-                  "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem("kuendigungsfristEnglisch")) +
-                  "&Projektpartner=" + encodeURIComponent(this.ppGesellschaft) + " " + encodeURIComponent(this.projektpartnerName) +
-                  "&Auslastung=" + encodeURIComponent(this.auslastung) +
-                  "&Einsatzort=" + encodeURIComponent(this.einsatzort) +
-                  "&Position=" + encodeURIComponent(this.position) +
-                  "&Aufgabenbeschreibung=" + encodeURIComponent(this.aufgabenbeschreibung)
-              ;
-              window.open(this.finalURL, "_blank");
-            });
-        }
+      if (document.getElementById('c-ev-k-eng').checked) { cevkEng(); }
 
-      else if (document.getElementById('doc-rv').checked) {
-        this.docxData = [
-          this.projektpartnerName,
-          this.wematchAnsprechpartnerName,
-          this.verguetungssatz,
-          this.startdatum,
-          this.enddatum,
-          this.adresseKundeStr,
-          this.adresseKundeCity,
-          this.ppGesellschaft,
-          this.kunde,
-          this.kuendigungsfrist,
-          this.zahlungszielPP,
-          this.zahlungszielKunde,
-          this.einsatzort,
-          this.position,
-          this.aufgabenbeschreibung,
-          this.ek,
-          this.vk,
-          this.ansprechpartnerKunde,
-          this.ppStreet,
-          this.ppCity,
-          this.auslastung,
-            //TODO unvollständig und localStorage.getItem()-Abfragen integrieren
-        ]
-
-        BackendService.postDocData("doc-rv", this.docxData)
-        window.open(this.finalURL, "_blank");
-      }
+      // -- Einzelvertrag DOCX --
+      else if (document.getElementById('docx-ev').checked) { docxEv(); }
     }
   },
+  mounted() {
+    localStorage.setItem("empfaengerName", this.empfaengerName);
+    localStorage.setItem("empfaengerMail", this.empfaengerMail);
+    localStorage.setItem("absenderName", this.absenderName);
+    localStorage.setItem("absenderMail", this.absenderMail);
+  },
   watch: {
-    empfaengerName(newValue){
-      localStorage.setItem('empfaengerName', newValue);
+    empfaengerName(newValue) {
+      localStorage.setItem("empfaengerName", newValue);
     },
-    empfaengerMail(newValue){
-      localStorage.setItem('empfaengerMail', newValue);
+    empfaengerMail(newValue) {
+      localStorage.setItem("empfaengerMail", newValue);
     },
-    absenderName(newValue){
-      localStorage.setItem('absenderName', newValue);
+    absenderName(newValue) {
+      localStorage.setItem("absenderName", newValue);
     },
-    absenderMail(newValue){
-      localStorage.setItem('absenderMail', newValue);
+    absenderMail(newValue) {
+      localStorage.setItem("absenderMail", newValue);
     },
-    ccName(newValue){
-      localStorage.setItem('ccName', newValue);
+    ccName(newValue) {
+      localStorage.setItem("ccName", newValue);
     },
-    ccMail(newValue){
-      localStorage.setItem('ccMail', newValue);
+    ccMail(newValue) {
+      localStorage.setItem("ccMail", newValue);
     }
   }
 }

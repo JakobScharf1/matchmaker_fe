@@ -24,6 +24,10 @@
   <input type="radio" id="proj-ev-pp-eng" value="proj-ev-pp-eng" name="radio" @click="confirmed = true">
   <label for="proj-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Projects</label><br/>
 
+  <h3 style="color:red">Individuelle DOCX-Verträge</h3>
+  <input type="radio" id="docx-ev-pp" value="docx-ev-pp" name="radio" @click="confirmed = true">
+  <label for="docx-ev-pp" @click="confirmed = true">Projekteinzelauftrag</label><br/>
+
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
 
   <h3>Vertrag Absender</h3>
@@ -51,7 +55,7 @@
 <script>
 import router from "@/router";
 import { logout } from "@/firebase-config";
-import {cevpp, cevppEng, engevpp, projevpp, engevppEng, projevppEng, kuendigungsfristTranslator, verguetungssatzSwitch} from "@/services/MethodService";
+import {cevpp, cevppEng, engevpp, projevpp, engevppEng, projevppEng, kuendigungsfristTranslator, verguetungssatzSwitch, docxEvPP} from "@/services/MethodService";
 
 export default {
   name: "chooseTemplate",
@@ -112,6 +116,10 @@ export default {
       //EV Projektpartner Englisch - Projects
       if (document.getElementById('proj-ev-pp-eng').checked) {
         projevppEng()
+      }
+      //EV Projektpartner
+      if (document.getElementById('docx-ev-pp').checked){
+        docxEvPP();
       }
     }
   },

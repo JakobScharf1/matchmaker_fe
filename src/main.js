@@ -4,11 +4,9 @@ import router from "@/router";
 import cors from 'cors';
 import DotLoader from 'vue-spinner/src/PulseLoader.vue';
 
-// Import the functions you need from the SDKs you need
 import firebase from "firebase/compat/app";
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
+// Firebase Config
 const firebaseConfig = {
     apiKey: "AIzaSyDTib2x4aE7llVddi_GDa72vGxYqHGHtQg",
     authDomain: "matchmaker-406610.firebaseapp.com",
@@ -21,6 +19,7 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+// Launched die Spring Boot App inkl. Dot-loader für Ladesymbole
 createApp(App)
     .use(router)
     .use(cors)

@@ -1,5 +1,9 @@
 import BackendService from "@/services/BackendService";
 
+/**
+ * Prüft die Variable verguetungssatz und setzt den Wert der entsprechenden Variable stundensatz, tagessatz oder festpreis auf den ek (Einkaufspreis).
+ * Die anderen Variablen bleiben beim Wert "X".
+ */
 function verguetungssatzSwitch(){
     localStorage.setItem("stundensatz", "X");
     localStorage.setItem("tagessatz", "X");
@@ -22,44 +26,51 @@ function verguetungssatzSwitch(){
     }
 }
 
+/**
+ * Die Methode nimmt den Wert kuendigungsfrist und prüft, welcher Wert hinterlegt.
+ * Entsprechend dem Wert, der hinterlegt ist wird das englischen Pendant in die Variable kuendigungsfristEnglisch geschrieben.
+ */
 function kuendigungsfristTranslator(){
-    var kuendigungsfristPPEnglisch;
+    var kuendigungsfristEnglisch;
 
-    switch (localStorage.getItem("kuendigungsfristPP")) {
+    switch (localStorage.getItem("kuendigungsfrist")) {
         case "Keine":
-            kuendigungsfristPPEnglisch = "none";
+            kuendigungsfristEnglisch = "none";
             break;
         case "0 Tage":
-            kuendigungsfristPPEnglisch = "0 days";
+            kuendigungsfristEnglisch = "0 days";
             break;
         case "5 Tage":
-            kuendigungsfristPPEnglisch = "5 days";
+            kuendigungsfristEnglisch = "5 days";
             break;
         case "7 Tage":
-            kuendigungsfristPPEnglisch = "7 days";
+            kuendigungsfristEnglisch = "7 days";
             break;
         case "14 Tage":
-            kuendigungsfristPPEnglisch = "14 days";
+            kuendigungsfristEnglisch = "14 days";
             break;
         case "14 Tage zum Monatsende":
-            kuendigungsfristPPEnglisch = "14 days to month end";
+            kuendigungsfristEnglisch = "14 days to month end";
             break;
         case "28 Tage":
-            kuendigungsfristPPEnglisch = "28 days";
+            kuendigungsfristEnglisch = "28 days";
             break;
         case "30 Tage":
-            kuendigungsfristPPEnglisch = "30 days";
+            kuendigungsfristEnglisch = "30 days";
             break;
         case "6 Wochen":
-            kuendigungsfristPPEnglisch = "6 weeks";
+            kuendigungsfristEnglisch = "6 weeks";
             break;
         case "90 Tage":
-            kuendigungsfristPPEnglisch = "90 days";
+            kuendigungsfristEnglisch = "90 days";
             break;
     }
-    localStorage.setItem("kuendigungsfirstPPEnglisch", kuendigungsfristPPEnglisch);
+    localStorage.setItem("kuendigungsfirstEnglisch", kuendigungsfristEnglisch);
 }
 
+/**
+ * Eine Test-Methode für die Prod-Umgebung, um zu schauen, ob alle Werte im localStorage korrekt übertragen wurden.
+ */
 function valueMappingTest(){
     console.log(
         "absenderName: " + localStorage.getItem('absenderName') + '\n' +
@@ -92,6 +103,11 @@ function valueMappingTest(){
     );
 }
 
+/**
+ * Alle nachfolgenden Methoden stellen mit Hilfe des BackendServices eine Anfrage an das Backend, um an den PowerForms-Link zu gelangen.
+ * Anschließend werden an den erhaltenen Link alle benötigten Variablen aus dem localStorage angehangen und vorher encodiert, sodass die Übertragung per URI problemlos abläuft.
+ * @param docId Beinhaltet die ID des zu erstellenden PDF-Dokuments (nur bei Rahmenverträgen (RV))
+ */
 // Rahmenvertrag Projektpartner
 function crv(docId){
     let finalURL = "";
@@ -328,6 +344,7 @@ function projevppEng(){
         });
 }
 
+//EV Kunde
 function cevk(){
     BackendService.getPowerForm("c-ev-k")
         .then(response => {
@@ -366,6 +383,67 @@ function cevk(){
         });
 }
 
+//EV Kunde Englisch
+function cevkEng(){
+    BackendService.getPowerForm("c-ev-k-eng")
+        .then(response => {
+            this.finalURL = response.data.toString() +
+                "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
+                "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
+                "&Projektpartner_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
+                "&Projektpartner_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
+                "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
+                "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
+
+                "&Kunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
+                "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
+                "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
+
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
+                "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
+                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
+
+                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
+                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
+                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
+
+                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
+                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
+                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfristEng')) +
+
+                "&PPName=" + encodeURIComponent(localStorage.getItem('ppGesellschaft')) + " " + encodeURIComponent(localStorage.getItem('projektpartnerName')) +
+                "&Auslastung=" + encodeURIComponent(localStorage.getItem('auslastung')) +
+                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
+
+                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
+                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
+            ;
+            window.open(this.finalURL, "_blank");
+        });
+}
+
+
+//EV Kunde - DOCX
+function docxEvk(){
+    let data = [
+        localStorage.getItem("ppGesellschaft") + " " + localStorage.getItem("projektpartnerName"),
+        localStorage.getItem("wematchAnsprechpartnerName"),
+        localStorage.getItem("startdatum"),
+        localStorage.getItem("enddatum"),
+        localStorage.getItem("adresseKundeStr"),
+        localStorage.getItem("adresseKundeCity"),
+        localStorage.getItem("kunde"),
+        localStorage.getItem("kuendigungsfrist"),
+        localStorage.getItem("einsatzort"),
+        localStorage.getItem("position"),
+    ]
+
+    BackendService.postDocData("docxEv", data).then(response => {
+            window.open(response.data.toString(), "_blank");
+        }
+    );
+}
+
 export { verguetungssatzSwitch };
 export { kuendigungsfristTranslator };
 export { crv };
@@ -377,3 +455,5 @@ export { engevppEng };
 export { projevppEng };
 export { cevk };
 export { valueMappingTest };
+export { cevkEng };
+export { docxEvk };

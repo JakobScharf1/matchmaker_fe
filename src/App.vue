@@ -16,17 +16,6 @@ export default {
       return router
     }
   },
-  mounted() {
-    const userInfo = localStorage.getItem('userInfo');
-    console.log("userInfo: " + userInfo);
-    try {
-      if (userInfo.length === 0) {
-        router.push('/')
-      }
-    } catch (error) {
-      console.error(error);
-    }
-      },
 }
 </script>
 

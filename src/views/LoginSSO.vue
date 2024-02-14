@@ -1,4 +1,6 @@
 <template>
+  <!-- Integration einer Fehlermeldung, wenn man Mobile Devices nutzt.
+       Außerdem der Login-Button, der die login-Methode aus der firebase-config.js aufruft -->
   <div>
     <div class="mobileDeviceError" v-if="isMobile"><p>Diese Website ist für die Verwendung auf Mobilgeräten nicht optimiert. Bitte verwende einen PC oder ein Tablet.</p></div>
     <button class="btn btn-primary" @click="login()">Login mit Google</button>
@@ -18,24 +20,26 @@ export default {
   },
 
   methods: {
-
     async login() {
       login();
     },
 
+    /* Prüft, ob das genutzte Gerät ein Handy o.ä. ist */
     checkIfMobile() {
       this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
   },
 
-  beforeUnmount() {
-    window.removeEventListener("resize", this.checkIfMobile);
-  },
-
+  /* Fügt den Eventlistener "resize" ein welcher darauf achtet, welches Format das aktuell genutzte Gerät hat und ob sich dieses verändert */
   mounted() {
     this.checkIfMobile();
     window.addEventListener("resize", this.checkIfMobile);
-  }
+  },
+
+  /* Entfernt den resize-Eventlistener, um das Fenster sauber zu schließen und das Neuladen bei erneutem Öffnen zu gewährleisten*/
+  beforeUnmount() {
+    window.removeEventListener("resize", this.checkIfMobile);
+  },
 
 }
 </script>

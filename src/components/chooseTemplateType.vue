@@ -11,11 +11,12 @@
 
 <script>
 import router from "@/router";
+import { logout } from "@/firebase-config";
 
 export default {
   name: 'chooseTemplateType',
   methods: {
-
+    logout,
     toLegal() {
       router.push('chooseTemplateLegal');
     },
@@ -24,11 +25,6 @@ export default {
     },
     pageBack(){
       router.go(-1);
-    },
-    logout(){
-      localStorage.clear();
-      localStorage.setItem('token', "");
-      router.push('/login');
     },
   }
 }
