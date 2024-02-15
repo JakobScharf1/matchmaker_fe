@@ -45,18 +45,13 @@ export default {
 </script>
 
 <style scoped>
-  .btn-primary {
-    background-color: #007772;
-    border-color: #007772;
-  }
-
-  .btn-primary:hover {
-    background-color: transparent;
-  }
-
   .mobileDeviceError {
     color: red;
     font-size: 1.5em;
     text-align: center;
+  }
+
+  #logoutButton {
+    display: none !important;
   }
 </style>

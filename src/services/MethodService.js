@@ -1,5 +1,38 @@
 import BackendService from "@/services/BackendService";
 
+function sendHelpMail(){
+    let subject = encodeURIComponent("Problem mit MatchMaker - MatchID: " + localStorage.getItem("matchID"));
+    let body = encodeURIComponent("\n---\nmatch data: \n" +
+        "Absender_UserName=" + localStorage.getItem('absenderName') + "\n" +
+        "Absender_Email=" + localStorage.getItem('absenderMail') + "\n" +
+        "Projektpartner_UserName=" + localStorage.getItem('empfaengerName') + "\n" +
+        "Projektpartner_Email=" + localStorage.getItem('empfaengerMail') + "\n" +
+        "CC_UserName=" + localStorage.getItem("ccName") + "\n" +
+        "CC_Email=" + localStorage.getItem("ccMail") + "\n" +
+
+        "Wematch_Ansprechpartner=" + localStorage.getItem('wematchAnsprechpartnerName') + "\n" +
+        "PPName=" + localStorage.getItem('ppGesellschaft') + " " + localStorage.getItem('projektpartnerName') + "\n" +
+        "MatchID=" + localStorage.getItem('matchID') + "\n" +
+
+        "Tagessatz=" + localStorage.getItem('tagessatz') + "\n" +
+        "Stundensatz=" + localStorage.getItem('stundensatz') + "\n" +
+        "Festpreis=" + localStorage.getItem('festpreis') + "\n" +
+
+        "Startdatum=" + localStorage.getItem('startdatum') + "\n" +
+        "Enddatum=" + localStorage.getItem('enddatum') + "\n" +
+        "Kuendigungsfrist=" + localStorage.getItem('kuendigungsfrist') + "\n" +
+
+        "Endkunde=" + localStorage.getItem('kunde') + "\n" +
+        "Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + ", " + localStorage.getItem('adresseKundeCity') + "\n" +
+        "Einsatzort=" + localStorage.getItem('einsatzort') + "\n" +
+
+        "Position=" + localStorage.getItem('position') + "\n" +
+        "Aufgabenbeschreibung=" + localStorage.getItem('aufgabenbeschreibung')
+    );
+    let mailtoLink = "mailto:teamoperations@wematch.de?subject=" + subject + "&body=" + body;
+    window.open(mailtoLink, '_blank');
+}
+
 /**
  * Prüft die Variable verguetungssatz und setzt den Wert der entsprechenden Variable stundensatz, tagessatz oder festpreis auf den ek (Einkaufspreis).
  * Die anderen Variablen bleiben beim Wert "X".
@@ -444,6 +477,10 @@ function docxEvk(){
     );
 }
 
+function docxEvPP() {
+
+}
+
 export { verguetungssatzSwitch };
 export { kuendigungsfristTranslator };
 export { crv };
@@ -457,3 +494,5 @@ export { cevk };
 export { valueMappingTest };
 export { cevkEng };
 export { docxEvk };
+export { sendHelpMail };
+export { docxEvPP };

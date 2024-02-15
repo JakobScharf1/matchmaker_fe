@@ -4,17 +4,29 @@
   <div class="bottom-right">
     <p>MatchMaker v1.0 made with &#10084;&#65039; by WeMatch Team Operations</p>
   </div>
+  <div id="buttonContainer">
+    <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
+    <button id="logoutButton" class="btn btn-primary" @click="logout()" v-if="!$isLoginPage"><b>Logout</b></button>
+  </div>
 </template>
 
 <script>
 import router from "@/router";
+import {sendHelpMail} from "@/services/MethodService";
+import {logout} from "@/firebase-config";
 
 export default {
   name: 'App',
   methods: {
+    logout,
     router() {
       return router
-    }
+    },
+  },
+  mounted() {
+    document.getElementById("helpButton").addEventListener("click", function() {
+      sendHelpMail();
+    })
   },
 }
 </script>
@@ -35,6 +47,7 @@ body {
   text-align: center;
   font-family: Jost, sans-serif;
 }
+
 #app {
   -webkit-font-smoothing: antialiased;
 
@@ -50,5 +63,39 @@ body {
 img {
   height: auto;
   max-width: 100%;
+}
+
+#buttonContainer {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+#helpButton {
+  margin-right: 10px;
+}
+
+.btn-outline-primary {
+  color: #007772;
+  border-color: #007772;
+}
+
+.btn-outline-primary:hover {
+  color: white;
+  background-color: #007772;
+}
+
+.btn-primary {
+  background-color: #007772;
+  border-color: #007772;
+}
+
+.btn-primary:hover {
+  background-color: transparent;
+  color: #007772;
+}
+
+h2 {
+  margin-top: 2rem;
 }
 </style>

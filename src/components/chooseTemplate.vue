@@ -49,12 +49,10 @@
   <input v-model="ccName" type="text" id="cc_name"><br />
 
   <button class="btn" v-bind:class="{'bestatigen-button btn-outline-primary': !confirmed, 'btn-primary': confirmed}" @click="chooseTemplate()">Bestätigen</button>
-  <button id="logoutButton" class="btn btn-outline-primary" @click="logout"><b>Logout</b></button>
 </template>
 
 <script>
 import router from "@/router";
-import { logout } from "@/firebase-config";
 import {cevpp, cevppEng, engevpp, projevpp, engevppEng, projevppEng, kuendigungsfristTranslator, verguetungssatzSwitch, docxEvPP} from "@/services/MethodService";
 
 export default {
@@ -72,7 +70,6 @@ export default {
     }
   },
   methods: {
-    logout,
     pageBack() {
       router.go(-1);
     },
@@ -164,21 +161,10 @@ export default {
     margin-left: 0.5rem;
   }
 
-  .btn-primary {
-    background-color: #007772;
-    border-color: #007772;
-    margin-top: 1rem;
-    margin-bottom: 2rem;
-  }
-
   .bestatigen-button {
     margin-top: 1rem;
     margin-bottom: 2rem;
     pointer-events: none;
-  }
-
-  h2 {
-    margin-top: 2rem;
   }
 
   h3 {
@@ -188,22 +174,6 @@ export default {
 
   [type="radio"] {
     margin-right: 5px;
-  }
-
-  #logoutButton {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-  }
-
-  .btn-outline-primary {
-    color: #007772;
-    border-color: #007772;
-  }
-
-  .btn-outline-primary:hover {
-    color: white;
-    background-color: #007772;
   }
 
 </style>
