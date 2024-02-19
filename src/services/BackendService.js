@@ -44,11 +44,10 @@ class BackendService{
         const BACKEND_BASE_URL = process.env.VUE_APP_BACKEND_URL;
         const token = localStorage.getItem("token");
         const requestBody = {
-            docId: docId,
             dataList: dataList,
             token: token
         };
-        const requestURI = BACKEND_BASE_URL + "/generateDoc";
+        const requestURI = BACKEND_BASE_URL + "/generateDoc/" + docId;
         console.log("Übermittelt an: " + requestURI);
         return axios.post(requestURI, requestBody);
     }

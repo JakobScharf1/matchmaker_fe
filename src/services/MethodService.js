@@ -459,6 +459,7 @@ function cevkEng(){
 //EV Kunde - DOCX
 function docxEvk(){
     let data = [
+        localStorage.getItem("matchId"),
         localStorage.getItem("ppGesellschaft") + " " + localStorage.getItem("projektpartnerName"),
         localStorage.getItem("wematchAnsprechpartnerName"),
         localStorage.getItem("startdatum"),
@@ -469,6 +470,12 @@ function docxEvk(){
         localStorage.getItem("kuendigungsfrist"),
         localStorage.getItem("einsatzort"),
         localStorage.getItem("position"),
+        localStorage.getItem("ansprechpartnerKunde"),
+        localStorage.getItem("tagessatz"),
+        localStorage.getItem("stundensatz"),
+        localStorage.getItem("festpreis"),
+        localStorage.getItem("auslastung"),
+        localStorage.getItem("aufgabenbeschreibung")
     ]
 
     BackendService.postDocData("docxEv", data).then(response => {

@@ -22,6 +22,7 @@ function login() {
             email: result.user.email.toString(),
         }
         saveUser(url, requestBody);
+        localStorage.clear();
         localStorage.setItem("token", token);
         localStorage.setItem("userMail", result.user.email.toString())
         router.push("/home")
