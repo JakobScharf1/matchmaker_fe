@@ -190,6 +190,8 @@ function cevpp(){
                 "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + ", " + localStorage.getItem('adresseKundeCity') +
                 "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
 
+                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
+
                 "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
                 "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
             ;
@@ -225,6 +227,8 @@ function engevpp(){
                 "&Endkunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
                 "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + ", " + localStorage.getItem('adresseKundeCity') +
                 "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
+
+                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
 
                 "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
                 "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
@@ -262,6 +266,8 @@ function projevpp(){
                 "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + ", " + localStorage.getItem('adresseKundeCity') +
                 "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
 
+                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
+
                 "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
                 "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
             ;
@@ -297,6 +303,8 @@ function cevppEng(){
                 "&Endkunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
                 "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + ", " + localStorage.getItem('adresseKundeCity') +
                 "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
+
+                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
 
                 "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
                 "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
@@ -334,6 +342,8 @@ function engevppEng(){
                 "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + ", " + localStorage.getItem('adresseKundeCity') +
                 "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
 
+                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
+
                 "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
                 "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
             ;
@@ -369,6 +379,8 @@ function projevppEng(){
                 "&Endkunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
                 "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + ", " + localStorage.getItem('adresseKundeCity') +
                 "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
+
+                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
 
                 "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
                 "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))

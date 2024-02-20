@@ -50,8 +50,4 @@ export default {
     font-size: 1.5em;
     text-align: center;
   }
-
-  #logoutButton {
-    display: none !important;
-  }
 </style>

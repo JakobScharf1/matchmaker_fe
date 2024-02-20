@@ -49,11 +49,28 @@
   <input v-model="ccName" type="text" id="cc_name"><br />
 
   <button class="btn" v-bind:class="{'bestatigen-button btn-outline-primary': !confirmed, 'btn-primary': confirmed}" @click="chooseTemplate()">Bestätigen</button>
+
+  <div id="buttonContainer">
+    <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
+    <button id="logoutButton" class="btn btn-primary" @click="logout()"><b>Logout</b></button>
+  </div>
 </template>
 
 <script>
 import router from "@/router";
-import {cevpp, cevppEng, engevpp, projevpp, engevppEng, projevppEng, kuendigungsfristTranslator, verguetungssatzSwitch, docxEvPP} from "@/services/MethodService";
+import {
+  cevpp,
+  cevppEng,
+  engevpp,
+  projevpp,
+  engevppEng,
+  projevppEng,
+  kuendigungsfristTranslator,
+  verguetungssatzSwitch,
+  docxEvPP,
+  sendHelpMail
+} from "@/services/MethodService";
+import {logout} from "@/firebase-config";
 
 export default {
   name: "chooseTemplate",
@@ -70,6 +87,7 @@ export default {
     }
   },
   methods: {
+    logout,
     pageBack() {
       router.go(-1);
     },
@@ -126,6 +144,10 @@ export default {
       localStorage.setItem("empfaengerMail", this.empfaengerMail);
       localStorage.setItem("absenderName", this.absenderName);
       localStorage.setItem("absenderMail", this.absenderMail);
+
+      document.getElementById("helpButton").addEventListener("click", function() {
+        sendHelpMail();
+      })
   },
 
   watch: {
@@ -152,6 +174,17 @@ export default {
 </script>
 
 <style scoped>
+
+  #helpButton {
+    margin-right: 10px;
+  }
+
+  #buttonContainer {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+  }
+
   [type="email"] {
     margin-left: 0.5rem;
     margin-right: 2rem;

@@ -165,19 +165,29 @@
         <td>Position:</td>
         <td v-if="confirmed">{{ position }}</td>
       </tr>
-      <tr>
+      <tr style="vertical-align:top">
         <td>Aufgabenbeschreibung:</td>
         <td v-if="confirmed">{{ aufgabenbeschreibung }}</td>
+      </tr>
+      <tr style="vertical-align:top">
+        <td>Zusätzliche Vereinbarungen:</td>
+        <td v-if="confirmed">{{ addAgreements }}</td>
       </tr>
       </tbody>
     </table>
   </div>
   <button class="btn weiter-button-gen" v-bind:class="{'weiter-button': !confirmed, 'btn-primary': confirmed}" @click="goToChooseTemplate"><b>Weiter</b></button><br />
+  <div id="buttonContainer">
+    <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
+    <button id="logoutButton" class="btn btn-primary" @click="logout()"><b>Logout</b></button>
+  </div>
 </template>
 
 <script>
 import router from "@/router";
 import BackendService from "@/services/BackendService";
+import {logout} from "@/firebase-config";
+import {sendHelpMail} from "@/services/MethodService";
 
 export default {
   name: 'MatchIDInput',
@@ -208,9 +218,11 @@ export default {
       einsatzort: "",
       position: "",
       aufgabenbeschreibung: "",
+      addAgreements: "",
     }
   },
   methods: {
+    logout,
     /**
      * Fragt die Daten eines Matches mit Hilfe des BackendServices ab und verarbeitet die Response.
      * Zeitgleich wird ein Timeout gesetzt, sodass bei zu langer Wartezeit der Vorgang abgebrochen wird.
@@ -221,64 +233,69 @@ export default {
       this.isLoading = true;
       setTimeout(() => {
         BackendService.getMatch(this.matchIdFromInput).then((response) => {
-          this.matches = response.data;
+          try {
+           /* if (response.status !== 200 || response.data === null || response.data === "null" || response === "null") {
+              alert("Die Match-ID ist nicht korrekt. Bitte gib die ID erneut ein.");
+              this.isLoading = false;
+            } else {*/
+              this.matches = response.data;
+              this.confirmClick();
 
-          if (this.matches.includes("DOCTYPE html")) {
+              localStorage.setItem('match', this.matches);
+              localStorage.setItem('projektpartnerName', this.matches.at(0) + " " + this.matches.at(1));
+              this.projektpartnerName = this.matches.at(0) + " " + this.matches.at(1);
+              localStorage.setItem('wematchAnsprechpartnerName', this.matches.at(9) + " " + this.matches.at(10));
+              this.wematchAnsprechpartnerName = this.matches.at(9) + " " + this.matches.at(10);
+              localStorage.setItem('projektpartnerMail', this.matches.at(22));
+              this.projektpartnerMail = this.matches.at(22);
+              localStorage.setItem('wematchAnsprechpartnerMail', this.matches.at(23));
+              this.wematchAnsprechpartnerMail = this.matches.at(23);
+              localStorage.setItem('startdatum', this.dateFormatter(this.matches.at(11)));
+              this.startdatum = this.dateFormatter(this.matches.at(11));
+              localStorage.setItem('enddatum', this.dateFormatter(this.matches.at(12)));
+              this.enddatum = this.dateFormatter(this.matches.at(12));
+              localStorage.setItem('adresseKundeStr', this.matches.at(15) + ", " + this.matches.at(16));
+              localStorage.setItem('adresseKundeCity', this.matches.at(18) + " " + this.matches.at(17));
+              localStorage.setItem('adresseKunde', this.matches.at(15) + ", " + this.matches.at(16) + ", " + this.matches.at(18) + " " + this.matches.at(17))
+              this.adresseKunde = this.matches.at(15) + ", " + this.matches.at(16) + ", " + this.matches.at(18) + " " + this.matches.at(17);
+              localStorage.setItem('ppGesellschaft', this.matches.at(2));
+              this.ppGesellschaft = this.matches.at(2);
+              localStorage.setItem('kunde', this.matches.at(14));
+              this.kunde = this.matches.at(14);
+              localStorage.setItem('kuendigungsfrist', this.matches.at(19));
+              this.kuendigungsfrist = this.matches.at(19);
+              localStorage.setItem('zahlungszielPP', this.matches.at(3));
+              this.zahlungszielPP = this.matches.at(3);
+              localStorage.setItem('zahlungszielKunde', this.matches.at(4));
+              this.zahlungszielKunde = this.matches.at(4);
+              localStorage.setItem('verguetungssatz', this.matches.at(5));
+              this.verguetungssatz = this.matches.at(5);
+              localStorage.setItem('einsatzort', this.matches.at(21));
+              this.einsatzort = this.matches.at(21);
+              localStorage.setItem('position', this.matches.at(13));
+              this.position = this.matches.at(13);
+              localStorage.setItem('aufgabenbeschreibung', this.matches.at(8));
+              this.aufgabenbeschreibung = this.matches.at(8);
+              localStorage.setItem('ek', this.preisFormatter(this.matches.at(6)));
+              this.ek = this.preisFormatter(this.matches.at(6));
+              localStorage.setItem('vk', this.preisFormatter(this.matches.at(7)));
+              this.vk = this.preisFormatter(this.matches.at(7))
+              localStorage.setItem('ansprechpartnerKunde', this.matches.at(24) + " " + this.matches.at(25));
+              this.ansprechpartnerKunde = this.matches.at(24) + " " + this.matches.at(25);
+              localStorage.setItem('matchID', this.matchIdFromInput);
+              localStorage.setItem('ppStreet', this.matches.at(26) + " " + this.matches.at(27));
+              localStorage.setItem('ppCity', this.matches.at(28) + " " + this.matches.at(29));
+              localStorage.setItem('ppAdresse', this.matches.at(26) + " " + this.matches.at(27) + ", " + this.matches.at(28) + " " + this.matches.at(29))
+              this.ppAdresse = this.matches.at(26) + " " + this.matches.at(27) + ", " + this.matches.at(28) + " " + this.matches.at(29)
+              localStorage.setItem('auslastung', this.matches.at(31) * this.matches.at(30) + " Stunden pro Woche");
+              this.auslastung = this.matches.at(31) * this.matches.at(30) + " Stunden pro Woche";
+              localStorage.setItem('addAgreements', this.matches.at(32));
+              this.addAgreements = this.matches.at(32);
+
+              this.isLoading = false;
+            //}
+          } catch(error) {
             alert("Die Match-ID ist nicht korrekt. Bitte gib die ID erneut ein.");
-            console.log(this.matches);
-            this.isLoading = false;
-          } else {
-            this.confirmClick();
-
-            localStorage.setItem('match', this.matches);
-            localStorage.setItem('projektpartnerName', this.matches.at(0) + " " + this.matches.at(1));
-            this.projektpartnerName = this.matches.at(0) + " " + this.matches.at(1);
-            localStorage.setItem('wematchAnsprechpartnerName', this.matches.at(9) + " " + this.matches.at(10));
-            this.wematchAnsprechpartnerName = this.matches.at(9) + " " + this.matches.at(10);
-            localStorage.setItem('projektpartnerMail', this.matches.at(22));
-            this.projektpartnerMail = this.matches.at(22);
-            localStorage.setItem('wematchAnsprechpartnerMail', this.matches.at(23));
-            this.wematchAnsprechpartnerMail = this.matches.at(23);
-            localStorage.setItem('startdatum', this.dateFormatter(this.matches.at(11)));
-            this.startdatum = this.dateFormatter(this.matches.at(11));
-            localStorage.setItem('enddatum', this.dateFormatter(this.matches.at(12)));
-            this.enddatum = this.dateFormatter(this.matches.at(12));
-            localStorage.setItem('adresseKundeStr', this.matches.at(15) + ", " + this.matches.at(16));
-            localStorage.setItem('adresseKundeCity', this.matches.at(18) + " " + this.matches.at(17));
-            localStorage.setItem('adresseKunde', this.matches.at(15) + ", " + this.matches.at(16) + ", " + this.matches.at(18) + " " + this.matches.at(17))
-            this.adresseKunde = this.matches.at(15) + ", " + this.matches.at(16) + ", " + this.matches.at(18) + " " + this.matches.at(17);
-            localStorage.setItem('ppGesellschaft', this.matches.at(2));
-            this.ppGesellschaft = this.matches.at(2);
-            localStorage.setItem('kunde', this.matches.at(14));
-            this.kunde = this.matches.at(14);
-            localStorage.setItem('kuendigungsfrist', this.matches.at(19));
-            this.kuendigungsfrist = this.matches.at(19);
-            localStorage.setItem('zahlungszielPP', this.matches.at(3));
-            this.zahlungszielPP = this.matches.at(3);
-            localStorage.setItem('zahlungszielKunde', this.matches.at(4));
-            this.zahlungszielKunde = this.matches.at(4);
-            localStorage.setItem('verguetungssatz', this.matches.at(5));
-            this.verguetungssatz = this.matches.at(5);
-            localStorage.setItem('einsatzort', this.matches.at(21));
-            this.einsatzort = this.matches.at(21);
-            localStorage.setItem('position', this.matches.at(13));
-            this.position = this.matches.at(13);
-            localStorage.setItem('aufgabenbeschreibung', this.matches.at(8));
-            this.aufgabenbeschreibung = this.matches.at(8);
-            localStorage.setItem('ek', this.preisFormatter(this.matches.at(6)));
-            this.ek = this.preisFormatter(this.matches.at(6));
-            localStorage.setItem('vk', this.preisFormatter(this.matches.at(7)));
-            this.vk = this.preisFormatter(this.matches.at(7))
-            localStorage.setItem('ansprechpartnerKunde', this.matches.at(24) + " " + this.matches.at(25));
-            this.ansprechpartnerKunde = this.matches.at(24) + " " + this.matches.at(25);
-            localStorage.setItem('matchID', this.matchIdFromInput);
-            localStorage.setItem('ppStreet', this.matches.at(26) + " " + this.matches.at(27));
-            localStorage.setItem('ppCity', this.matches.at(28) + " " + this.matches.at(29));
-            localStorage.setItem('ppAdresse', this.matches.at(26) + " " + this.matches.at(27) + ", " + this.matches.at(28) + " " + this.matches.at(29))
-            this.ppAdresse = this.matches.at(26) + " " + this.matches.at(27) + ", " + this.matches.at(28) + " " + this.matches.at(29)
-            localStorage.setItem('auslastung', this.matches.at(31) * this.matches.at(30) + " Stunden pro Woche");
-            this.auslastung = this.matches.at(31) * this.matches.at(30) + " Stunden pro Woche";
-
             this.isLoading = false;
           }
         });
@@ -332,10 +349,25 @@ export default {
       return formatedValue;
     }
   },
+  mounted() {
+    document.getElementById("helpButton").addEventListener("click", function() {
+      sendHelpMail();
+    })
+  },
 }
 </script>
 
 <style scoped>
+
+#helpButton {
+  margin-right: 10px;
+}
+
+#buttonContainer {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
 
 .secondtitle {
   font-size: 0.8rem;

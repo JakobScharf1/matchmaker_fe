@@ -8,14 +8,23 @@ class BackendService{
      * @param matchId Die entsprechende MatchID
      * @returns {Promise<axios.AxiosResponse<any>>} Der Return enthält die Daten des entsprechenden Matches.
      */
-    getMatch(matchId){
-        const BACKEND_BASE_URL = process.env.VUE_APP_BACKEND_URL;
-        const requestURI = BACKEND_BASE_URL + "/match/" + matchId;
-        const token = localStorage.getItem("token");
-        const requestBody = {
-            token: token
+    async getMatch(matchId){
+        try {
+            const BACKEND_BASE_URL = process.env.VUE_APP_BACKEND_URL;
+            const requestURI = BACKEND_BASE_URL + "/match/" + matchId;
+            const token = localStorage.getItem("token");
+            const requestBody = {
+                token: token
+            }
+            const response = await axios.post(requestURI, requestBody);
+
+            if(response.status === 200) {
+                return response;
+            }
+        } catch (error) {
+            console.log("Error in getMatch BackendService: ", error)
         }
-        return axios.post(requestURI, requestBody);
+
     }
 
     /**

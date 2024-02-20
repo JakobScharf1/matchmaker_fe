@@ -4,29 +4,17 @@
   <div class="bottom-right">
     <p>MatchMaker v1.0 made with &#10084;&#65039; by WeMatch Team Operations</p>
   </div>
-  <div id="buttonContainer">
-    <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
-    <button id="logoutButton" class="btn btn-primary" @click="logout()" v-if="!$isLoginPage"><b>Logout</b></button>
-  </div>
 </template>
 
 <script>
 import router from "@/router";
-import {sendHelpMail} from "@/services/MethodService";
-import {logout} from "@/firebase-config";
 
 export default {
   name: 'App',
   methods: {
-    logout,
     router() {
       return router
     },
-  },
-  mounted() {
-    document.getElementById("helpButton").addEventListener("click", function() {
-      sendHelpMail();
-    })
   },
 }
 </script>
