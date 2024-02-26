@@ -4,9 +4,16 @@
   </div>
 
 <h2>2. Wähle den Vertrag aus, den du erstellen willst:</h2>
-  <h3>Contracts</h3>
-  <!--<input type="radio" id="c-rv-pp" value="c-rv-pp" name="radio" @click="confirmed = true">
-  <label for="c-rv-pp" @click="confirmed = true">Rahmenvereinbarung Projektpartner</label><br/>-->
+
+  <h3>Contracts - Rahmenverträge</h3>
+  <input type="radio" id="c-rv-pp" value="c-rv-pp" name="radio" @click="confirmed = true">
+  <label for="c-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+  <input type="radio" id="eng-rv-pp" value="eng-rv-pp" name="radio" @click="confirmed = true">
+  <label for="eng-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner - Engineering</label><br/>
+  <input type="radio" id="proj-rv-pp" value="proj-rv-pp" name="radio" @click="confirmed = true">
+  <label for="proj-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner - Projects</label><br/>
+
+  <h3>Contracts - Einzelverträge</h3>
   <input type="radio" id="c-ev-pp" value="c-ev-pp" name="radio" @click="confirmed = true">
   <label for="c-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
   <input type="radio" id="eng-ev-pp" value="eng-ev-pp" name="radio" @click="confirmed = true">
@@ -14,9 +21,15 @@
   <input type="radio" id="proj-ev-pp" value="proj-ev-pp" name="radio" @click="confirmed = true">
   <label for="proj-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Projects</label><br/>
 
-  <h3>Contracts - Englisch</h3>
-  <!--<input type="radio" id="c-rv-pp-eng" value="c-rv-pp-eng" name="radio" @click="confirmed = true">
-  <label for="c-rv-pp-eng" @click="confirmed = true">Rahmenvereinbarung Projektpartner</label><br/>-->
+  <h3>Contracts - Rahmenverträge - Englisch</h3>
+  <input type="radio" id="c-rv-pp-eng" value="c-rv-pp-eng" name="radio" @click="confirmed = true">
+  <label for="c-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+  <input type="radio" id="eng-rv-pp-eng" value="eng-rv-pp-eng" name="radio" @click="confirmed = true">
+  <label for="eng-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner - Engineering</label><br/>
+  <!--<input type="radio" id="proj-rv-pp-eng" value="proj-rv-pp-eng" name="radio" @click="confirmed = true">
+  <label for="proj-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner - Projects</label><br/>-->
+
+  <h3>Contracts - Einzelverträge - Englisch</h3>
   <input type="radio" id="c-ev-pp-eng" value="c-ev-pp-eng" name="radio" @click="confirmed = true">
   <label for="c-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
   <input type="radio" id="eng-ev-pp-eng" value="eng-ev-pp-eng" name="radio" @click="confirmed = true">
@@ -24,9 +37,9 @@
   <input type="radio" id="proj-ev-pp-eng" value="proj-ev-pp-eng" name="radio" @click="confirmed = true">
   <label for="proj-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Projects</label><br/>
 
-  <h3 style="color:red">Individuelle DOCX-Verträge</h3>
+  <!--<h3 style="color:red">Individuelle DOCX-Verträge</h3>
   <input type="radio" id="docx-ev-pp" value="docx-ev-pp" name="radio" @click="confirmed = true">
-  <label for="docx-ev-pp" @click="confirmed = true">Projekteinzelauftrag</label><br/>
+  <label for="docx-ev-pp" @click="confirmed = true">Projekteinzelauftrag</label><br/>-->
 
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
 
@@ -68,7 +81,8 @@ import {
   kuendigungsfristTranslator,
   verguetungssatzSwitch,
   docxEvPP,
-  sendHelpMail
+  sendHelpMail,
+  crv
 } from "@/services/MethodService";
 import {logout} from "@/firebase-config";
 
@@ -96,9 +110,19 @@ export default {
       kuendigungsfristTranslator()
 
       //RV Projektpartner
-      /*if (document.getElementById('c-rv-pp').checked) {
-        crv(this.ccName, this.ccMail, "c-rv-pp");
-      }*/
+      if (document.getElementById('c-rv-pp').checked) {
+        crv("c-rv-pp");
+      }
+
+      //RV Projektpartner - Engineering
+      if (document.getElementById('eng-rv-pp').checked) {
+        crv("eng-rv-pp");
+      }
+
+      //RV Projektpartner - Projects
+      if (document.getElementById('proj-rv-pp').checked) {
+        crv("proj-rv-pp");
+      }
 
       //EV Projektpartner
       if (document.getElementById('c-ev-pp').checked) {
@@ -116,9 +140,20 @@ export default {
       }
 
       //RV Projektpartner Englisch
-      /*if (document.getElementById('c-rv-pp-eng').checked) {
-        crv(this.ccName, this.ccMail, "c-rv-pp-eng")
-      }*/
+      if (document.getElementById('c-rv-pp-eng').checked) {
+        crv("c-rv-pp-eng")
+      }
+
+
+      //RV Projektpartner Englisch - Engineering
+      if (document.getElementById('eng-rv-pp-eng').checked) {
+        crv("eng-rv-pp-eng")
+      }
+
+      //RV projektpartner Englisch - Projects
+      if (document.getElementById('proj-rv-pp-eng').checked) {
+        crv("proj-rv-pp-eng")
+      }
 
       //EV Projektpartner Englisch
       if (document.getElementById('c-ev-pp-eng').checked) {
@@ -132,7 +167,7 @@ export default {
       if (document.getElementById('proj-ev-pp-eng').checked) {
         projevppEng()
       }
-      //EV Projektpartner
+      //DOCX EV Projektpartner
       if (document.getElementById('docx-ev-pp').checked){
         docxEvPP();
       }
