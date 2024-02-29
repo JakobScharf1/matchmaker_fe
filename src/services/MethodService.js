@@ -418,7 +418,7 @@ function cevk(){
                 "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfrist')) +
 
                 "&PPName=" + encodeURIComponent(localStorage.getItem('ppGesellschaft')) + " " + encodeURIComponent(localStorage.getItem('projektpartnerName')) +
-                "&Auslastung=" + encodeURIComponent(localStorage.getItem('auslastung')) +
+                "&Auslastung=" + encodeURIComponent("Nach Abschätzung") +
                 "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
 
                 "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
@@ -457,7 +457,7 @@ function cevkEng(){
                 "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfristEng')) +
 
                 "&PPName=" + encodeURIComponent(localStorage.getItem('ppGesellschaft')) + " " + encodeURIComponent(localStorage.getItem('projektpartnerName')) +
-                "&Auslastung=" + encodeURIComponent(localStorage.getItem('auslastung')) +
+                "&Auslastung=" + encodeURIComponent("after estimation") +
                 "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
 
                 "&Position=" + encodeURIComponent(localStorage.getItem('position')) +

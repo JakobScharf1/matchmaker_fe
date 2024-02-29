@@ -25,7 +25,6 @@ function login() {
         localStorage.clear();
         localStorage.setItem("token", token);
         localStorage.setItem("userMail", result.user.email.toString())
-        router.push("/home")
 
     }) .catch((error) => {
         console.log("error", error);
@@ -35,8 +34,7 @@ function login() {
 function saveUser(url, requestBody) {
     axios.post(url, requestBody)
         .then(response => {
-            console.log("saveUser POST reached with response: ", response.data);
-            if(response.status === 200){
+            if(response.status === 200 && response.data.toString().startsWith("Saved")){
                 router.push("/home")
             } else {
                 router.push("/login")
@@ -53,7 +51,6 @@ function logout() {
     const requestBody = {
         token: localStorage.getItem("token")
     }
-    console.log("Starting delete call with body: ",requestBody)
     axios.post(url, requestBody)
         .then(response => {
             if(response.status === 200) {
