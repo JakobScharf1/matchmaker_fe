@@ -3,8 +3,8 @@
     <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
   </div>
 <h2>Bitte wähle aus, was für eine Vertragsart du erstellen willst:</h2>
-  <button class="btn btn-primary" @click="toLegal">Kundenvertrag</button><br />
-  <button class="btn btn-primary" @click="toNormal">Projektpartnervertrag</button>
+  <button class="btn btn-primary chooseButtons" @click="toLegal">Kundenvertrag</button><br />
+  <button class="btn btn-primary chooseButtons" @click="toNormal">Projektpartnervertrag</button>
 
   <div id="buttonContainer">
     <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
@@ -49,5 +49,9 @@ export default {
   position: fixed;
   top: 10px;
   right: 10px;
+}
+
+.chooseButtons {
+  margin-top: 10px;
 }
 </style>

@@ -21,10 +21,10 @@ function login() {
             token: token,
             email: result.user.email.toString(),
         }
-        saveUser(url, requestBody);
         localStorage.clear();
         localStorage.setItem("token", token);
         localStorage.setItem("userMail", result.user.email.toString())
+        saveUser(url, requestBody);
 
     }) .catch((error) => {
         console.log("error", error);
@@ -34,11 +34,20 @@ function login() {
 function saveUser(url, requestBody) {
     axios.post(url, requestBody)
         .then(response => {
+            console.log("saveUser reponse: ", response.data.toString())
             if(response.status === 200 && response.data.toString().startsWith("Saved")){
-                router.push("/home")
+                var permissionUrl =  process.env.VUE_APP_BACKEND_URL + "/private/getPermission/" + requestBody.email;
+                axios.get(permissionUrl)
+                    .then(response => {
+                        console.log("permissionUrl response", response.data.toString())
+                        localStorage.setItem("permission", response.data.toString());
+                        if(response.data.toString() === "1" || response.data.toString() === "2"){
+                            router.push("/home");
+                        }
+                    })
             } else {
                 router.push("/login")
-                alert("Login failed.")
+                alert("Login failed or permission denied.")
             }
         }).catch(error => {
         router.push("/login").then(r =>  console.log("error", error,r))
@@ -54,7 +63,6 @@ function logout() {
     axios.post(url, requestBody)
         .then(response => {
             if(response.status === 200) {
-                console.log("user data deleted in backend")
                 router.push("/login")
             } else {
                 alert("Something went wrong...")

@@ -2,7 +2,7 @@
   <img alt="MatchMaker logo" src="./assets/logo.png">
   <RouterView/>
   <div class="bottom-right">
-    <p>MatchMaker v1.0.1 made with &#10084;&#65039; by WeMatch Team Operations</p>
+    <p>MatchMaker v1.0.2 made with &#10084;&#65039; by WeMatch Team Operations</p>
   </div>
 </template>
 
@@ -11,6 +11,11 @@ import router from "@/router";
 
 export default {
   name: 'App',
+  data(){
+    return {
+      userType: ""
+    }
+  },
   methods: {
     router() {
       return router

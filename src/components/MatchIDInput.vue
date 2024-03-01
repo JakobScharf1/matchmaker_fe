@@ -311,12 +311,7 @@ export default {
      * berechtigt ist, auch Kundenverträge erstellen zu können. Wenn nicht, wird er normal zu chooseTemplate weitergeleitet und kann PP-Verträge erstellen.
      */
     goToChooseTemplate() {
-      const legalMail = "a.peikert@wematch.de";
-      const legalMail1 = "s.lastal@wematch.de";
-      const legalMail2 = "v.wagner@wematch.de";
-      const userMail = localStorage.getItem("userMail");
-      if (userMail === legalMail || userMail === legalMail1 || userMail === legalMail2) {
-        console.log("User: " + userMail);
+      if (localStorage.getItem('permission') === "2") {
         router.push('chooseTemplateType');
       } else {
         router.push('chooseTemplate');

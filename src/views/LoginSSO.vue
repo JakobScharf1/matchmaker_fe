@@ -24,7 +24,6 @@ export default {
       login();
     },
 
-    /* Prüft, ob das genutzte Gerät ein Handy o.ä. ist */
     checkIfMobile() {
       this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }

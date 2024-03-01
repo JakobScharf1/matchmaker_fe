@@ -3,6 +3,7 @@ import BackendService from "@/services/BackendService";
 function sendHelpMail(){
     let subject = encodeURIComponent("Problem mit MatchMaker - MatchID: " + localStorage.getItem("matchID"));
     let body = encodeURIComponent("\n---\nmatch data: \n" +
+        "User Permission Level=" + localStorage.getItem('permission') + "\n" +
         "Absender_UserName=" + localStorage.getItem('absenderName') + "\n" +
         "Absender_Email=" + localStorage.getItem('absenderMail') + "\n" +
         "Projektpartner_UserName=" + localStorage.getItem('empfaengerName') + "\n" +
