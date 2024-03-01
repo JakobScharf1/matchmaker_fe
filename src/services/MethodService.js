@@ -392,9 +392,10 @@ function projevppEng(){
 
 //EV Kunde
 function cevk(){
+    let finalURL = "";
     BackendService.getPowerForm("c-ev-k")
         .then(response => {
-            this.finalURL = response.data.toString() +
+            finalURL = response.data.toString() +
                 "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
                 "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
                 "&Projektpartner_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
@@ -425,7 +426,7 @@ function cevk(){
                 "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
                 "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
             ;
-            window.open(this.finalURL, "_blank");
+            window.open(finalURL, "_blank");
         });
 }
 
