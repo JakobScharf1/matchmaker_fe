@@ -38,7 +38,7 @@ function sendHelpMail(){
  * Prüft die Variable verguetungssatz und setzt den Wert der entsprechenden Variable stundensatz, tagessatz oder festpreis auf den ek (Einkaufspreis).
  * Die anderen Variablen bleiben beim Wert "X".
  */
-function verguetungssatzSwitch(){
+function verguetungssatzSwitchPP(){
     localStorage.setItem("stundensatz", "X");
     localStorage.setItem("tagessatz", "X");
     localStorage.setItem("festpreis", "X");
@@ -54,6 +54,28 @@ function verguetungssatzSwitch(){
             break;
         case "Festpreis":
             localStorage.setItem("festpreis", ek);
+            break;
+        default:
+            break;
+    }
+}
+
+function verguetungssatzSwitchKunde(){
+    localStorage.setItem("stundensatz", "X");
+    localStorage.setItem("tagessatz", "X");
+    localStorage.setItem("festpreis", "X");
+
+    let vk = localStorage.getItem("vk");
+
+    switch (localStorage.getItem('verguetungssatz')){
+        case "Stundensatz":
+            localStorage.setItem("stundensatz", vk);
+            break;
+        case "Tagessatz":
+            localStorage.setItem("tagessatz", vk);
+            break;
+        case "Festpreis":
+            localStorage.setItem("festpreis", vk);
             break;
         default:
             break;
@@ -398,8 +420,8 @@ function cevk(){
             finalURL = response.data.toString() +
                 "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
                 "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
-                "&Projektpartner_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
-                "&Projektpartner_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
+                "&Kunde_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
+                "&Kunde_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
                 "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
@@ -432,13 +454,14 @@ function cevk(){
 
 //EV Kunde Englisch
 function cevkEng(){
+    let finalURL = "";
     BackendService.getPowerForm("c-ev-k-eng")
         .then(response => {
-            this.finalURL = response.data.toString() +
+            finalURL = response.data.toString() +
                 "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
                 "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
-                "&Projektpartner_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
-                "&Projektpartner_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
+                "&Kunde_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
+                "&Kunde_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
                 "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
@@ -465,7 +488,7 @@ function cevkEng(){
                 "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
                 "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
             ;
-            window.open(this.finalURL, "_blank");
+            window.open(finalURL, "_blank");
         });
 }
 
@@ -502,7 +525,8 @@ function docxEvPP() {
 
 }
 
-export { verguetungssatzSwitch };
+export { verguetungssatzSwitchPP };
+export { verguetungssatzSwitchKunde };
 export { kuendigungsfristTranslator };
 export { crv };
 export { cevpp };

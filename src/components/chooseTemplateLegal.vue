@@ -52,7 +52,7 @@
 import router from "@/router";
 import {
   kuendigungsfristTranslator,
-  verguetungssatzSwitch,
+  verguetungssatzSwitchKunde,
   cevk,
   cevkEng,
   docxEvk,
@@ -79,7 +79,7 @@ export default {
       router.go(-1);
     },
     chooseTemplate() {
-      verguetungssatzSwitch()
+      verguetungssatzSwitchKunde()
       kuendigungsfristTranslator()
 
       // --- Einzelvertrag ---

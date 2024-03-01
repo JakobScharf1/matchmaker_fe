@@ -79,7 +79,7 @@ import {
   engevppEng,
   projevppEng,
   kuendigungsfristTranslator,
-  verguetungssatzSwitch,
+  verguetungssatzSwitchPP,
   docxEvPP,
   sendHelpMail,
   crv
@@ -106,8 +106,8 @@ export default {
       router.go(-1);
     },
     chooseTemplate() {
-      verguetungssatzSwitch()
-      kuendigungsfristTranslator()
+      verguetungssatzSwitchPP();
+      kuendigungsfristTranslator();
 
       //RV Projektpartner
       if (document.getElementById('c-rv-pp').checked) {
