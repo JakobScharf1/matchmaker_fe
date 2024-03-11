@@ -19,6 +19,10 @@
   <h3 style="color:red">Individuelle DOCX-Verträge</h3>
   <input type="radio" id="docx-ev" value="docx-ev" name="radio" @click="confirmed = true">
   <label for="docx-ev" @click="confirmed = true">Projekteinzelauftrag</label><br/>
+  <input type="radio" id="docx-ev-engineering" value="docx-ev-engineering" name="radio" @click="confirmed = true">
+  <label for="docx-ev-engineering" @click="confirmed = true">Projekteinzelauftrag - Engineering</label><br/>
+  <input type="radio" id="docx-ev-proj" value="docx-ev-proj" name="radio" @click="confirmed = true">
+  <label for="docx-ev-proj" @click="confirmed = true">Projekteinzelauftrag - Projects</label><br/>
 
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
 
@@ -89,7 +93,22 @@ export default {
       if (document.getElementById('c-ev-k-eng').checked) { cevkEng(); }
 
       // -- Einzelvertrag DOCX --
-      else if (document.getElementById('docx-ev').checked) { docxEvk(); }
+      if (document.getElementById('docx-ev').checked) {
+        localStorage.setItem("docId", "docx-ev");
+        docxEvk();
+      }
+
+      // -- Einzelvertrag DOCX Engineering --
+      if (document.getElementById('docx-ev-engineering').checked) {
+        localStorage.setItem("docId", "docx-ev-engineering");
+        docxEvk();
+      }
+
+      // -- Einzelvertrag DOCX Projects --
+      if (document.getElementById('docx-ev-proj').checked) {
+        localStorage.setItem("docId", "docx-ev-proj")
+        docxEvk();
+      }
     }
   },
   mounted() {

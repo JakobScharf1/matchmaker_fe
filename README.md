@@ -1,24 +1,16 @@
 # matchmaker
 
-## Project setup
+## Build for Development
 ```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
+npm run serve
 ```
 
-### Compiles and minifies for production
+## Build for Testing
 ```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
+npm run build:testing
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Build for Production
+```
+npm run build
+```

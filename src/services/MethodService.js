@@ -515,7 +515,7 @@ function docxEvk(){
         localStorage.getItem("aufgabenbeschreibung")
     ]
 
-    BackendService.postDocData("docxEv", data).then(response => {
+    BackendService.postDocData(localStorage.getItem("docId"), data).then(response => {
             window.open(response.data.toString(), "_blank");
         }
     );
