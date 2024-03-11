@@ -5,14 +5,10 @@
   <h2>2. Wähle den Vertrag aus, den du erstellen willst:</h2>
 
   <h3>Deutsch</h3>
-  <!--<input type="radio" id="c-rv-k" value="c-rv-k" name="radio" @click="confirmed = true">
-  <label for="c-rv-k" @click="confirmed = true">Rahmenvereinbarung Kunde</label><br/>-->
   <input type="radio" id="c-ev-k" value="c-ev-k" name="radio" @click="confirmed = true">
   <label for="c-ev-k" @click="confirmed = true">Projekteinzelauftrag Kunde</label><br/>
 
   <h3>Englisch</h3>
-  <!--<input type="radio" id="c-rv-k-eng" value="c-rv-k-eng" name="radio" @click="confirmed = true">
-  <label for="c-rv-k-eng" @click="confirmed = true">Rahmenvereinbarung Kunde</label><br/>-->
   <input type="radio" id="c-ev-k-eng" value="c-ev-k-eng" name="radio" @click="confirmed = true">
   <label for="c-ev-k-eng" @click="confirmed = true">Projekteinzelauftrag Kunde</label><br/>
 
