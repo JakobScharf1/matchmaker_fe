@@ -46,6 +46,8 @@ export default {
 </script>
 
 <style>
+@import url('./assets/font/font.css');
+
 .hidden {
   display: none;
 }
@@ -63,7 +65,8 @@ export default {
   padding: 5px;
   color: #008783;
   font-family: 'Courier New', monospace;
-  font-size: x-small;
+  font-size: x-small;,
+
 }
 
 .background-image {
