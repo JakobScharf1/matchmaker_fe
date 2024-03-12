@@ -257,7 +257,7 @@ export default {
               localStorage.setItem('adresseKundeStr', this.matches.at(15) + ", " + this.matches.at(16));
               localStorage.setItem('adresseKundeCity', this.matches.at(18) + " " + this.matches.at(17));
               localStorage.setItem('adresseKunde', this.matches.at(15) + ", " + this.matches.at(16) + ", " + this.matches.at(18) + " " + this.matches.at(17))
-              this.adresseKunde = this.matches.at(15) + ", " + this.matches.at(16) + ", " + this.matches.at(18) + " " + this.matches.at(17);
+              this.adresseKunde = this.matches.at(15) + " " + this.matches.at(16) + ", " + this.matches.at(18) + " " + this.matches.at(17);
               localStorage.setItem('ppGesellschaft', this.matches.at(2));
               this.ppGesellschaft = this.matches.at(2);
               localStorage.setItem('kunde', this.matches.at(14));
