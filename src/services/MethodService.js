@@ -160,11 +160,10 @@ function valueMappingTest(){
 }
 
 function getPPName() {
-    let ppNameLocal = "";
     if(localStorage.getItem("ppGesellschaft") !== null || localStorage.getItem("ppGesellschaft") !== ""){
-        return ppNameLocal = localStorage.getItem("ppGesellschaft") + " Projektinhaber: " + localStorage.getItem("projektpartnerName");
+        return localStorage.getItem("ppGesellschaft") + " Projektinhaber: " + localStorage.getItem("projektpartnerName");
     } else {
-        return ppNameLocal = localStorage.getItem("projektpartnerName");
+        return localStorage.getItem("projektpartnerName");
     }
 }
 
