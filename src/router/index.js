@@ -1,9 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 import MatchIDInput from "@/components/MatchIDInput.vue";
 import LoginSSO from "@/views/LoginSSO.vue";
-import chooseTemplate from "@/components/chooseTemplate.vue";
-import chooseTemplateLegal from "@/components/chooseTemplateLegal.vue";
 import chooseTemplateType from "@/components/chooseTemplateType.vue";
+import chooseTemplateFormats from "@/components/chooseTemplateFormats.vue";
+import chooseTemplateDocuSign from "@/components/consultants/chooseTemplateDocuSign.vue";
+import chooseTemplateDocx from "@/components/consultants/chooseTemplateDocx.vue";
+import chooseTemplateLegalDocuSign from "@/components/legal/chooseTemplateLegalDocuSign.vue";
+import chooseTemplateLegalDocx from "@/components/legal/chooseTemplateLegalDocx.vue";
 
 const routes = [
     {
@@ -19,17 +22,31 @@ const routes = [
         component: LoginSSO
     },
     {
-        path: "/chooseTemplate",
-        component: chooseTemplate
+        path: "/chooseTemplateFormats",
+        component: chooseTemplateFormats
     },
     {
         path: "/chooseTemplateType",
         component: chooseTemplateType
     },
     {
-        path: "/chooseTemplateLegal",
-        component: chooseTemplateLegal
+        path: "/chooseTemplateDocuSign",
+        component: chooseTemplateDocuSign
+    },
+    {
+        path: "/consultants/chooseTemplateDocx",
+        component: chooseTemplateDocx
+    },
+    {
+        path: "/chooseTemplateLegalDocuSign",
+        component: chooseTemplateLegalDocuSign
+    },
+    {
+        path: "/chooseTemplateLegalDocx",
+        component: chooseTemplateLegalDocx
     }
+
+
 ]
 
 const router = createRouter({

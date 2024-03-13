@@ -11,86 +11,6 @@
     <dot-loader :loading="isLoading" :color="'#007772'"></dot-loader>
   </div>
   <div class="valueTable" v-if="!isLoading">
-    <!--<table>
-     <tbody>
-       <tr>
-         <td>WeMatch Ansprechpartner:</td>
-         <td v-if="confirmed">{{localStorage.getItem('wematchAnsprechpartnerName')}}</td>
-       </tr>
-        <tr>
-          <td>Projektpartner:</td>
-          <td v-if="confirmed">{{localStorage.getItem('projektpartnerName')}}</td>
-        </tr>
-        <tr>
-          <td>Projektpartner Gesellschaft:</td>
-          <td v-if="confirmed">{{localStorage.getItem('ppGesellschaft')}}</td>
-        </tr>
-       <tr>
-         <td>Projektpartner Adresse:</td>
-         <td v-if="confirmed">{{localStorage.getItem('ppAdresse')}}</td>
-       </tr>
-        <tr>
-          <td>Kunde:</td>
-          <td v-if="confirmed">{{localStorage.getItem('kunde')}}</td>
-        </tr>
-        <tr>
-          <td>Ansprechpartner Kunde:</td>
-          <td v-if="confirmed">{{localStorage.getItem('ansprechpartnerKunde')}}</td>
-        </tr>
-        <tr>
-          <td>Adresse Kunde:</td>
-          <td v-if="confirmed">{{localStorage.getItem('adresseKunde')}}</td>
-        </tr>
-        <tr>
-          <td>Startdatum:</td>
-          <td v-if="confirmed">{{localStorage.getItem('startdatum')}}</td>
-        </tr>
-        <tr>
-          <td>Enddatum:</td>
-          <td v-if="confirmed">{{localStorage.getItem('enddatum')}}</td>
-        </tr>
-        <tr>
-          <td>Kündigungsfrist:</td>
-          <td v-if="confirmed">{{localStorage.getItem('kuendigungsfrist')}}</td>
-        </tr>
-        <tr>
-          <td>Zahlungsziel PP:</td>
-          <td v-if="confirmed">{{localStorage.getItem('zahlungszielPP')}}</td>
-        </tr>
-        <tr>
-          <td>Zahlungsziel Kunde:</td>
-          <td v-if="confirmed">{{localStorage.getItem('zahlungszielKunde')}}</td>
-        </tr>
-        <tr>
-          <td>Vergütungssatz:</td>
-          <td v-if="confirmed">{{localStorage.getItem('verguetungssatz')}}</td>
-        </tr>
-        <tr>
-          <td>EK-Preis:</td>
-          <td v-if="confirmed">{{localStorage.getItem('ek')}}</td>
-        </tr>
-        <tr>
-          <td>VK-Preis:</td>
-          <td v-if="confirmed">{{localStorage.getItem('vk')}}</td>
-        </tr>
-       <tr>
-         <td>Auslastung:</td>
-         <td v-if="confirmed">{{localStorage.getItem('auslastung')}}</td>
-       </tr>
-       <tr>
-         <td>Einsatzort:</td>
-         <td v-if="confirmed">{{localStorage.getItem('einsatzort')}}</td>
-       </tr>
-        <tr>
-          <td>Position:</td>
-          <td v-if="confirmed">{{localStorage.getItem('position')}}</td>
-        </tr>
-        <tr>
-          <td>Aufgabenbeschreibung:</td>
-          <td v-if="confirmed">{{localStorage.getItem('aufgabenbeschreibung')}}</td>
-        </tr>
-      </tbody>
-    </table>-->
     <table>
       <tbody>
       <tr>
@@ -314,7 +234,8 @@ export default {
       if (localStorage.getItem('permission') === "2") {
         router.push('chooseTemplateType');
       } else {
-        router.push('chooseTemplate');
+        localStorage.setItem("vertragsart","Projektpartner")
+        router.push('chooseTemplateFormats');
       }
     },
 

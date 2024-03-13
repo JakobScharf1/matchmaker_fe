@@ -12,15 +12,6 @@
   <input type="radio" id="c-ev-k-eng" value="c-ev-k-eng" name="radio" @click="confirmed = true">
   <label for="c-ev-k-eng" @click="confirmed = true">Projekteinzelauftrag Kunde</label><br/>
 
-  <h3 style="color:red">Individuelle DOCX-Verträge</h3>
-  <input type="radio" id="docx-rv-k" value="docx-rv-k" name="radio" @click="confirmed = true">
-  <label for="docx-rv-k" @click="confirmed = true">Rahmenvereinbarung Kunde</label><br/>
-  <input type="radio" id="docx-rv-k-eng" value="docx-rv-k-eng" name="radio" @click=" confirmed = true">
-  <label for="docx-rv-k-eng" @click="confirmed = true">Rahmenvereinbarung Kunde - Englisch</label><br/>
-  <input type="radio" id="docx-ev-pp" value="docx-ev-pp" name="radio" @click="confirmed = true">
-  <label for="docx-ev-pp" @click="confirmed = true">Projekteinzelauftrag</label><br/>
-  <input type="radio" id="docx-ev-pp-eng" value="docx-ev-pp-eng" name="radio" @click="confirmed = true">
-  <label for="docx-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag - Englisch</label><br/>
 
 
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
@@ -64,7 +55,7 @@ import {
 import {logout} from "@/firebase-config";
 
 export default {
-  name: 'chooseTemplateLegal',
+  name: 'chooseTemplateLegalDocuSign',
   data() {
     return {
       confirmed: false,
@@ -92,23 +83,7 @@ export default {
       if (document.getElementById('c-ev-k-eng').checked) { cevkEng(); }
 
       // -- Einzelvertrag DOCX --
-      if (document.getElementById('docx-ev').checked) {
-        localStorage.setItem("docId", "docx-ev");
-        docxEvk();
-      }
-
-      // -- Einzelvertrag DOCX Engineering --
-      if (document.getElementById('docx-ev-engineering').checked) {
-        localStorage.setItem("docId", "docx-ev-engineering");
-        docxEvk();
-      }
-
-      // -- Einzelvertrag DOCX Projects --
-      if (document.getElementById('docx-ev-proj').checked) {
-        localStorage.setItem("docId", "docx-ev-proj")
-        docxEvk();
-      }
-      if (document.getElementById('docx-rv-k').checked) {
+     if (document.getElementById('docx-rv-k').checked) {
         localStorage.setItem("docId", "docx-rv-k")
         docxEvk();
       }
@@ -122,6 +97,18 @@ export default {
       }
       if (document.getElementById('docx-ev-pp-eng').checked) {
         localStorage.setItem("docId", "docx-ev-pp-eng")
+        docxEvk();
+      }
+
+      // -- Einzelvertrag DOCX Engineering --
+      if (document.getElementById('docx-ev-engineering').checked) {
+        localStorage.setItem("docId", "docx-ev-engineering");
+        docxEvk();
+      }
+
+      // -- Einzelvertrag DOCX Projects --
+      if (document.getElementById('docx-ev-proj').checked) {
+        localStorage.setItem("docId", "docx-ev-proj")
         docxEvk();
       }
 

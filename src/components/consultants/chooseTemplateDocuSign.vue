@@ -37,9 +37,7 @@
   <input type="radio" id="proj-ev-pp-eng" value="proj-ev-pp-eng" name="radio" @click="confirmed = true">
   <label for="proj-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Projects</label><br/>
 
-  <!--<h3 style="color:red">Individuelle DOCX-Verträge</h3>
-  <input type="radio" id="docx-ev-pp" value="docx-ev-pp" name="radio" @click="confirmed = true">
-  <label for="docx-ev-pp" @click="confirmed = true">Projekteinzelauftrag</label><br/>-->
+
 
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
 
@@ -80,7 +78,6 @@ import {
   projevppEng,
   kuendigungsfristTranslator,
   verguetungssatzSwitchPP,
-  docxEvPP,
   sendHelpMail,
   crv
 } from "@/services/MethodService";
@@ -144,7 +141,6 @@ export default {
         crv("c-rv-pp-eng")
       }
 
-
       //RV Projektpartner Englisch - Engineering
       if (document.getElementById('eng-rv-pp-eng').checked) {
         crv("eng-rv-pp-eng")
@@ -166,10 +162,6 @@ export default {
       //EV Projektpartner Englisch - Projects
       if (document.getElementById('proj-ev-pp-eng').checked) {
         projevppEng()
-      }
-      //DOCX EV Projektpartner
-      if (document.getElementById('docx-ev-pp').checked){
-        docxEvPP();
       }
     }
   },
