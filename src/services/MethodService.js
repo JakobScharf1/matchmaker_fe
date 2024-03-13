@@ -159,6 +159,15 @@ function valueMappingTest(){
     );
 }
 
+function getPPName() {
+    let ppNameLocal = "";
+    if(localStorage.getItem("ppGesellschaft") !== null || localStorage.getItem("ppGesellschaft") !== ""){
+        return ppNameLocal = localStorage.getItem("ppGesellschaft") + " Projektinhaber: " + localStorage.getItem("projektpartnerName");
+    } else {
+        return ppNameLocal = localStorage.getItem("projektpartnerName");
+    }
+}
+
 /**
  * Alle nachfolgenden Methoden stellen mit Hilfe des BackendServices eine Anfrage an das Backend, um an den PowerForms-Link zu gelangen.
  * Anschließend werden an den erhaltenen Link alle benötigten Variablen aus dem localStorage angehangen und vorher encodiert, sodass die Übertragung per URI problemlos abläuft.
@@ -167,6 +176,7 @@ function valueMappingTest(){
 // Rahmenvertrag Projektpartner
 function crv(docId){
     let finalURL = "";
+    let ppNameLocal = getPPName();
     BackendService.getPowerForm(docId)
         .then(response =>{
             finalURL = response.data.toString() +
@@ -176,8 +186,7 @@ function crv(docId){
                 "&Projektpartner_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
                 "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
-
-                "&PPName=" + encodeURIComponent(localStorage.getItem('ppGesellschaft')) + " " + encodeURIComponent(localStorage.getItem('projektpartnerName')) +
+                "&PPName=" + encodeURIComponent(ppNameLocal) +
                 "&Adresse1=" + encodeURIComponent(localStorage.getItem('ppStreet')) +
                 "&Adresse2=" + encodeURIComponent(localStorage.getItem('ppCity'));
             window.open(finalURL, "_blank")
@@ -187,6 +196,7 @@ function crv(docId){
 //EV Projektpartner
 function cevpp(){
     let finalURL = "";
+    let ppNameLocal = getPPName();
     BackendService.getPowerForm("c-ev-pp")
         .then(response => {
             finalURL = response.data.toString() +
@@ -198,7 +208,7 @@ function cevpp(){
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
                 "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
-                "&PPName=" + encodeURIComponent(localStorage.getItem('ppGesellschaft')) + " " + encodeURIComponent(localStorage.getItem('projektpartnerName')) +
+                "&PPName=" + encodeURIComponent(ppNameLocal) +
                 "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
                 "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
@@ -225,6 +235,7 @@ function cevpp(){
 //EV Projektpartner - Engineering
 function engevpp(){
     let finalURL = "";
+    let ppNameLocal = getPPName();
     BackendService.getPowerForm("eng-ev-pp")
         .then(response => {
             finalURL = response.data.toString() +
@@ -236,7 +247,7 @@ function engevpp(){
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
                 "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
-                "&PPName=" + encodeURIComponent(localStorage.getItem('ppGesellschaft')) + " " + encodeURIComponent(localStorage.getItem('projektpartnerName')) +
+                "&PPName=" + encodeURIComponent(ppNameLocal) +
                 "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
                 "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
@@ -263,6 +274,7 @@ function engevpp(){
 //EV Projektpartner - Projects
 function projevpp(){
     let finalURL = "";
+    let ppNameLocal = getPPName();
     BackendService.getPowerForm("proj-ev-pp")
         .then(response => {
             finalURL = response.data.toString() +
@@ -274,7 +286,7 @@ function projevpp(){
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
                 "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
-                "&PPName=" + encodeURIComponent(localStorage.getItem('ppGesellschaft')) + " " + encodeURIComponent(localStorage.getItem('projektpartnerName')) +
+                "&PPName=" + encodeURIComponent(ppNameLocal) +
                 "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
                 "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
@@ -301,6 +313,7 @@ function projevpp(){
 //EV Projektpartner Englisch
 function cevppEng(){
     let finalURL = "";
+    let ppNameLocal = getPPName();
     BackendService.getPowerForm("c-ev-pp-eng")
         .then(response => {
             finalURL = response.data.toString() +
@@ -312,7 +325,7 @@ function cevppEng(){
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
                 "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
-                "&PPName=" + encodeURIComponent(localStorage.getItem('ppGesellschaft')) + " " + encodeURIComponent(localStorage.getItem('projektpartnerName')) +
+                "&PPName=" + encodeURIComponent(ppNameLocal) +
                 "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
                 "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
@@ -339,6 +352,7 @@ function cevppEng(){
 //EV Projektpartner Englisch - Engineering
 function engevppEng(){
     let finalURL = "";
+    let ppNameLocal = getPPName();
     BackendService.getPowerForm("eng-ev-pp-eng")
         .then(response => {
             finalURL = response.data.toString() +
@@ -350,7 +364,7 @@ function engevppEng(){
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
                 "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
-                "&PPName=" + encodeURIComponent(localStorage.getItem('ppGesellschaft')) + " " + encodeURIComponent(localStorage.getItem('projektpartnerName')) +
+                "&PPName=" + encodeURIComponent(ppNameLocal) +
                 "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
                 "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
@@ -377,6 +391,7 @@ function engevppEng(){
 //EV Projektpartner Englisch - Projects
 function projevppEng(){
     let finalURL = "";
+    let ppNameLocal = getPPName();
     BackendService.getPowerForm("proj-ev-pp-eng")
         .then(response => {
             finalURL = response.data.toString() +
@@ -388,7 +403,7 @@ function projevppEng(){
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
                 "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
-                "&PPName=" + encodeURIComponent(localStorage.getItem('ppGesellschaft')) + " " + encodeURIComponent(localStorage.getItem('projektpartnerName')) +
+                "&PPName=" + encodeURIComponent(ppNameLocal) +
                 "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
                 "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
@@ -415,6 +430,7 @@ function projevppEng(){
 //EV Kunde
 function cevk(){
     let finalURL = "";
+    let ppNameLocal = getPPName();
     BackendService.getPowerForm("c-ev-k")
         .then(response => {
             finalURL = response.data.toString() +
@@ -441,7 +457,7 @@ function cevk(){
                 "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
                 "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfrist')) +
 
-                "&PPName=" + encodeURIComponent(localStorage.getItem('ppGesellschaft')) + " " + encodeURIComponent(localStorage.getItem('projektpartnerName')) +
+                "&PPName=" + encodeURIComponent(ppNameLocal) +
                 "&Auslastung=" + encodeURIComponent("Nach Abschätzung") +
                 "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
 
@@ -455,6 +471,7 @@ function cevk(){
 //EV Kunde Englisch
 function cevkEng(){
     let finalURL = "";
+    let ppNameLocal = getPPName();
     BackendService.getPowerForm("c-ev-k-eng")
         .then(response => {
             finalURL = response.data.toString() +
@@ -481,7 +498,7 @@ function cevkEng(){
                 "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
                 "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfristEng')) +
 
-                "&PPName=" + encodeURIComponent(localStorage.getItem('ppGesellschaft')) + " " + encodeURIComponent(localStorage.getItem('projektpartnerName')) +
+                "&PPName=" + encodeURIComponent(ppNameLocal) +
                 "&Auslastung=" + encodeURIComponent("after estimation") +
                 "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
 
@@ -495,9 +512,10 @@ function cevkEng(){
 
 //EV Kunde - DOCX
 function docxEvk(){
+    let ppNameLocal = getPPName();
     let data = [
         localStorage.getItem("matchID"),
-        localStorage.getItem("ppGesellschaft") + " " + localStorage.getItem("projektpartnerName"),
+        ppNameLocal,
         localStorage.getItem("wematchAnsprechpartnerName"),
         localStorage.getItem("startdatum"),
         localStorage.getItem("enddatum"),
