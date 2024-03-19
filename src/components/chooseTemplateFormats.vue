@@ -25,14 +25,14 @@ export default {
       if(localStorage.getItem("vertragsart") === "Kundenvertrag"){
         router.push('chooseTemplateLegalDocx');
       } else {
-        router.push('chooseTemplateLegalDocuSign');
+        router.push('chooseTemplateDocx');
       }
     },
     toDocusign() {
       if(localStorage.getItem("vertragsart") === "Projektpartnervertrag"){
         router.push('chooseTemplateLegalDocuSign');
       } else {
-        router.push('chooseTemplateLegalDocuSign');
+        router.push('chooseTemplateDocuSign');
       }
     },
     pageBack(){

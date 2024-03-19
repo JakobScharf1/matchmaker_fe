@@ -58,7 +58,8 @@ class BackendService{
         };
         const requestURI = BACKEND_BASE_URL + "/generateDocx/" + docId;
         console.log("Übermittelt an: " + requestURI);
-        return axios.post(requestURI, requestBody);
+        window.open(axios.post(requestURI, requestBody), "_blank");
+
     }
 }
 
