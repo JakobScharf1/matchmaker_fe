@@ -2,17 +2,47 @@
   <div>
     <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
   </div>
-  <h2>2. Wähle den Vertrag aus, den du erstellen willst:</h2>
 
-  <h3>Deutsch</h3>
-  <input type="radio" id="c-ev-k" value="c-ev-k" name="radio" @click="confirmed = true">
-  <label for="c-ev-k" @click="confirmed = true">Projekteinzelauftrag Kunde</label><br/>
+  <h2>Wähle den Vertrag aus, den du erstellen willst:</h2>
 
-  <h3>Englisch</h3>
-  <input type="radio" id="c-ev-k-eng" value="c-ev-k-eng" name="radio" @click="confirmed = true">
-  <label for="c-ev-k-eng" @click="confirmed = true">Projekteinzelauftrag Kunde</label><br/>
+  <h3>Contracts - Rahmenverträge</h3>
+  <input type="radio" id="c-rv-pp" value="c-rv-pp" name="radio" @click="confirmed = true">
+  <label for="c-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+  <input type="radio" id="eng-rv-pp" value="eng-rv-pp" name="radio" @click="confirmed = true">
+  <label for="eng-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner - Engineering</label><br/>
+  <input type="radio" id="proj-rv-pp" value="proj-rv-pp" name="radio" @click="confirmed = true">
+  <label for="proj-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner - Projects</label><br/>
 
+  <h3>Contracts - Einzelverträge</h3>
+  <input type="radio" id="c-ev-pp" value="c-ev-pp" name="radio" @click="confirmed = true">
+  <label for="c-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
+  <input type="radio" id="eng-ev-pp" value="eng-ev-pp" name="radio" @click="confirmed = true">
+  <label for="eng-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Engineering</label><br/>
+  <input type="radio" id="proj-rv-pp" value="proj-ev-pp" name="radio" @click="confirmed = true">
+  <label for="proj-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Projects</label><br/>
 
+  <h3>Contracts - Rahmenverträge - Englisch</h3>
+  <input type="radio" id="c-rv-pp-eng" value="c-rv-pp-eng" name="radio" @click="confirmed = true">
+  <label for="c-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+  <input type="radio" id="eng-rv-pp-eng" value="eng-rv-pp-eng" name="radio" @click="confirmed = true">
+  <label for="eng-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner - Engineering</label><br/>
+  <!--<input type="radio" id="proj-rv-pp-eng" value="proj-rv-pp-eng" name="radio" @click="confirmed = true">
+  <label for="proj-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner - Projects</label><br/>-->
+
+  <h3>Contracts - Einzelverträge - Englisch</h3>
+  <input type="radio" id="c-ev-pp-eng" value="c-ev-pp-eng" name="radio" @click="confirmed = true">
+  <label for="c-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
+  <input type="radio" id="eng-ev-pp-eng" value="eng-ev-pp-eng" name="radio" @click="confirmed = true">
+  <label for="eng-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Engineering</label><br/>
+  <input type="radio" id="proj-ev-pp-eng" value="proj-ev-pp-eng" name="radio" @click="confirmed = true">
+  <label for="proj-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Projects</label><br/>
+
+  <h3>Contracts - Einzelverträge - 2 Unterschriftsblöcke</h3>
+  <input type="radio" id="c-ev-pp-2" value="c-ev-pp-2" name="radio" @click="confirmed = true">
+  <label for="c-ev-pp-2" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+  <!--<h3 style="color:red">Individuelle DOCX-Verträge</h3>
+  <input type="radio" id="docx-ev-pp" value="docx-ev-pp" name="radio" @click="confirmed = true">
+  <label for="docx-ev-pp" @click="confirmed = true">Projekteinzelauftrag</label><br/>-->
 
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
 
@@ -45,20 +75,26 @@
 <script>
 import router from "@/router";
 import {
+  cevpp,
+  cevppEng,
+  engevpp,
+  //projevpp,
+  engevppEng,
+  projevppEng,
   kuendigungsfristTranslator,
-  verguetungssatzSwitchKunde,
-  cevk,
-  cevkEng,
-  docxEvk,
-  sendHelpMail
+  verguetungssatzSwitchPP,
+  //docxEvPP,
+  sendHelpMail,
+  crv
 } from "@/services/MethodService";
 import {logout} from "@/firebase-config";
 
 export default {
-  name: 'chooseTemplateLegalDocuSign',
+  name: "chooseTemplateLegalDocuSign",
   data() {
     return {
       confirmed: false,
+      verguetungssatzList: [],
       empfaengerMail: localStorage.getItem('projektpartnerMail'),
       empfaengerName: localStorage.getItem('projektpartnerName'),
       absenderName: localStorage.getItem('wematchAnsprechpartnerName'),
@@ -69,51 +105,82 @@ export default {
   },
   methods: {
     logout,
-    pageBack(){
+    pageBack() {
       router.go(-1);
     },
     chooseTemplate() {
-      verguetungssatzSwitchKunde()
-      kuendigungsfristTranslator()
+      verguetungssatzSwitchPP();
+      kuendigungsfristTranslator();
 
-      // --- Einzelvertrag ---
-      if (document.getElementById('c-ev-k').checked) { cevk(); }
-
-      // -- Einzelvertrag englisch --
-      if (document.getElementById('c-ev-k-eng').checked) { cevkEng(); }
-
-      // -- Einzelvertrag DOCX --
-     if (document.getElementById('docx-rv-k').checked) {
-        localStorage.setItem("docId", "docx-rv-k")
-        docxEvk();
-      }
-      if (document.getElementById('docx-rv-k-eng').checked) {
-        localStorage.setItem("docId", "docx-rv-k-eng")
-        docxEvk();
-      }
-      if (document.getElementById('docx-ev-pp').checked) {
-        localStorage.setItem("docId", "docx-ev-pp")
-        docxEvk();
-      }
-      if (document.getElementById('docx-ev-pp-eng').checked) {
-        localStorage.setItem("docId", "docx-ev-pp-eng")
-        docxEvk();
+      //RV Projektpartner
+      if (document.getElementById('c-rv-pp').checked) {
+        crv("c-rv-pp");
       }
 
-      // -- Einzelvertrag DOCX Engineering --
-      if (document.getElementById('docx-ev-engineering').checked) {
-        localStorage.setItem("docId", "docx-ev-engineering");
-        docxEvk();
+      //RV Projektpartner - Engineering
+      if (document.getElementById('eng-rv-pp').checked) {
+        crv("eng-rv-pp");
       }
 
-      // -- Einzelvertrag DOCX Projects --
-      if (document.getElementById('docx-ev-proj').checked) {
-        localStorage.setItem("docId", "docx-ev-proj")
-        docxEvk();
+      //RV Projektpartner - Projects
+      if (document.getElementById('proj-rv-pp').checked) {
+        crv("proj-rv-pp");
       }
 
+      //EV Projektpartner
+      if (document.getElementById('c-ev-pp').checked) {
+        cevpp();
+      }
+
+      //EV Projektpartner - Engineering
+      if (document.getElementById('eng-ev-pp').checked) {
+        engevpp();
+      }
+
+      //EV Projektpartner - Projects
+      //if (document.getElementById('proj-ev-pp').checked) {
+       // projevpp();
+      //}
+
+      //RV Projektpartner Englisch
+      if (document.getElementById('c-rv-pp-eng').checked) {
+        crv("c-rv-pp-eng")
+      }
+
+
+      //RV Projektpartner Englisch - Engineering
+      if (document.getElementById('eng-rv-pp-eng').checked) {
+        crv("eng-rv-pp-eng")
+      }
+
+      //RV projektpartner Englisch - Projects
+     // if (document.getElementById('proj-rv-pp-eng').checked) {
+       // crv("proj-rv-pp-eng")
+     // }
+
+      //EV Projektpartner Englisch
+      if (document.getElementById('c-ev-pp-eng').checked) {
+        cevppEng()
+      }
+      //EV Projektpartner Englisch - Engineering
+      if (document.getElementById('eng-ev-pp-eng').checked) {
+        engevppEng()
+      }
+      //EV Projektpartner Englisch - Projects
+      if (document.getElementById('proj-ev-pp-eng').checked) {
+        projevppEng()
+      }
+      //DOCX EV Projektpartner
+     // if (document.getElementById('docx-ev-pp').checked){
+      //  docxEvPP();
+      //}
+
+      if (document.getElementById('c-ev-pp-2').checked) {
+        cevpp();
+      }
     }
   },
+
   mounted() {
     localStorage.setItem("empfaengerName", this.empfaengerName);
     localStorage.setItem("empfaengerMail", this.empfaengerMail);
@@ -124,6 +191,7 @@ export default {
       sendHelpMail();
     })
   },
+
   watch: {
     empfaengerName(newValue) {
       localStorage.setItem("empfaengerName", newValue);
@@ -159,20 +227,6 @@ export default {
   right: 10px;
 }
 
-.bestatigen-button {
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-  pointer-events: none;
-}
-h3 {
-  font-size: 1.5rem;
-  margin-top: 2rem;
-}
-
-[type="radio"] {
-  margin-right: 5px;
-}
-
 [type="email"] {
   margin-left: 0.5rem;
   margin-right: 2rem;
@@ -180,6 +234,21 @@ h3 {
 
 [type="text"] {
   margin-left: 0.5rem;
+}
+
+.bestatigen-button {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  pointer-events: none;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+}
+
+[type="radio"] {
+  margin-right: 5px;
 }
 
 </style>

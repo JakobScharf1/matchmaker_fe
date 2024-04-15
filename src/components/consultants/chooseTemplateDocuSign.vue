@@ -84,7 +84,7 @@ import {
 import {logout} from "@/firebase-config";
 
 export default {
-  name: "chooseTemplate",
+  name: "chooseTemplateDocuSign",
   data() {
     return {
       confirmed: false,
@@ -147,9 +147,9 @@ export default {
       }
 
       //RV projektpartner Englisch - Projects
-      if (document.getElementById('proj-rv-pp-eng').checked) {
+     /* if (document.getElementById('proj-rv-pp-eng').checked) {
         crv("proj-rv-pp-eng")
-      }
+      }*/
 
       //EV Projektpartner Englisch
       if (document.getElementById('c-ev-pp-eng').checked) {

@@ -232,10 +232,10 @@ export default {
      */
     goToChooseTemplate() {
       if (localStorage.getItem('permission') === "2") {
-        router.push('chooseTemplateType');
+        router.push('chooseTemplateFormats');
       } else {
         localStorage.setItem("vertragsart","Projektpartner")
-        router.push('chooseTemplateFormats');
+        router.push('chooseTemplateDocuSign');
       }
     },
 

@@ -22,18 +22,10 @@ export default {
   methods: {
     logout,
     toDocx() {
-      if(localStorage.getItem("vertragsart") === "Kundenvertrag"){
         router.push('chooseTemplateLegalDocx');
-      } else {
-        router.push('chooseTemplateDocx');
-      }
-    },
+      },
     toDocusign() {
-      if(localStorage.getItem("vertragsart") === "Projektpartnervertrag"){
         router.push('chooseTemplateLegalDocuSign');
-      } else {
-        router.push('chooseTemplateDocuSign');
-      }
     },
     pageBack(){
       router.go(-1);
