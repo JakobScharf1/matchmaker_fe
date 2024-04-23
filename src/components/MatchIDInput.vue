@@ -282,6 +282,8 @@ export default {
       if (encodeURIComponent(newValue).length > 4000) {
         this.aufgabenbeschreibungError = true;
         this.confirmed = false;
+      } else {
+        this.aufgabenbeschreibungError = false;
       }
     }
   }

@@ -6,38 +6,38 @@
   <h2>Wähle den Vertrag aus, den du erstellen willst:</h2>
 
   <h3>Contracts - Rahmenverträge</h3>
-  <input type="radio" id="c-rv-pp" value="c-rv-pp" name="radio" @click="confirmed = true">
-  <label for="c-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
-  <input type="radio" id="eng-rv-pp" value="eng-rv-pp" name="radio" @click="confirmed = true">
-  <label for="eng-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner - Engineering</label><br/>
-  <input type="radio" id="proj-rv-pp" value="proj-rv-pp" name="radio" @click="confirmed = true">
-  <label for="proj-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner - Projects</label><br/>
+  <input type="radio" id="c-rv-pp" value="c-rv-pp" name="radio" @click="confSecond(false)">
+  <label for="c-rv-pp" @click="confSecond(false)">Rahmenvertrag Projektpartner</label><br/>
+  <input type="radio" id="eng-rv-pp" value="eng-rv-pp" name="radio" @click="confSecond(false)">
+  <label for="eng-rv-pp" @click="confSecond(false)">Rahmenvertrag Projektpartner - Engineering</label><br/>
+  <input type="radio" id="proj-rv-pp" value="proj-rv-pp" name="radio" @click="confSecond(false)">
+  <label for="proj-rv-pp" @click="confSecond(false)">Rahmenvertrag Projektpartner - Projects</label><br/>
 
   <h3>Contracts - Einzelverträge</h3>
-  <input type="radio" id="c-ev-pp" value="c-ev-pp" name="radio" @click="confirmed = true">
-  <label for="c-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
-  <input type="radio" id="eng-ev-pp" value="eng-ev-pp" name="radio" @click="confirmed = true">
-  <label for="eng-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Engineering</label><br/>
-  <input type="radio" id="proj-rv-pp" value="proj-ev-pp" name="radio" @click="confirmed = true">
-  <label for="proj-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Projects</label><br/>
+  <input type="radio" id="c-ev-pp" value="c-ev-pp" name="radio" @click="confSecond(false)">
+  <label for="c-ev-pp" @click="confSecond(false)">Projekteinzelauftrag Projektpartner</label><br/>
+  <input type="radio" id="eng-ev-pp" value="eng-ev-pp" name="radio" @click="confSecond(false)">
+  <label for="eng-ev-pp" @click="confSecond(false)">Projekteinzelauftrag Projektpartner - Engineering</label><br/>
+  <input type="radio" id="proj-rv-pp" value="proj-ev-pp" name="radio" @click="confSecond(false)">
+  <label for="proj-ev-pp" @click="confSecond(false)">Projekteinzelauftrag Projektpartner - Projects</label><br/>
 
   <h3>Contracts - Rahmenverträge - Englisch</h3>
-  <input type="radio" id="c-rv-pp-eng" value="c-rv-pp-eng" name="radio" @click="confirmed = true">
-  <label for="c-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
-  <input type="radio" id="eng-rv-pp-eng" value="eng-rv-pp-eng" name="radio" @click="confirmed = true">
-  <label for="eng-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner - Engineering</label><br/>
+  <input type="radio" id="c-rv-pp-eng" value="c-rv-pp-eng" name="radio" @click="confSecond(false)">
+  <label for="c-rv-pp-eng" @click="confSecond(false)">Rahmenvertrag Projektpartner</label><br/>
+  <input type="radio" id="eng-rv-pp-eng" value="eng-rv-pp-eng" name="radio" @click="confSecond(false)">
+  <label for="eng-rv-pp-eng" @click="confSecond(false)">Rahmenvertrag Projektpartner - Engineering</label><br/>
 
   <h3>Contracts - Einzelverträge - Englisch</h3>
-  <input type="radio" id="c-ev-pp-eng" value="c-ev-pp-eng" name="radio" @click="confirmed = true">
-  <label for="c-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
-  <input type="radio" id="eng-ev-pp-eng" value="eng-ev-pp-eng" name="radio" @click="confirmed = true">
-  <label for="eng-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Engineering</label><br/>
-  <input type="radio" id="proj-ev-pp-eng" value="proj-ev-pp-eng" name="radio" @click="confirmed = true">
-  <label for="proj-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Projects</label><br/>
+  <input type="radio" id="c-ev-pp-eng" value="c-ev-pp-eng" name="radio" @click="confSecond(false)">
+  <label for="c-ev-pp-eng" @click="confSecond(false)">Projekteinzelauftrag Projektpartner</label><br/>
+  <input type="radio" id="eng-ev-pp-eng" value="eng-ev-pp-eng" name="radio" @click="confSecond(false)">
+  <label for="eng-ev-pp-eng" @click="confSecond(false)">Projekteinzelauftrag Projektpartner - Engineering</label><br/>
+  <input type="radio" id="proj-ev-pp-eng" value="proj-ev-pp-eng" name="radio" @click="confSecond(false)">
+  <label for="proj-ev-pp-eng" @click="confSecond(false)">Projekteinzelauftrag Projektpartner - Projects</label><br/>
 
   <h3>Contracts - Einzelverträge - 2 Unterschriftsblöcke</h3>
-  <input type="radio" id="c-ev-k-2" value="c-ev-k-2" name="radio" @click="confirmed = true">
-  <label for="c-ev-k-2" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+  <input type="radio" id="c-ev-k-2" value="c-ev-k-2" name="radio" @click="confSecond(true)">
+  <label for="c-ev-k-2" @click="confSecond(true)">Rahmenvertrag Projektpartner</label><br/>
 
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
 
@@ -113,6 +113,16 @@ export default {
     pageBack() {
       router.go(-1);
     },
+    confSecond(cond) {
+      if(cond){
+        this.confirmed = true;
+        this.zweiterEmpfaenger = true;
+      } else if(!cond){
+        this.confirmed = true;
+        this.zweiterEmpfaenger = false;
+      }
+    },
+
     chooseTemplate() {
       verguetungssatzSwitchPP();
       kuendigungsfristTranslator();
@@ -198,6 +208,12 @@ export default {
     },
     empfaengerMail(newValue) {
       localStorage.setItem("empfaengerMail", newValue);
+    },
+    empfaengerName2(newValue) {
+      localStorage.setItem("empfaengerName2", newValue);
+    },
+    empfaengerMail2(newValue) {
+      localStorage.setItem("empfaengerMail2", newValue);
     },
     absenderName(newValue) {
       localStorage.setItem("absenderName", newValue);
