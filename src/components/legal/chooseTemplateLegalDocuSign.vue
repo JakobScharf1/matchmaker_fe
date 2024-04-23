@@ -85,7 +85,8 @@ import {
   verguetungssatzSwitchPP,
   //docxEvPP,
   sendHelpMail,
-  crv
+  crv,
+  cevk2
 } from "@/services/MethodService";
 import {logout} from "@/firebase-config";
 
@@ -176,7 +177,7 @@ export default {
       //}
 
       if (document.getElementById('c-ev-pp-2').checked) {
-        cevpp();
+        cevk2()
       }
     }
   },

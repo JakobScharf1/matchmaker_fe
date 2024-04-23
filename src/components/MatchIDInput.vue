@@ -135,6 +135,7 @@ export default {
       ek: "",
       vk: "",
       auslastung: "",
+      auslastungEng: "",
       einsatzort: "",
       position: "",
       aufgabenbeschreibung: "",
@@ -174,10 +175,10 @@ export default {
               this.startdatum = this.dateFormatter(this.matches.at(11));
               localStorage.setItem('enddatum', this.dateFormatter(this.matches.at(12)));
               this.enddatum = this.dateFormatter(this.matches.at(12));
-              localStorage.setItem('adresseKundeStr', this.matches.at(15) + ", " + this.matches.at(16));
+              localStorage.setItem('adresseKundeStr', this.matches.at(15) + " " + this.matches.at(16));
               localStorage.setItem('adresseKundeCity', this.matches.at(18) + " " + this.matches.at(17));
-              localStorage.setItem('adresseKunde', this.matches.at(15) + ", " + this.matches.at(16) + ", " + this.matches.at(18) + " " + this.matches.at(17))
-              this.adresseKunde = this.matches.at(15) + " " + this.matches.at(16) + ", " + this.matches.at(18) + " " + this.matches.at(17);
+              localStorage.setItem('adresseKunde', this.matches.at(15) + " " + this.matches.at(16) + " " + this.matches.at(18) + " " + this.matches.at(17))
+              this.adresseKunde = this.matches.at(15) + " " + this.matches.at(16) + " " + this.matches.at(18) + " " + this.matches.at(17);
               localStorage.setItem('ppGesellschaft', this.matches.at(2));
               this.ppGesellschaft = this.matches.at(2);
               localStorage.setItem('kunde', this.matches.at(14));
@@ -209,6 +210,8 @@ export default {
               this.ppAdresse = this.matches.at(26) + " " + this.matches.at(27) + ", " + this.matches.at(28) + " " + this.matches.at(29)
               localStorage.setItem('auslastung', this.matches.at(31) * this.matches.at(30) + " Stunden pro Woche");
               this.auslastung = this.matches.at(31) * this.matches.at(30) + " Stunden pro Woche";
+              localStorage.setItem('auslastungEng', this.matches.at(31) * this.matches.at(30) + " Hours per week");
+              this.auslastungEng = this.matches.at(31) * this.matches.at(30) + " Hours per week";
               localStorage.setItem('addAgreements', this.matches.at(32));
               this.addAgreements = this.matches.at(32);
 

@@ -81,16 +81,13 @@ export default {
       if (this.selectedContract) {
         localStorage.setItem("docId", this.selectedContract);
         docxEvk();
-      } else {
-        alert("Bitte wähle einen Vertrag aus.");
       }
     },
     toggleSelection(contractId) {
       if (this.selectedContract === contractId) {
         this.selectedContract = contractId;
-        this.confirmed = true;
       }
-
+        this.confirmed = true;
     }
   },
   mounted() {
