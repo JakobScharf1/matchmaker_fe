@@ -96,6 +96,7 @@
       </tbody>
     </table>
   </div>
+  <p class="error" v-if="aufgabenbeschreibungError">Die Aufgabenbeschreibung überschreitet die Grenze von 4000 Zeichen.<br />Bitte kürze sie in bullhorn und gib die Match-ID erneut ein!</p>
   <button class="btn weiter-button-gen" v-bind:class="{'weiter-button': !confirmed, 'btn-primary': confirmed}" @click="goToChooseTemplate"><b>Weiter</b></button><br />
   <div id="buttonContainer">
     <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
@@ -117,6 +118,7 @@ export default {
       matches: [],
       confirmed: false,
       isLoading: false,
+      aufgabenbeschreibungError: false,
       wematchAnsprechpartnerName: "",
       wematchAnsprechpartnerMail: "",
       projektpartnerName: "",
@@ -272,6 +274,14 @@ export default {
       sendHelpMail();
     })
   },
+  watch: {
+    aufgabenbeschreibung(newValue) {
+      if (encodeURIComponent(newValue).length > 4000) {
+        this.aufgabenbeschreibungError = true;
+        this.confirmed = false;
+      }
+    }
+  }
 }
 </script>
 
@@ -285,6 +295,11 @@ export default {
   position: fixed;
   top: 10px;
   right: 10px;
+}
+
+.error {
+  color: red;
+  margin-top: 15px;
 }
 
 .secondtitle {
