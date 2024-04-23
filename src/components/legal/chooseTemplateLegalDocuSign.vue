@@ -26,8 +26,6 @@
   <label for="c-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
   <input type="radio" id="eng-rv-pp-eng" value="eng-rv-pp-eng" name="radio" @click="confirmed = true">
   <label for="eng-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner - Engineering</label><br/>
-  <!--<input type="radio" id="proj-rv-pp-eng" value="proj-rv-pp-eng" name="radio" @click="confirmed = true">
-  <label for="proj-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner - Projects</label><br/>-->
 
   <h3>Contracts - Einzelverträge - Englisch</h3>
   <input type="radio" id="c-ev-pp-eng" value="c-ev-pp-eng" name="radio" @click="confirmed = true">
@@ -38,11 +36,8 @@
   <label for="proj-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Projects</label><br/>
 
   <h3>Contracts - Einzelverträge - 2 Unterschriftsblöcke</h3>
-  <input type="radio" id="c-ev-pp-2" value="c-ev-pp-2" name="radio" @click="confirmed = true">
-  <label for="c-ev-pp-2" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
-  <!--<h3 style="color:red">Individuelle DOCX-Verträge</h3>
-  <input type="radio" id="docx-ev-pp" value="docx-ev-pp" name="radio" @click="confirmed = true">
-  <label for="docx-ev-pp" @click="confirmed = true">Projekteinzelauftrag</label><br/>-->
+  <input type="radio" id="c-ev-k-2" value="c-ev-k-2" name="radio" @click="confirmed = true">
+  <label for="c-ev-k-2" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
 
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
 
@@ -57,6 +52,14 @@
   <input v-model="empfaengerMail" type="email" id="empfaenger_mail">
   <label for="empfaenger_name">Name:</label>
   <input v-model="empfaengerName" type="text" id="empfaenger_mail"><br />
+
+  <div v-if="zweiterEmpfaenger">
+    <h3>Vertrag Zweiter Empfänger</h3>
+    <label for="empfaenger_mail2">E-Mail:</label>
+    <input v-model="empfaengerMail2" type="email" id="empfaenger_mail2">
+    <label for="empfaenger_name2">Name:</label>
+    <input v-model="empfaengerName2" type="text" id="empfaenger_mail2"><br />
+  </div>
 
   <h3>Consultant in CC</h3>
   <label for="cc_mail">E-Mail:</label>
@@ -78,12 +81,10 @@ import {
   cevpp,
   cevppEng,
   engevpp,
-  //projevpp,
   engevppEng,
   projevppEng,
   kuendigungsfristTranslator,
   verguetungssatzSwitchPP,
-  //docxEvPP,
   sendHelpMail,
   crv,
   cevk2
@@ -96,12 +97,15 @@ export default {
     return {
       confirmed: false,
       verguetungssatzList: [],
-      empfaengerMail: localStorage.getItem('projektpartnerMail'),
       empfaengerName: localStorage.getItem('projektpartnerName'),
+      empfaengerMail: localStorage.getItem('projektpartnerMail'),
+      empfaengerName2: "",
+      empfaengerMail2: "",
       absenderName: localStorage.getItem('wematchAnsprechpartnerName'),
       absenderMail: localStorage.getItem('wematchAnsprechpartnerMail'),
       ccName: "",
       ccMail: "",
+      zweiterEmpfaenger: false,
     }
   },
   methods: {
@@ -137,11 +141,6 @@ export default {
       if (document.getElementById('eng-ev-pp').checked) {
         engevpp();
       }
-
-      //EV Projektpartner - Projects
-      //if (document.getElementById('proj-ev-pp').checked) {
-       // projevpp();
-      //}
 
       //RV Projektpartner Englisch
       if (document.getElementById('c-rv-pp-eng').checked) {
