@@ -44,6 +44,10 @@ const routes = [
     {
         path: "/chooseTemplateLegalDocx",
         component: chooseTemplateLegalDocx
+    },
+    {
+        path: "/chooseTemplateDocx",
+        component: chooseTemplateDocx
     }
 
 

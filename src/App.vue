@@ -8,7 +8,7 @@
 
   <RouterView/>
   <div class="bottom-right">
-    <p>MatchMaker v1.1.2 made with &#10084;&#65039; by WeMatch Team Operations</p>
+    <p>MatchMaker v1.2 made with &#10084;&#65039; by WeMatch Team Operations</p>
   </div>
 </template>
 

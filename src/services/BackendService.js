@@ -49,7 +49,7 @@ class BackendService{
      * @param dataList Die Liste der Daten, die in das Dokument eingefügt werden soll bzw. die Match-Daten.
      * @returns {Promise<axios.AxiosResponse<any>>} Enthält die URL des erstellen DOCX-Dokuments.
      */
-    postDocData(docId, dataList){
+    async postDocData(docId, dataList) {
         const BACKEND_BASE_URL = process.env.VUE_APP_BACKEND_URL;
         const token = localStorage.getItem("token");
         const requestBody = {
@@ -59,6 +59,7 @@ class BackendService{
         const requestURI = BACKEND_BASE_URL + "/generateDocx/" + docId;
         console.log("Übermittelt an: " + requestURI);
         return axios.post(requestURI, requestBody);
+
     }
 }
 
