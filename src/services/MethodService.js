@@ -428,10 +428,10 @@ function projevppEng(){
 }
 
 //EV Kunde
-function cevk(){
+function cevk(docId){
     let finalURL = "";
     let ppNameLocal = getPPName();
-    BackendService.getPowerForm("c-ev-k")
+    BackendService.getPowerForm(docId)
         .then(response => {
             finalURL = response.data.toString() +
                 "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
@@ -445,7 +445,7 @@ function cevk(){
                 "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
                 "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('jobOwner')) +
                 "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
                 "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
@@ -468,16 +468,18 @@ function cevk(){
         });
 }
 
-function cevk2(){
+function cevk2(docId){
     let finalURL = "";
     let ppNameLocal = getPPName();
-    BackendService.getPowerForm("c-ev-pp-2")
+    BackendService.getPowerForm(docId)
         .then(response => {
             finalURL = response.data.toString() +
                 "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
                 "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
                 "&Kunde_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
                 "&Kunde_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
+                "&Kunde2_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName2')) +
+                "&Kunde2_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail2')) +
                 "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
@@ -485,7 +487,7 @@ function cevk2(){
                 "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
                 "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('jobOwner')) +
                 "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
                 "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
@@ -509,10 +511,10 @@ function cevk2(){
 }
 
 //EV Kunde Englisch
-function cevkEng(){
+function cevkEng(docId){
     let finalURL = "";
     let ppNameLocal = getPPName();
-    BackendService.getPowerForm("c-ev-k-eng")
+    BackendService.getPowerForm(docId)
         .then(response => {
             finalURL = response.data.toString() +
                 "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
@@ -526,7 +528,7 @@ function cevkEng(){
                 "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
                 "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('jobOwner')) +
                 "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
                 "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
@@ -547,6 +549,50 @@ function cevkEng(){
             ;
             window.open(finalURL, "_blank");
         });
+
+}
+
+function cevkEng2(docId){
+    let finalURL = "";
+    let ppNameLocal = getPPName();
+    BackendService.getPowerForm(docId)
+        .then(response => {
+            finalURL = response.data.toString() +
+                "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
+                "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
+                "&Kunde_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
+                "&Kunde_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
+                "&Kunde2_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName2')) +
+                "&Kunde2_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail2')) +
+                "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
+                "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
+
+                "&Kunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
+                "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
+                "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
+
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('jobOwner')) +
+                "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
+                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
+
+                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
+                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
+                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
+
+                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
+                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
+                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfristEng')) +
+
+                "&PPName=" + encodeURIComponent(ppNameLocal) +
+                "&Auslastung=" + encodeURIComponent("after estimation") +
+                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
+
+                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
+                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
+            ;
+            window.open(finalURL, "_blank");
+        });
+
 }
 
 
@@ -572,7 +618,8 @@ function docxEvk(){
         localStorage.getItem("auslastung"),
         localStorage.getItem("auslastungEng"),
         localStorage.getItem("aufgabenbeschreibung"),
-        localStorage.getItem("addAgreements")
+        localStorage.getItem("addAgreements"),
+        localStorage.getItem("jobOwner")
     ]
 
     BackendService.postDocData(localStorage.getItem("docId"), data).then(response => {
@@ -602,3 +649,4 @@ export { docxEvk };
 export { sendHelpMail };
 export { docxEvPP };
 export { cevk2 };
+export { cevkEng2 };

@@ -142,6 +142,7 @@ export default {
       position: "",
       aufgabenbeschreibung: "",
       addAgreements: "",
+      jobOwner: "",
     }
   },
   methods: {
@@ -205,7 +206,7 @@ export default {
               this.vk = this.preisFormatter(this.matches.at(7))
               localStorage.setItem('ansprechpartnerKunde', this.matches.at(24) + " " + this.matches.at(25));
               this.ansprechpartnerKunde = this.matches.at(24) + " " + this.matches.at(25);
-              localStorage.setItem('matchID', this.matchIdFromInput);
+              localStorage.setItem('matchID','EZ-' + this.matchIdFromInput);
               localStorage.setItem('ppStreet', this.matches.at(26) + " " + this.matches.at(27));
               localStorage.setItem('ppCity', this.matches.at(28) + " " + this.matches.at(29));
               localStorage.setItem('ppAdresse', this.matches.at(26) + " " + this.matches.at(27) + ", " + this.matches.at(28) + " " + this.matches.at(29))
@@ -216,6 +217,8 @@ export default {
               this.auslastungEng = this.matches.at(31) * this.matches.at(30) + " Hours per week";
               localStorage.setItem('addAgreements', this.matches.at(32));
               this.addAgreements = this.matches.at(32);
+              localStorage.setItem('jobOwner', this.matches.at(33));
+              this.jobOwner = this.matches.at(33);
 
               this.isLoading = false;
             //}

@@ -3,41 +3,66 @@
     <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
   </div>
 
-  <h2>Wähle den Vertrag aus, den du erstellen willst:</h2>
+  <h2>2. Wähle den Vertrag aus, den du erstellen willst:</h2>
 
-  <h3>Contracts - Rahmenverträge</h3>
-  <input type="radio" id="c-rv-pp" value="c-rv-pp" name="radio" @click="confSecond(false)">
-  <label for="c-rv-pp" @click="confSecond(false)">Rahmenvertrag Projektpartner</label><br/>
-  <input type="radio" id="eng-rv-pp" value="eng-rv-pp" name="radio" @click="confSecond(false)">
-  <label for="eng-rv-pp" @click="confSecond(false)">Rahmenvertrag Projektpartner - Engineering</label><br/>
-  <input type="radio" id="proj-rv-pp" value="proj-rv-pp" name="radio" @click="confSecond(false)">
-  <label for="proj-rv-pp" @click="confSecond(false)">Rahmenvertrag Projektpartner - Projects</label><br/>
+  <h2>Deutsch</h2>
 
-  <h3>Contracts - Einzelverträge</h3>
-  <input type="radio" id="c-ev-pp" value="c-ev-pp" name="radio" @click="confSecond(false)">
-  <label for="c-ev-pp" @click="confSecond(false)">Projekteinzelauftrag Projektpartner</label><br/>
-  <input type="radio" id="eng-ev-pp" value="eng-ev-pp" name="radio" @click="confSecond(false)">
-  <label for="eng-ev-pp" @click="confSecond(false)">Projekteinzelauftrag Projektpartner - Engineering</label><br/>
-  <input type="radio" id="proj-rv-pp" value="proj-ev-pp" name="radio" @click="confSecond(false)">
-  <label for="proj-ev-pp" @click="confSecond(false)">Projekteinzelauftrag Projektpartner - Projects</label><br/>
-
-  <h3>Contracts - Rahmenverträge - Englisch</h3>
-  <input type="radio" id="c-rv-pp-eng" value="c-rv-pp-eng" name="radio" @click="confSecond(false)">
-  <label for="c-rv-pp-eng" @click="confSecond(false)">Rahmenvertrag Projektpartner</label><br/>
-  <input type="radio" id="eng-rv-pp-eng" value="eng-rv-pp-eng" name="radio" @click="confSecond(false)">
-  <label for="eng-rv-pp-eng" @click="confSecond(false)">Rahmenvertrag Projektpartner - Engineering</label><br/>
-
-  <h3>Contracts - Einzelverträge - Englisch</h3>
-  <input type="radio" id="c-ev-pp-eng" value="c-ev-pp-eng" name="radio" @click="confSecond(false)">
-  <label for="c-ev-pp-eng" @click="confSecond(false)">Projekteinzelauftrag Projektpartner</label><br/>
-  <input type="radio" id="eng-ev-pp-eng" value="eng-ev-pp-eng" name="radio" @click="confSecond(false)">
-  <label for="eng-ev-pp-eng" @click="confSecond(false)">Projekteinzelauftrag Projektpartner - Engineering</label><br/>
-  <input type="radio" id="proj-ev-pp-eng" value="proj-ev-pp-eng" name="radio" @click="confSecond(false)">
-  <label for="proj-ev-pp-eng" @click="confSecond(false)">Projekteinzelauftrag Projektpartner - Projects</label><br/>
-
-  <h3>Contracts - Einzelverträge - 2 Unterschriftsblöcke</h3>
+  <h3>WeMatch</h3>
+  <input type="radio" id="c-rv-k" value="c-rv-k" name="radio" @click="confSecond(false)">
+  <label for="c-rv-k" @click="confSecond(false)">Rahmenvertrag Kunde</label><br/>
+  <input type="radio" id="c-ev-k" value="c-ev-k" name="radio" @click="confSecond(false)">
+  <label for="c-ev-k" @click="confSecond(false)">Projekteinzelauftrag Kunder</label><br/>
+  <input type="radio" id="c-rv-k-2" value="c-rv-k-2" name="radio" @click="confSecond(true)">
+  <label for="c-rv-k-2" @click="confSecond(true)">Rahmenvertrag Kunde: 2 Unterschriftsblöcke</label><br/>
   <input type="radio" id="c-ev-k-2" value="c-ev-k-2" name="radio" @click="confSecond(true)">
-  <label for="c-ev-k-2" @click="confSecond(true)">Rahmenvertrag Projektpartner</label><br/>
+  <label for="c-ev-k-2" @click="confSecond(true)">Projekteinzelvertrag Kunde: 2 Unterschriftsblöcke</label><br/>
+
+  <h3>Engineering</h3>
+  <input type="radio" id="c-rv-k-e" value="c-rv-k-e" name="radio" @click="confSecond(false)">
+  <label for="c-rv-k-e" @click="confSecond(false)">Rahmenvertrag Kunde - Engineering</label><br/>
+  <input type="radio" id="c-ev-k-e" value="c-ev-k-e" name="radio" @click="confSecond(false)">
+  <label for="c-ev-k-e" @click="confSecond(false)">Projekteinzelauftrag Kunde - Engineering</label><br/>
+  <input type="radio" id="c-rv-k-e-2" value="c-rv-k-e-2" name="radio" @click="confSecond(true)">
+  <label for="c-rv-k-e-2" @click="confSecond(true)">Rahmenvertrag Kunde: 2 Unterschriftsblöcke - Engineering</label><br/>
+  <input type="radio" id="c-ev-k-e-2" value="c-ev-k-e-2" name="radio" @click="confSecond(true)">
+  <label for="c-ev-k-e-2" @click="confSecond(true)">Projekteinzelvertrag Kunde: 2 Unterschriftsblöcke - Engineering</label><br/>
+
+  <h3>Projects</h3>
+  <input type="radio" id="c-rv-k-p" value="c-rv-k-p" name="radio" @click="confSecond(false)">
+  <label for="c-rv-k-p" @click="confSecond(false)">Rahmenvertrag Kunde - Projects</label><br/>
+  <input type="radio" id="c-ev-k-p" value="c-ev-k-p" name="radio" @click="confSecond(false)">
+  <label for="c-ev-k-p" @click="confSecond(false)">Projekteinzelauftrag Kunde - Projects</label><br/>
+
+  <h3>Englisch</h3>
+
+  <h3>WeMatch</h3>
+  <input type="radio" id="c-rv-k-eng" value="c-rv-k-eng" name="radio" @click="confSecond(false)">
+  <label for="c-rv-k-eng" @click="confSecond(false)">Rahmenvertrag Kunde</label><br/>
+  <input type="radio" id="c-ev-k-eng" value="c-ev-k-eng" name="radio" @click="confSecond(false)">
+  <label for="c-ev-k-eng" @click="confSecond(false)">Projekteinzelauftrag Kunde</label><br/>
+  <input type="radio" id="c-rv-k-2-eng" value="c-rv-k-2-eng" name="radio" @click="confSecond(true)">
+  <label for="c-rv-k-2-eng" @click="confSecond(true)">Rahmenvertrag Kunde: 2 Unterschriftsblöcke</label><br/>
+  <input type="radio" id="c-ev-k-2-eng" value="c-ev-k-2-eng" name="radio" @click="confSecond(true)">
+  <label for="c-ev-k-2-eng" @click="confSecond(true)">Projekteinzelvertrag Kunde: 2 Unterschriftsblöcke</label><br/>
+
+  <h3>Engineering</h3>
+  <input type="radio" id="c-rv-k-e-eng" value="c-rv-k-e-eng" name="radio" @click="confSecond(false)">
+  <label for="c-rv-k-e-eng" @click="confSecond(false)">Rahmenvertrag Kunde - Engineering</label><br/>
+  <input type="radio" id="c-ev-k-e-eng" value="c-ev-k-e-eng" name="radio" @click="confSecond(false)">
+  <label for="c-ev-k-e-eng" @click="confSecond(true)">Rahmenvertrag Kunde: 2 Unterschriftsblöcke</label><br/>
+  <input type="radio" id="c-rv-k-e-2-eng" value="c-rv-k-e-2-eng" name="radio" @click="confSecond(true)">
+  <label for="c-rv-k-e-2-eng" @click="confSecond(true)">Rahmenvertrag Kunde: 2 Unterschriftsblöcke - Engineering</label><br/>
+  <input type="radio" id="c-ev-k-e-2-eng" value="c-ev-k-e-2-eng" name="radio" @click="confSecond(true)">
+  <label for="c-ev-k-e-2-eng" @click="confSecond(false)">Projekteinzelvertrag Kunde: 2 Unterschriftsblöcke - Engineering</label><br/>
+
+  <h3>Projects</h3>
+  <input type="radio" id="c-rv-k-p-eng" value="c-rv-k-p-eng" name="radio" @click="confSecond(false)">
+  <label for="c-rv-k-p-eng" @click="confSecond(false)">Rahmenvertrag Kunde - Projects</label><br/>
+  <input type="radio" id="c-ev-k-p-eng" value="c-ev-k-p-eng" name="radio" @click="confSecond(false)">
+  <label for="c-ev-k-p-eng" @click="confSecond(false)">Projekteinzelauftrag Kunde - Projects</label><br/>
+
+
+
 
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
 
@@ -78,16 +103,15 @@
 <script>
 import router from "@/router";
 import {
-  cevpp,
-  cevppEng,
-  engevpp,
-  engevppEng,
-  projevppEng,
   kuendigungsfristTranslator,
   verguetungssatzSwitchPP,
   sendHelpMail,
   crv,
-  cevk2
+  cevk2,
+  cevk,
+  cevkEng,
+  cevkEng2
+
 } from "@/services/MethodService";
 import {logout} from "@/firebase-config";
 
@@ -127,67 +151,98 @@ export default {
       verguetungssatzSwitchPP();
       kuendigungsfristTranslator();
 
-      //RV Projektpartner
-      if (document.getElementById('c-rv-pp').checked) {
-        crv("c-rv-pp");
+      //RV Kunde Deutsch : WeMatch, Engineering, Projects
+      if (document.getElementById('c-rv-k').checked) {
+        crv("c-rv-k");
       }
 
-      //RV Projektpartner - Engineering
-      if (document.getElementById('eng-rv-pp').checked) {
-        crv("eng-rv-pp");
+      if (document.getElementById('c-rv-k-e').checked) {
+        crv("c-rv-k-e");
       }
 
-      //RV Projektpartner - Projects
-      if (document.getElementById('proj-rv-pp').checked) {
-        crv("proj-rv-pp");
-      }
-
-      //EV Projektpartner
-      if (document.getElementById('c-ev-pp').checked) {
-        cevpp();
-      }
-
-      //EV Projektpartner - Engineering
-      if (document.getElementById('eng-ev-pp').checked) {
-        engevpp();
-      }
-
-      //RV Projektpartner Englisch
-      if (document.getElementById('c-rv-pp-eng').checked) {
-        crv("c-rv-pp-eng")
+      if (document.getElementById('c-rv-k-p').checked) {
+        crv("c-rv-k-p");
       }
 
 
-      //RV Projektpartner Englisch - Engineering
-      if (document.getElementById('eng-rv-pp-eng').checked) {
-        crv("eng-rv-pp-eng")
+      //RV Kunde Englisch: WeMatch, Engineering, Projects
+      if (document.getElementById('c-rv-k-eng').checked) {
+        crv("c-rv-k-eng")
       }
 
-      //RV projektpartner Englisch - Projects
-     // if (document.getElementById('proj-rv-pp-eng').checked) {
-       // crv("proj-rv-pp-eng")
-     // }
+      if (document.getElementById('c-rv-k-e-eng').checked) {
+        crv("c-rv-k-e-eng")
+      }
 
-      //EV Projektpartner Englisch
-      if (document.getElementById('c-ev-pp-eng').checked) {
-        cevppEng()
+      if (document.getElementById('c-rv-k-p-eng').checked) {
+        crv("c-rv-k-p-eng")
       }
-      //EV Projektpartner Englisch - Engineering
-      if (document.getElementById('eng-ev-pp-eng').checked) {
-        engevppEng()
-      }
-      //EV Projektpartner Englisch - Projects
-      if (document.getElementById('proj-ev-pp-eng').checked) {
-        projevppEng()
-      }
-      //DOCX EV Projektpartner
-     // if (document.getElementById('docx-ev-pp').checked){
-      //  docxEvPP();
-      //}
 
-      if (document.getElementById('c-ev-pp-2').checked) {
-        cevk2()
+
+      //EV Kunde Deutsch : WeMatch, Engineering, Projects
+      if (document.getElementById('c-ev-k').checked) {
+        cevk("c-ev-k")
       }
+
+      if (document.getElementById('c-ev-k-e').checked) {
+        cevk("c-ev-k-e")
+      }
+
+      if (document.getElementById('c-ev-k-p').checked) {
+        cevk("c-ev-k-p")
+      }
+
+      //EV Kunde Englisch: WeMatch, Engineering, Projects
+      if (document.getElementById('c-ev-k-eng').checked) {
+        cevkEng("c-ev-k-eng")
+      }
+
+      if (document.getElementById('c-ev-k-e-eng').checked) {
+        cevkEng("c-ev-k-e-eng")
+      }
+      if (document.getElementById('c-ev-k-p-eng').checked) {
+        cevkEng("c-ev-k-p-eng")
+      }
+
+      //EV Kunde - 2 Unterschriftsblöcke
+
+      if (document.getElementById('c-ev-k-2').checked) {
+        cevk2("c-ev-k-2")
+      }
+
+      if(document.getElementById('c-rv-k-2').checked) {
+        cevk2("c-ev-k-2")
+      }
+
+      if(document.getElementById('c-rv-k-e-2').checked) {
+        cevk2("c-rv-k-e-2")
+      }
+
+      if(document.getElementById('c-ev-k-e-2').checked) {
+        cevk2("c-ev-k-e-2")
+      }
+
+      if(document.getElementById('c-ev-k-2-eng').checked) {
+        cevkEng2("c-ev-k-2-eng")
+      }
+
+      if(document.getElementById('c-rv-k-2-eng').checked) {
+        cevkEng2("c-rv-k-2-eng")
+      }
+
+      if(document.getElementById('c-rv-k-e-2-eng').checked){
+        cevkEng2("c-rv-k-2-e-eng")
+      }
+
+      if(document.getElementById('c-ev-k-e-2-eng').checked){
+        cevkEng2("c-ev-k-e-2-eng")
+      }
+
+
+
+
+
+      //ToDO: Implementierung für 2 Unterschriftsblöcke für Engineering und +Englisch
     }
   },
 
