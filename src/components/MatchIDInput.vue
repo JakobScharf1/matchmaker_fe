@@ -142,7 +142,9 @@ export default {
       position: "",
       aufgabenbeschreibung: "",
       addAgreements: "",
-      jobOwner: "",
+      jobOwnerfirstName: "",
+      jobOwnerLastName: "",
+      jobOwnerEmail: ""
     }
   },
   methods: {
@@ -168,12 +170,12 @@ export default {
               localStorage.setItem('match', this.matches);
               localStorage.setItem('projektpartnerName', this.matches.at(0) + " " + this.matches.at(1));
               this.projektpartnerName = this.matches.at(0) + " " + this.matches.at(1);
-              localStorage.setItem('wematchAnsprechpartnerName', this.matches.at(9) + " " + this.matches.at(10));
-              this.wematchAnsprechpartnerName = this.matches.at(9) + " " + this.matches.at(10);
+              localStorage.setItem('wematchAnsprechpartnerName', this.matches.at(33) + " " + this.matches.at(34));
+              this.wematchAnsprechpartnerName = this.matches.at(33) + " " + this.matches.at(34);
               localStorage.setItem('projektpartnerMail', this.matches.at(22));
               this.projektpartnerMail = this.matches.at(22);
-              localStorage.setItem('wematchAnsprechpartnerMail', this.matches.at(23));
-              this.wematchAnsprechpartnerMail = this.matches.at(23);
+              localStorage.setItem('wematchAnsprechpartnerMail', this.matches.at(35));
+              this.wematchAnsprechpartnerMail = this.matches.at(35);
               localStorage.setItem('startdatum', this.dateFormatter(this.matches.at(11)));
               this.startdatum = this.dateFormatter(this.matches.at(11));
               localStorage.setItem('enddatum', this.dateFormatter(this.matches.at(12)));
@@ -217,7 +219,7 @@ export default {
               this.auslastungEng = this.matches.at(31) * this.matches.at(30) + " Hours per week";
               localStorage.setItem('addAgreements', this.matches.at(32));
               this.addAgreements = this.matches.at(32);
-              localStorage.setItem('jobOwner', this.matches.at(33));
+              localStorage.setItem('jobOwnerFirstName', this.matches.at(33));
               this.jobOwner = this.matches.at(33);
 
               this.isLoading = false;

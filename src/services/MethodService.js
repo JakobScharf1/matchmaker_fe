@@ -445,7 +445,7 @@ function cevk(docId){
                 "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
                 "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('jobOwner')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
                 "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
                 "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
@@ -487,7 +487,7 @@ function cevk2(docId){
                 "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
                 "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('jobOwner')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
                 "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
                 "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
@@ -528,7 +528,7 @@ function cevkEng(docId){
                 "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
                 "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('jobOwner')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
                 "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
                 "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
@@ -571,7 +571,7 @@ function cevkEng2(docId){
                 "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
                 "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('jobOwner')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
                 "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
                 "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
