@@ -125,7 +125,7 @@ export default {
       empfaengerMail: localStorage.getItem('projektpartnerMail'),
       empfaengerName2: "",
       empfaengerMail2: "",
-      absenderName: localStorage.getItem('wematchAnsprechpartnerName'),
+      absenderName: localStorage.getItem('jobOwner'),
       absenderMail: localStorage.getItem('wematchAnsprechpartnerMail'),
       ccName: "",
       ccMail: "",
