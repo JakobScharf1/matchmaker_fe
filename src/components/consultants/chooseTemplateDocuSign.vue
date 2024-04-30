@@ -5,39 +5,44 @@
 
 <h2>2. Wähle den Vertrag aus, den du erstellen willst:</h2>
 
-  <h3>Contracts - Rahmenverträge</h3>
-  <input type="radio" id="c-rv-pp" value="c-rv-pp" name="radio" @click="confirmed = true">
-  <label for="c-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
-  <input type="radio" id="eng-rv-pp" value="eng-rv-pp" name="radio" @click="confirmed = true">
-  <label for="eng-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner - Engineering</label><br/>
-  <input type="radio" id="proj-rv-pp" value="proj-rv-pp" name="radio" @click="confirmed = true">
-  <label for="proj-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner - Projects</label><br/>
-
-  <h3>Contracts - Einzelverträge</h3>
-  <input type="radio" id="c-ev-pp" value="c-ev-pp" name="radio" @click="confirmed = true">
-  <label for="c-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
-  <input type="radio" id="eng-ev-pp" value="eng-ev-pp" name="radio" @click="confirmed = true">
-  <label for="eng-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Engineering</label><br/>
-  <input type="radio" id="proj-ev-pp" value="proj-ev-pp" name="radio" @click="confirmed = true">
-  <label for="proj-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Projects</label><br/>
-
-  <h3>Contracts - Rahmenverträge - Englisch</h3>
-  <input type="radio" id="c-rv-pp-eng" value="c-rv-pp-eng" name="radio" @click="confirmed = true">
-  <label for="c-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
-  <input type="radio" id="eng-rv-pp-eng" value="eng-rv-pp-eng" name="radio" @click="confirmed = true">
-  <label for="eng-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner - Engineering</label><br/>
-  <!--<input type="radio" id="proj-rv-pp-eng" value="proj-rv-pp-eng" name="radio" @click="confirmed = true">
-  <label for="proj-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner - Projects</label><br/>-->
-
-  <h3>Contracts - Einzelverträge - Englisch</h3>
-  <input type="radio" id="c-ev-pp-eng" value="c-ev-pp-eng" name="radio" @click="confirmed = true">
-  <label for="c-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
-  <input type="radio" id="eng-ev-pp-eng" value="eng-ev-pp-eng" name="radio" @click="confirmed = true">
-  <label for="eng-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Engineering</label><br/>
-  <input type="radio" id="proj-ev-pp-eng" value="proj-ev-pp-eng" name="radio" @click="confirmed = true">
-  <label for="proj-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner - Projects</label><br/>
+  <h2>Deutsch</h2>
+  <h3>Standard</h3>
+    <input type="radio" id="c-rv-pp" value="c-rv-pp" name="radio" @click="confirmed = true">
+    <label for="c-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+    <input type="radio" id="c-ev-pp" value="c-ev-pp" name="radio" @click="confirmed = true">
+    <label for="c-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
 
 
+  <h3>Engineering</h3>
+    <input type="radio" id="eng-rv-pp" value="eng-rv-pp" name="radio" @click="confirmed = true">
+    <label for="eng-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+    <input type="radio" id="eng-ev-pp" value="eng-ev-pp" name="radio" @click="confirmed = true">
+    <label for="eng-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
+
+  <h3>Projects</h3>
+    <input type="radio" id="proj-rv-pp" value="proj-rv-pp" name="radio" @click="confirmed = true">
+    <label for="proj-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+    <input type="radio" id="proj-ev-pp" value="proj-ev-pp" name="radio" @click="confirmed = true">
+    <label for="proj-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
+
+  <h2>Englisch</h2>
+  <h3>Standard</h3>
+    <input type="radio" id="c-rv-pp-eng" value="c-rv-pp-eng" name="radio" @click="confirmed = true">
+    <label for="c-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+    <input type="radio" id="c-ev-pp-eng" value="c-ev-pp-eng" name="radio" @click="confirmed = true">
+    <label for="c-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
+
+  <h3>Engineering</h3>
+    <input type="radio" id="eng-rv-pp-eng" value="eng-rv-pp-eng" name="radio" @click="confirmed = true">
+    <label for="eng-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+    <input type="radio" id="eng-ev-pp-eng" value="eng-ev-pp-eng" name="radio" @click="confirmed = true">
+    <label for="eng-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
+
+  <h3>Projects</h3>
+    <input type="radio" id="proj-rv-pp-eng" value="proj-rv-pp-eng" name="radio" @click="confirmed = true">
+    <label for="proj-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+    <input type="radio" id="proj-ev-pp-eng" value="proj-ev-pp-eng" name="radio" @click="confirmed = true">
+    <label for="proj-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
 
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
 

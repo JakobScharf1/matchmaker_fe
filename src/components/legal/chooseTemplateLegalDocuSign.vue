@@ -11,29 +11,29 @@
   <input type="radio" id="c-rv-k" value="c-rv-k" name="radio" @click="confSecond(false)">
   <label for="c-rv-k" @click="confSecond(false)">Rahmenvertrag Kunde</label><br/>
   <input type="radio" id="c-ev-k" value="c-ev-k" name="radio" @click="confSecond(false)">
-  <label for="c-ev-k" @click="confSecond(false)">Projekteinzelauftrag Kunder</label><br/>
+  <label for="c-ev-k" @click="confSecond(false)">Projekteinzelauftrag Kunde</label><br/>
   <input type="radio" id="c-rv-k-2" value="c-rv-k-2" name="radio" @click="confSecond(true)">
   <label for="c-rv-k-2" @click="confSecond(true)">Rahmenvertrag Kunde: 2 Unterschriftsblöcke</label><br/>
   <input type="radio" id="c-ev-k-2" value="c-ev-k-2" name="radio" @click="confSecond(true)">
-  <label for="c-ev-k-2" @click="confSecond(true)">Projekteinzelvertrag Kunde: 2 Unterschriftsblöcke</label><br/>
+  <label for="c-ev-k-2" @click="confSecond(true)">Projekteinzelauftrag Kunde: 2 Unterschriftsblöcke</label><br/>
 
   <h3>Engineering</h3>
   <input type="radio" id="c-rv-k-e" value="c-rv-k-e" name="radio" @click="confSecond(false)">
-  <label for="c-rv-k-e" @click="confSecond(false)">Rahmenvertrag Kunde - Engineering</label><br/>
+  <label for="c-rv-k-e" @click="confSecond(false)">Rahmenvertrag Kunde</label><br/>
   <input type="radio" id="c-ev-k-e" value="c-ev-k-e" name="radio" @click="confSecond(false)">
-  <label for="c-ev-k-e" @click="confSecond(false)">Projekteinzelauftrag Kunde - Engineering</label><br/>
+  <label for="c-ev-k-e" @click="confSecond(false)">Projekteinzelauftrag Kunde</label><br/>
   <input type="radio" id="c-rv-k-e-2" value="c-rv-k-e-2" name="radio" @click="confSecond(true)">
-  <label for="c-rv-k-e-2" @click="confSecond(true)">Rahmenvertrag Kunde: 2 Unterschriftsblöcke - Engineering</label><br/>
+  <label for="c-rv-k-e-2" @click="confSecond(true)">Rahmenvertrag Kunde: 2 Unterschriftsblöcke</label><br/>
   <input type="radio" id="c-ev-k-e-2" value="c-ev-k-e-2" name="radio" @click="confSecond(true)">
-  <label for="c-ev-k-e-2" @click="confSecond(true)">Projekteinzelvertrag Kunde: 2 Unterschriftsblöcke - Engineering</label><br/>
+  <label for="c-ev-k-e-2" @click="confSecond(true)">Projekteinzelauftrag Kunde: 2 Unterschriftsblöcke</label><br/>
 
   <h3>Projects</h3>
   <input type="radio" id="c-rv-k-p" value="c-rv-k-p" name="radio" @click="confSecond(false)">
-  <label for="c-rv-k-p" @click="confSecond(false)">Rahmenvertrag Kunde - Projects</label><br/>
+  <label for="c-rv-k-p" @click="confSecond(false)">Rahmenvertrag Kunde</label><br/>
   <input type="radio" id="c-ev-k-p" value="c-ev-k-p" name="radio" @click="confSecond(false)">
-  <label for="c-ev-k-p" @click="confSecond(false)">Projekteinzelauftrag Kunde - Projects</label><br/>
+  <label for="c-ev-k-p" @click="confSecond(false)">Projekteinzelauftrag Kunde</label><br/>
 
-  <h3>Englisch</h3>
+  <h2>Englisch</h2>
 
   <h3>WeMatch</h3>
   <input type="radio" id="c-rv-k-eng" value="c-rv-k-eng" name="radio" @click="confSecond(false)">
@@ -43,23 +43,23 @@
   <input type="radio" id="c-rv-k-2-eng" value="c-rv-k-2-eng" name="radio" @click="confSecond(true)">
   <label for="c-rv-k-2-eng" @click="confSecond(true)">Rahmenvertrag Kunde: 2 Unterschriftsblöcke</label><br/>
   <input type="radio" id="c-ev-k-2-eng" value="c-ev-k-2-eng" name="radio" @click="confSecond(true)">
-  <label for="c-ev-k-2-eng" @click="confSecond(true)">Projekteinzelvertrag Kunde: 2 Unterschriftsblöcke</label><br/>
+  <label for="c-ev-k-2-eng" @click="confSecond(true)">Projekteinzelauftrag Kunde: 2 Unterschriftsblöcke</label><br/>
 
   <h3>Engineering</h3>
   <input type="radio" id="c-rv-k-e-eng" value="c-rv-k-e-eng" name="radio" @click="confSecond(false)">
-  <label for="c-rv-k-e-eng" @click="confSecond(false)">Rahmenvertrag Kunde - Engineering</label><br/>
+  <label for="c-rv-k-e-eng" @click="confSecond(false)">Rahmenvertrag Kunde</label><br/>
   <input type="radio" id="c-ev-k-e-eng" value="c-ev-k-e-eng" name="radio" @click="confSecond(false)">
-  <label for="c-ev-k-e-eng" @click="confSecond(true)">Rahmenvertrag Kunde: 2 Unterschriftsblöcke</label><br/>
+  <label for="c-ev-k-e-eng" @click="confSecond(true)">Projekteinzelauftrag Kunde</label><br/>
   <input type="radio" id="c-rv-k-e-2-eng" value="c-rv-k-e-2-eng" name="radio" @click="confSecond(true)">
-  <label for="c-rv-k-e-2-eng" @click="confSecond(true)">Rahmenvertrag Kunde: 2 Unterschriftsblöcke - Engineering</label><br/>
+  <label for="c-rv-k-e-2-eng" @click="confSecond(true)">Rahmenvertrag Kunde: 2 Unterschriftsblöcke</label><br/>
   <input type="radio" id="c-ev-k-e-2-eng" value="c-ev-k-e-2-eng" name="radio" @click="confSecond(true)">
-  <label for="c-ev-k-e-2-eng" @click="confSecond(false)">Projekteinzelvertrag Kunde: 2 Unterschriftsblöcke - Engineering</label><br/>
+  <label for="c-ev-k-e-2-eng" @click="confSecond(false)">Projekteinzelauftrag Kunde: 2 Unterschriftsblöcke</label><br/>
 
   <h3>Projects</h3>
   <input type="radio" id="c-rv-k-p-eng" value="c-rv-k-p-eng" name="radio" @click="confSecond(false)">
-  <label for="c-rv-k-p-eng" @click="confSecond(false)">Rahmenvertrag Kunde - Projects</label><br/>
+  <label for="c-rv-k-p-eng" @click="confSecond(false)">Rahmenvertrag Kunde</label><br/>
   <input type="radio" id="c-ev-k-p-eng" value="c-ev-k-p-eng" name="radio" @click="confSecond(false)">
-  <label for="c-ev-k-p-eng" @click="confSecond(false)">Projekteinzelauftrag Kunde - Projects</label><br/>
+  <label for="c-ev-k-p-eng" @click="confSecond(false)">Projekteinzelauftrag Kunde</label><br/>
 
 
 
