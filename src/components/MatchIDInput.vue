@@ -108,7 +108,8 @@
 import router from "@/router";
 import BackendService from "@/services/BackendService";
 import {logout} from "@/firebase-config";
-import {sendHelpMail} from "@/services/MethodService";
+import {absenderMail, sendHelpMail} from "@/services/MethodService";
+
 
 export default {
   name: 'MatchIDInput',
@@ -142,9 +143,7 @@ export default {
       position: "",
       aufgabenbeschreibung: "",
       addAgreements: "",
-      jobOwnerfirstName: "",
-      jobOwnerLastName: "",
-      jobOwnerEmail: ""
+      jobOwner: "",
     }
   },
   methods: {
@@ -170,12 +169,12 @@ export default {
               localStorage.setItem('match', this.matches);
               localStorage.setItem('projektpartnerName', this.matches.at(0) + " " + this.matches.at(1));
               this.projektpartnerName = this.matches.at(0) + " " + this.matches.at(1);
-              localStorage.setItem('wematchAnsprechpartnerName', this.matches.at(33) + " " + this.matches.at(34));
-              this.wematchAnsprechpartnerName = this.matches.at(33) + " " + this.matches.at(34);
+              localStorage.setItem('wematchAnsprechpartnerName', this.matches.at(33));
+              this.wematchAnsprechpartnerName = this.matches.at(33);
               localStorage.setItem('projektpartnerMail', this.matches.at(22));
               this.projektpartnerMail = this.matches.at(22);
-              localStorage.setItem('wematchAnsprechpartnerMail', this.matches.at(35));
-              this.wematchAnsprechpartnerMail = this.matches.at(35);
+              localStorage.setItem('wematchAnsprechpartnerMail', absenderMail());
+              this.wematchAnsprechpartnerMail = localStorage.getItem('wematchAnsprechpartnerMail');
               localStorage.setItem('startdatum', this.dateFormatter(this.matches.at(11)));
               this.startdatum = this.dateFormatter(this.matches.at(11));
               localStorage.setItem('enddatum', this.dateFormatter(this.matches.at(12)));

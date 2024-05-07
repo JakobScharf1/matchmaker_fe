@@ -1,5 +1,7 @@
 import BackendService from "@/services/BackendService";
 
+
+
 function sendHelpMail(){
     let subject = encodeURIComponent("Problem mit MatchMaker - MatchID: " + localStorage.getItem("matchID"));
     let body = encodeURIComponent("\n---\nmatch data: \n" +
@@ -32,6 +34,18 @@ function sendHelpMail(){
     );
     let mailtoLink = "mailto:teamoperations@wematch.de?subject=" + subject + "&body=" + body;
     window.open(mailtoLink, '_blank');
+}
+
+function absenderMail(){
+    const name= localStorage.getItem('wematchAnsprechpartnerName');
+    console.log(name);
+    if(name!= null){
+        const [firstName, lastName] = name.split(" ");
+        let mail = `${firstName[0].toLowerCase()}.${lastName.toLowerCase()}@wematch.de`;
+        localStorage.setItem('absenderMail',mail);
+        console.log(mail);
+        return mail;
+    }
 }
 
 /**
@@ -471,11 +485,12 @@ function cevk(docId){
 function cevk2(docId){
     let finalURL = "";
     let ppNameLocal = getPPName();
+    let absenderMail = absenderMail();
     BackendService.getPowerForm(docId)
         .then(response => {
             finalURL = response.data.toString() +
                 "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
-                "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
+                "&Absender_Mail=" + encodeURIComponent(absenderMail) +
                 "&Kunde_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
                 "&Kunde_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
                 "&Kunde2_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName2')) +
@@ -619,7 +634,6 @@ function docxEvk(){
         localStorage.getItem("auslastungEng"),
         localStorage.getItem("aufgabenbeschreibung"),
         localStorage.getItem("addAgreements"),
-        localStorage.getItem("jobOwner")
     ]
 
     BackendService.postDocData(localStorage.getItem("docId"), data).then(response => {
@@ -650,3 +664,4 @@ export { sendHelpMail };
 export { docxEvPP };
 export { cevk2 };
 export { cevkEng2 };
+export { absenderMail };
