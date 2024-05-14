@@ -104,13 +104,13 @@
 import router from "@/router";
 import {
   kuendigungsfristTranslator,
-  verguetungssatzSwitchPP,
+  verguetungssatzSwitchKunde,
   sendHelpMail,
   crv,
   cevk2,
   cevk,
   cevkEng,
-  cevkEng2
+  cevkEng2,
 
 } from "@/services/MethodService";
 import {logout} from "@/firebase-config";
@@ -148,7 +148,7 @@ export default {
     },
 
     chooseTemplate() {
-      verguetungssatzSwitchPP();
+      verguetungssatzSwitchKunde();
       kuendigungsfristTranslator();
 
       //RV Kunde Deutsch : WeMatch, Engineering, Projects
