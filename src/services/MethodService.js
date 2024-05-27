@@ -41,7 +41,7 @@ function absenderMail(){
     console.log(name);
     if(name!= null){
         const [firstName, lastName] = name.split(" ");
-        let mail = `${firstName[0].toLowerCase()}.${lastName.toLowerCase()}@wematch.de`;
+        var mail = `${firstName[0].toLowerCase()}.${lastName.toLowerCase()}@wematch.de`;
         localStorage.setItem('absenderMail',mail);
         console.log(mail);
         return mail;
@@ -137,6 +137,52 @@ function kuendigungsfristTranslator(){
     }
     localStorage.setItem("kuendigungsfirstEnglisch", kuendigungsfristEnglisch);
 }
+
+/*function calculateTermination() {
+
+    var terminationdate;
+
+   switch (localStorage.getItem("kuendigungsfrist")){
+       case "Keine":
+           terminationdate = new Date();
+           terminationdate = terminationdate.setDate(terminationdate.getDate());
+           break;
+       case "0 Tage":
+           terminationdate = new Date();
+           terminationdate = terminationdate.setDate(terminationdate.getDate());
+           break;
+       case "5 Tage":
+           terminationdate = new Date();
+           terminationdate = terminationdate.setDate(terminationdate.getDate() + 5);
+           break;
+       case "7 Tage":
+           terminationdate = new Date();
+           terminationdate = terminationdate.setDate(terminationdate.getDate() + 7);
+           break;
+       case "14 Tage":
+           terminationdate = new Date();
+           terminationdate = terminationdate.setDate(terminationdate.getDate() + 14);
+           break;
+       case "14 Tage zum Monatsende":
+           terminationdate = new Date();
+           terminationdate = terminationdate.setDate(terminationdate.getDate() + );
+           break;
+       case "28 Tage":
+           terminationdate = "28 days";
+           break;
+       case "30 Tage":
+           terminationdate = "30 days";
+           break;
+       case "6 Wochen":
+           terminationdate = "6 weeks";
+           break;
+       case "90 Tage":
+           terminationdate = "90 days";
+           break;
+   }
+   }
+
+}*/
 
 /**
  * Eine Test-Methode für die Prod-Umgebung, um zu schauen, ob alle Werte im localStorage korrekt übertragen wurden.
@@ -485,7 +531,7 @@ function cevk(docId){
 function cevk2(docId){
     let finalURL = "";
     let ppNameLocal = getPPName();
-    let absenderMail = absenderMail();
+    let absenderMail = localStorage.getItem('absenderMail');
     BackendService.getPowerForm(docId)
         .then(response => {
             finalURL = response.data.toString() +
@@ -665,3 +711,4 @@ export { docxEvPP };
 export { cevk2 };
 export { cevkEng2 };
 export { absenderMail };
+//export{ calculateTermination };
