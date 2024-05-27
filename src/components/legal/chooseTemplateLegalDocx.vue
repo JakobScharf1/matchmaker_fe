@@ -6,40 +6,40 @@
   <h2>Deutsch</h2>
   <h3>WeMatch</h3>
   <input type="radio" id="docx-rv-k" value="docx-rv-k" name="wematch-deu" v-model="selectedContract" @click="toggleSelection('docx-rv-k')">
-  <label for="docx-rv-k">Rahmenvereinbarung Kunde</label><br/>
+  <label for="docx-rv-k">Rahmenvereinbarung</label><br/>
   <input type="radio" id="docx-ev-k" value="docx-ev-k" name="wematch-deu" v-model="selectedContract" @click="toggleSelection('docx-ev-k')">
-  <label for="docx-ev-k">Projekteinzelauftrag Kunde</label><br/>
+  <label for="docx-ev-k">Projekteinzelauftrag</label><br/>
 
   <h3>Engineering</h3>
   <input type="radio" id="docx-rv-k-e" value="docx-rv-k-e" name="engineering-deu" v-model="selectedContract" @click="toggleSelection('docx-rv-k-e')"  >
-  <label for="docx-rv-k-e">Rahmenvereinbarung Kunde</label><br/>
+  <label for="docx-rv-k-e">Rahmenvereinbarung</label><br/>
   <input type="radio" id="docx-ev-k-e" value="docx-ev-k-e" name="engineering-deu" v-model="selectedContract" @click="toggleSelection('docx-ev-k-e')">
-  <label for="docx-ev-k-e">Projekteinzelauftrag Kunde</label><br/>
+  <label for="docx-ev-k-e">Projekteinzelauftrag</label><br/>
 
   <h3>Projects</h3>
   <input type="radio" id="docx-rv-k-p" value="docx-rv-k-p" name="projects-deu" v-model="selectedContract" @click="toggleSelection('docx-rv-k-p')">
-  <label for="docx-rv-k-p">Rahmenvereinbarung Kunde</label><br/>
+  <label for="docx-rv-k-p">Rahmenvereinbarung</label><br/>
   <input type="radio" id="docx-ev-k-p" value="docx-ev-k-p" name="projects-deu" v-model="selectedContract" @click="toggleSelection('docx-ev-k-p')">
-  <label for="docx-ev-k-p">Projekteinzelauftrag Kunde</label><br/>
+  <label for="docx-ev-k-p">Projekteinzelauftrag</label><br/>
 
   <h2>Englisch</h2>
   <h3>WeMatch</h3>
   <input type="radio" id="docx-rv-k-eng" value="docx-rv-k-eng" name="wematch-eng" v-model="selectedContract" @click="toggleSelection('docx-rv-k-eng')">
-  <label for="docx-rv-k-eng">Rahmenvereinbarung Kunde</label><br/>
+  <label for="docx-rv-k-eng">Rahmenvereinbarung</label><br/>
   <input type="radio" id="docx-ev-k-eng" value="docx-ev-k-eng" name="wematch-eng" v-model="selectedContract" @click="toggleSelection('docx-ev-p-eng')">
-  <label for="docx-ev-k-eng">Projekteinzelauftrag Kunde</label><br/>
+  <label for="docx-ev-k-eng">Projekteinzelauftrag</label><br/>
 
   <h3>Engineering</h3>
   <input type="radio" id="docx-rv-k-e-eng" value="docx-rv-k-e-eng" name="engineering-eng" v-model="selectedContract" @click="toggleSelection('docx-rv-k-e-eng')">
-  <label for="docx-rv-k-e-eng">Rahmenvereinbarung Kunde</label><br/>
+  <label for="docx-rv-k-e-eng">Rahmenvereinbarung</label><br/>
   <input type="radio" id="docx-ev-k-e-eng" value="docx-ev-k-e-eng" name="engineering-eng" v-model="selectedContract" @click="toggleSelection('docx-ev-k-e-eng')">
-  <label for="docx-ev-k-e-eng">Projekteinzelauftrag Kunde</label><br/>
+  <label for="docx-ev-k-e-eng">Projekteinzelauftrag</label><br/>
 
   <h3>Projects</h3>
   <input type="radio" id="docx-rv-k-p-eng" value="docx-rv-k-p-eng" name="projects-rv-eng" v-model="selectedContract" @click="toggleSelection('docx-rv-k-p-eng')">
-  <label for="docx-rv-k-p-eng">Rahmenvereinbarung Kunde</label><br/>
+  <label for="docx-rv-k-p-eng">Rahmenvereinbarung</label><br/>
   <input type="radio" id="docx-ev-k-p-eng" value="docx-ev-k-p-eng" name="projects-eng" v-model="selectedContract" @click="toggleSelection('docx-ev-k-p-eng')">
-  <label for="docx-ev-k-p-eng">Projekteinzelauftrag Kunde</label><br/>
+  <label for="docx-ev-k-p-eng">Projekteinzelauftrag</label><br/>
 
   <!-- Repeat the same structure for other sections -->
 
