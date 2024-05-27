@@ -7,6 +7,7 @@ import chooseTemplateDocuSign from "@/components/consultants/chooseTemplateDocuS
 import chooseTemplateDocx from "@/components/consultants/chooseTemplateDocx.vue";
 import chooseTemplateLegalDocuSign from "@/components/legal/chooseTemplateLegalDocuSign.vue";
 import chooseTemplateLegalDocx from "@/components/legal/chooseTemplateLegalDocx.vue";
+//import chooseTermination from "@/components/legal/chooseTermination.vue";
 
 const routes = [
     {
@@ -48,7 +49,12 @@ const routes = [
     {
         path: "/chooseTemplateDocx",
         component: chooseTemplateDocx
-    }
+    },
+    //{
+    //    path: "/chooseTermination",
+    //    component: chooseTermination
+    //}
+
 
 
 ]

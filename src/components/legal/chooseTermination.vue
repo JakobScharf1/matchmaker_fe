@@ -1,47 +1,29 @@
-<template>
+ <template>
   <div>
     <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
   </div>
   <h2>Wähle den kündigung aus, den du erstellen willst:</h2>
   <h2>Deutsch</h2>
   <h3>WeMatch</h3>
-  <input type="radio" id="docx-rv-k" value="docx-rv-k" name="wematch-deu" v-model="selectedContract" @click="toggleSelection('docx-rv-k')">
-  <label for="docx-rv-k">Rahmenvereinbarung Kunde</label><br/>
-  <input type="radio" id="docx-ev-k" value="docx-ev-k" name="wematch-deu" v-model="selectedContract" @click="toggleSelection('docx-ev-k')">
-  <label for="docx-ev-k">Projekteinzelauftrag Kunde</label><br/>
+  <input type="radio" id="docx-k-k-fg" value="docx-k-k-fg" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-rv-k')">
+  <label for="docx-k-k-fg">Kündigung - fristgerecht - Kunde</label><br/>
+  <input type="radio" id="docx-k-k-fl" value="docx-k-k-fl" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-ev-k')">
+  <label for="docx-k-k-fl">Kündigung - firstlos - Kunde</label><br/>
+  <input type="radio" id="docx-k-k-b" value="docx-k-k-b" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-ev-k')">
+  <label for="docx-k-k-b">Kündigungsbestätigung - Kunde</label><br/>
+  <input type="radio" id="docx-k-pp-fg" value="docx-k-pp-fg" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-ev-k')">
+  <label for="docx-k-pp-fg">Kündigung - firstgerecht - Projektpartner</label><br/>
+  <input type="radio" id="docx-k-pp-fl" value="docx-k-pp-fl" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-ev-k')">
+  <label for="docx-k-pp-fl">Kündigung - firstlos - Projektpartner</label><br/>
+  <input type="radio" id="docx-ev-k" value="docx-ev-k" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-ev-k')">
+  <label for="docx-ev-k">Kündigungsbestätigung - Projektpartner</label><br/>
+
 
   <h3>Engineering</h3>
-  <input type="radio" id="docx-rv-k-e" value="docx-rv-k-e" name="engineering-deu" v-model="selectedContract" @click="toggleSelection('docx-rv-k-e')"  >
-  <label for="docx-rv-k-e">Rahmenvereinbarung Kunde</label><br/>
-  <input type="radio" id="docx-ev-k-e" value="docx-ev-k-e" name="engineering-deu" v-model="selectedContract" @click="toggleSelection('docx-ev-k-e')">
-  <label for="docx-ev-k-e">Projekteinzelauftrag Kunde</label><br/>
-
-  <h3>Projects</h3>
-  <input type="radio" id="docx-rv-k-p" value="docx-rv-k-p" name="projects-deu" v-model="selectedContract" @click="toggleSelection('docx-rv-k-p')">
-  <label for="docx-rv-k-p">Rahmenvereinbarung Kunde</label><br/>
-  <input type="radio" id="docx-ev-k-p" value="docx-ev-k-p" name="projects-deu" v-model="selectedContract" @click="toggleSelection('docx-ev-k-p')">
-  <label for="docx-ev-k-p">Projekteinzelauftrag Kunde</label><br/>
-
-  <h2>Englisch</h2>
-  <h3>WeMatch</h3>
-  <input type="radio" id="docx-rv-k-eng" value="docx-rv-k-eng" name="wematch-eng" v-model="selectedContract" @click="toggleSelection('docx-rv-k-eng')">
-  <label for="docx-rv-k-eng">Rahmenvereinbarung Kunde</label><br/>
-  <input type="radio" id="docx-ev-k-eng" value="docx-ev-k-eng" name="wematch-eng" v-model="selectedContract" @click="toggleSelection('docx-ev-p-eng')">
-  <label for="docx-ev-k-eng">Projekteinzelauftrag Kunde</label><br/>
-
-  <h3>Engineering</h3>
-  <input type="radio" id="docx-rv-k-e-eng" value="docx-rv-k-e-eng" name="engineering-eng" v-model="selectedContract" @click="toggleSelection('docx-rv-k-e-eng')">
-  <label for="docx-rv-k-e-eng">Rahmenvereinbarung Kunde</label><br/>
-  <input type="radio" id="docx-ev-k-e-eng" value="docx-ev-k-e-eng" name="engineering-eng" v-model="selectedContract" @click="toggleSelection('docx-ev-k-e-eng')">
-  <label for="docx-ev-k-e-eng">Projekteinzelauftrag Kunde</label><br/>
-
-  <h3>Projects</h3>
-  <input type="radio" id="docx-rv-k-p-eng" value="docx-rv-k-p-eng" name="projects-rv-eng" v-model="selectedContract" @click="toggleSelection('docx-rv-k-p-eng')">
-  <label for="docx-rv-k-p-eng">Rahmenvereinbarung Kunde</label><br/>
-  <input type="radio" id="docx-ev-k-p-eng" value="docx-ev-k-p-eng" name="projects-eng" v-model="selectedContract" @click="toggleSelection('docx-ev-k-p-eng')">
-  <label for="docx-ev-k-p-eng">Projekteinzelauftrag Kunde</label><br/>
-
-  <!-- Repeat the same structure for other sections -->
+  <input type="radio" id="docx-k-pp-fg-e" value="docx-k-pp-fg-e" name="engineering-deu" v-model="selectedContract" @click="toggleSelection('docx-rv-k-e')"  >
+  <label for="docx-k-pp-fg-e">Kündigung - firstgerecht - Projektpartner</label><br/>
+  <input type="radio" id="docx-k-pp-fl-e" value="docx-k-pp-fl-e" name="engineering-deu" v-model="selectedContract" @click="toggleSelection('docx-ev-k-e')">
+  <label for="docx-k-pp-fl-e">Kündigung - firstlos - Projektpartner</label><br/>
 
   <button class="btn" v-bind:class="{'bestatigen-button btn-outline-primary': !confirmed, 'btn-primary': confirmed}" @click="chooseTemplate()">Bestätigen</button>
 
@@ -49,7 +31,7 @@
     <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
     <button id="logoutButton" class="btn btn-primary" @click="logout"><b>Logout</b></button>
   </div>
-</template>
+</template>-->
 
 <script>
 import router from "@/router";
@@ -62,7 +44,7 @@ import {
 import {logout} from "@/firebase-config";
 
 export default {
-  name: 'chooseTemplateLegalDocx',
+  name: 'chooseTemplateTermination',
   data() {
     return {
       confirmed: false,
@@ -123,4 +105,4 @@ h3 {
   cursor: pointer;
   margin-right: 10px;
 }
-</style>
+</style> -->
