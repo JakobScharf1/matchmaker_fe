@@ -9,14 +9,13 @@ In the following you'll find the changelogs of the WeMatch MatchMaker **starting
 
 # Releases
 
-## Version 0.0.0. - 01.01.2000
+## Version 1.2.5 - 14.06.2024
 
 ### Frontend
 No changes
 
 ### Backend
-A few changes
+The 'zahlungszielPP' variable is now coming from the bullhorn field 'customText23' instead of 'correlatedCustomText1'.
 
 ### Other changes
-- New Vue Version 1.1.1
-- Docker Containering
+No changes
