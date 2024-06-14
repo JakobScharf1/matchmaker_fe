@@ -46,6 +46,7 @@ function absenderMail(){
         console.log(mail);
         return mail;
     }
+    return "";
 }
 
 /**
@@ -246,6 +247,7 @@ function crv(docId){
                 "&Projektpartner_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
                 "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
+
                 "&PPName=" + encodeURIComponent(ppNameLocal) +
                 "&Adresse1=" + encodeURIComponent(localStorage.getItem('ppStreet')) +
                 "&Adresse2=" + encodeURIComponent(localStorage.getItem('ppCity'));
@@ -536,7 +538,7 @@ function cevk2(docId){
         .then(response => {
             finalURL = response.data.toString() +
                 "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
-                "&Absender_Mail=" + encodeURIComponent(absenderMail) +
+                "&Absender_Email=" + encodeURIComponent(absenderMail) +
                 "&Kunde_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
                 "&Kunde_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
                 "&Kunde2_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName2')) +
