@@ -1,5 +1,7 @@
 import BackendService from "@/services/BackendService";
 
+
+
 function sendHelpMail(){
     let subject = encodeURIComponent("Problem mit MatchMaker - MatchID: " + localStorage.getItem("matchID"));
     let body = encodeURIComponent("\n---\nmatch data: \n" +
@@ -32,6 +34,18 @@ function sendHelpMail(){
     );
     let mailtoLink = "mailto:teamoperations@wematch.de?subject=" + subject + "&body=" + body;
     window.open(mailtoLink, '_blank');
+}
+
+function absenderMail(){
+    const name= localStorage.getItem('wematchAnsprechpartnerName');
+    console.log(name);
+    if(name!= null){
+        const [firstName, lastName] = name.split(" ");
+        var mail = `${firstName[0].toLowerCase()}.${lastName.toLowerCase()}@wematch.de`;
+        localStorage.setItem('absenderMail',mail);
+        console.log(mail);
+        return mail;
+    }
 }
 
 /**
@@ -123,6 +137,52 @@ function kuendigungsfristTranslator(){
     }
     localStorage.setItem("kuendigungsfirstEnglisch", kuendigungsfristEnglisch);
 }
+
+/*function calculateTermination() {
+
+    var terminationdate;
+
+   switch (localStorage.getItem("kuendigungsfrist")){
+       case "Keine":
+           terminationdate = new Date();
+           terminationdate = terminationdate.setDate(terminationdate.getDate());
+           break;
+       case "0 Tage":
+           terminationdate = new Date();
+           terminationdate = terminationdate.setDate(terminationdate.getDate());
+           break;
+       case "5 Tage":
+           terminationdate = new Date();
+           terminationdate = terminationdate.setDate(terminationdate.getDate() + 5);
+           break;
+       case "7 Tage":
+           terminationdate = new Date();
+           terminationdate = terminationdate.setDate(terminationdate.getDate() + 7);
+           break;
+       case "14 Tage":
+           terminationdate = new Date();
+           terminationdate = terminationdate.setDate(terminationdate.getDate() + 14);
+           break;
+       case "14 Tage zum Monatsende":
+           terminationdate = new Date();
+           terminationdate = terminationdate.setDate(terminationdate.getDate() + );
+           break;
+       case "28 Tage":
+           terminationdate = "28 days";
+           break;
+       case "30 Tage":
+           terminationdate = "30 days";
+           break;
+       case "6 Wochen":
+           terminationdate = "6 weeks";
+           break;
+       case "90 Tage":
+           terminationdate = "90 days";
+           break;
+   }
+   }
+
+}*/
 
 /**
  * Eine Test-Methode für die Prod-Umgebung, um zu schauen, ob alle Werte im localStorage korrekt übertragen wurden.
@@ -445,7 +505,7 @@ function cevk(docId){
                 "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
                 "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('jobOwner')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
                 "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
                 "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
@@ -471,11 +531,12 @@ function cevk(docId){
 function cevk2(docId){
     let finalURL = "";
     let ppNameLocal = getPPName();
+    let absenderMail = localStorage.getItem('absenderMail');
     BackendService.getPowerForm(docId)
         .then(response => {
             finalURL = response.data.toString() +
                 "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
-                "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
+                "&Absender_Mail=" + encodeURIComponent(absenderMail) +
                 "&Kunde_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
                 "&Kunde_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
                 "&Kunde2_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName2')) +
@@ -487,7 +548,7 @@ function cevk2(docId){
                 "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
                 "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('jobOwner')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
                 "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
                 "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
@@ -528,7 +589,7 @@ function cevkEng(docId){
                 "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
                 "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('jobOwner')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
                 "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
                 "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
@@ -571,7 +632,7 @@ function cevkEng2(docId){
                 "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
                 "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('jobOwner')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
                 "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
                 "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
@@ -619,7 +680,6 @@ function docxEvk(){
         localStorage.getItem("auslastungEng"),
         localStorage.getItem("aufgabenbeschreibung"),
         localStorage.getItem("addAgreements"),
-        localStorage.getItem("jobOwner")
     ]
 
     BackendService.postDocData(localStorage.getItem("docId"), data).then(response => {
@@ -650,3 +710,5 @@ export { sendHelpMail };
 export { docxEvPP };
 export { cevk2 };
 export { cevkEng2 };
+export { absenderMail };
+//export{ calculateTermination };

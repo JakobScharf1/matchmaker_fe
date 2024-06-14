@@ -104,13 +104,13 @@
 import router from "@/router";
 import {
   kuendigungsfristTranslator,
-  verguetungssatzSwitchPP,
+  verguetungssatzSwitchKunde,
   sendHelpMail,
   crv,
   cevk2,
   cevk,
   cevkEng,
-  cevkEng2
+  cevkEng2,
 
 } from "@/services/MethodService";
 import {logout} from "@/firebase-config";
@@ -125,7 +125,7 @@ export default {
       empfaengerMail: localStorage.getItem('projektpartnerMail'),
       empfaengerName2: "",
       empfaengerMail2: "",
-      absenderName: localStorage.getItem('jobOwner'),
+      absenderName: localStorage.getItem('wematchAnsprechpartnerName'),
       absenderMail: localStorage.getItem('wematchAnsprechpartnerMail'),
       ccName: "",
       ccMail: "",
@@ -148,7 +148,7 @@ export default {
     },
 
     chooseTemplate() {
-      verguetungssatzSwitchPP();
+      verguetungssatzSwitchKunde();
       kuendigungsfristTranslator();
 
       //RV Kunde Deutsch : WeMatch, Engineering, Projects
