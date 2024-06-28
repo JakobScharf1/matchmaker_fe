@@ -157,7 +157,7 @@ export default {
     getMatch() {
       this.isLoading = true;
       setTimeout(() => {
-        BackendService.getMatch(this.matchIdFromInput).then((response) => {
+        BackendService.getBullhornData(this.matchIdFromInput, "match").then((response) => {
           try {
            /* if (response.status !== 200 || response.data === null || response.data === "null" || response === "null") {
               alert("Die Match-ID ist nicht korrekt. Bitte gib die ID erneut ein.");
@@ -166,59 +166,59 @@ export default {
               this.matches = response.data;
               this.confirmClick();
 
-              localStorage.setItem('match', this.matches);
-              localStorage.setItem('projektpartnerName', this.matches.at(0) + " " + this.matches.at(1));
+              localStorage.setItem('match:match', this.matches);
+              localStorage.setItem('match:projektpartnerName', this.matches.at(0) + " " + this.matches.at(1));
               this.projektpartnerName = this.matches.at(0) + " " + this.matches.at(1);
-              localStorage.setItem('wematchAnsprechpartnerName', this.matches.at(33));
+              localStorage.setItem('match:wematchAnsprechpartnerName', this.matches.at(33));
               this.wematchAnsprechpartnerName = this.matches.at(33);
-              localStorage.setItem('projektpartnerMail', this.matches.at(22));
+              localStorage.setItem('match:projektpartnerMail', this.matches.at(22));
               this.projektpartnerMail = this.matches.at(22);
-              localStorage.setItem('wematchAnsprechpartnerMail', absenderMail());
-              this.wematchAnsprechpartnerMail = localStorage.getItem('wematchAnsprechpartnerMail');
-              localStorage.setItem('startdatum', this.dateFormatter(this.matches.at(11)));
+              localStorage.setItem('match:wematchAnsprechpartnerMail', absenderMail());
+              this.wematchAnsprechpartnerMail = localStorage.getItem('match:wematchAnsprechpartnerMail');
+              localStorage.setItem('match:startdatum', this.dateFormatter(this.matches.at(11)));
               this.startdatum = this.dateFormatter(this.matches.at(11));
-              localStorage.setItem('enddatum', this.dateFormatter(this.matches.at(12)));
+              localStorage.setItem('match:enddatum', this.dateFormatter(this.matches.at(12)));
               this.enddatum = this.dateFormatter(this.matches.at(12));
-              localStorage.setItem('adresseKundeStr', this.matches.at(15) + " " + this.matches.at(16));
-              localStorage.setItem('adresseKundeCity', this.matches.at(18) + " " + this.matches.at(17));
-              localStorage.setItem('adresseKunde', this.matches.at(15) + " " + this.matches.at(16) + " " + this.matches.at(18) + " " + this.matches.at(17))
+              localStorage.setItem('match:adresseKundeStr', this.matches.at(15) + " " + this.matches.at(16));
+              localStorage.setItem('match:adresseKundeCity', this.matches.at(18) + " " + this.matches.at(17));
+              localStorage.setItem('match:adresseKunde', this.matches.at(15) + " " + this.matches.at(16) + " " + this.matches.at(18) + " " + this.matches.at(17))
               this.adresseKunde = this.matches.at(15) + " " + this.matches.at(16) + " " + this.matches.at(18) + " " + this.matches.at(17);
-              localStorage.setItem('ppGesellschaft', this.matches.at(2));
+              localStorage.setItem('match:ppGesellschaft', this.matches.at(2));
               this.ppGesellschaft = this.matches.at(2);
-              localStorage.setItem('kunde', this.matches.at(14));
+              localStorage.setItem('match:kunde', this.matches.at(14));
               this.kunde = this.matches.at(14);
-              localStorage.setItem('kuendigungsfrist', this.matches.at(19));
+              localStorage.setItem('match:kuendigungsfrist', this.matches.at(19));
               this.kuendigungsfrist = this.matches.at(19);
-              localStorage.setItem('zahlungszielPP', this.matches.at(3));
+              localStorage.setItem('match:zahlungszielPP', this.matches.at(3));
               this.zahlungszielPP = this.matches.at(3);
-              localStorage.setItem('zahlungszielKunde', this.matches.at(4));
+              localStorage.setItem('match:zahlungszielKunde', this.matches.at(4));
               this.zahlungszielKunde = this.matches.at(4);
-              localStorage.setItem('verguetungssatz', this.matches.at(5));
+              localStorage.setItem('match:verguetungssatz', this.matches.at(5));
               this.verguetungssatz = this.matches.at(5);
-              localStorage.setItem('einsatzort', this.matches.at(21));
+              localStorage.setItem('match:einsatzort', this.matches.at(21));
               this.einsatzort = this.matches.at(21);
-              localStorage.setItem('position', this.matches.at(13));
+              localStorage.setItem('match:position', this.matches.at(13));
               this.position = this.matches.at(13);
-              localStorage.setItem('aufgabenbeschreibung', this.matches.at(8));
+              localStorage.setItem('match:aufgabenbeschreibung', this.matches.at(8));
               this.aufgabenbeschreibung = this.matches.at(8);
-              localStorage.setItem('ek', this.preisFormatter(this.matches.at(6)));
+              localStorage.setItem('match:ek', this.preisFormatter(this.matches.at(6)));
               this.ek = this.preisFormatter(this.matches.at(6));
-              localStorage.setItem('vk', this.preisFormatter(this.matches.at(7)));
+              localStorage.setItem('match:vk', this.preisFormatter(this.matches.at(7)));
               this.vk = this.preisFormatter(this.matches.at(7))
-              localStorage.setItem('ansprechpartnerKunde', this.matches.at(24) + " " + this.matches.at(25));
+              localStorage.setItem('match:ansprechpartnerKunde', this.matches.at(24) + " " + this.matches.at(25));
               this.ansprechpartnerKunde = this.matches.at(24) + " " + this.matches.at(25);
-              localStorage.setItem('matchID','EZ-' + this.matchIdFromInput);
-              localStorage.setItem('ppStreet', this.matches.at(26) + " " + this.matches.at(27));
-              localStorage.setItem('ppCity', this.matches.at(28) + " " + this.matches.at(29));
-              localStorage.setItem('ppAdresse', this.matches.at(26) + " " + this.matches.at(27) + ", " + this.matches.at(28) + " " + this.matches.at(29))
+              localStorage.setItem('match:matchID','EZ-' + this.matchIdFromInput);
+              localStorage.setItem('match:ppStreet', this.matches.at(26) + " " + this.matches.at(27));
+              localStorage.setItem('match:ppCity', this.matches.at(28) + " " + this.matches.at(29));
+              localStorage.setItem('match:ppAdresse', this.matches.at(26) + " " + this.matches.at(27) + ", " + this.matches.at(28) + " " + this.matches.at(29))
               this.ppAdresse = this.matches.at(26) + " " + this.matches.at(27) + ", " + this.matches.at(28) + " " + this.matches.at(29)
-              localStorage.setItem('auslastung', this.matches.at(31) * this.matches.at(30) + " Stunden pro Woche");
+              localStorage.setItem('match:auslastung', this.matches.at(31) * this.matches.at(30) + " Stunden pro Woche");
               this.auslastung = this.matches.at(31) * this.matches.at(30) + " Stunden pro Woche";
-              localStorage.setItem('auslastungEng', this.matches.at(31) * this.matches.at(30) + " Hours per week");
+              localStorage.setItem('match:auslastungEng', this.matches.at(31) * this.matches.at(30) + " Hours per week");
               this.auslastungEng = this.matches.at(31) * this.matches.at(30) + " Hours per week";
-              localStorage.setItem('addAgreements', this.matches.at(32));
+              localStorage.setItem('match:addAgreements', this.matches.at(32));
               this.addAgreements = this.matches.at(32);
-              localStorage.setItem('jobOwnerFirstName', this.matches.at(33));
+              localStorage.setItem('match:jobOwnerFirstName', this.matches.at(33));
               this.jobOwner = this.matches.at(33);
 
               this.isLoading = false;
