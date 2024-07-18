@@ -3,46 +3,45 @@
     <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
   </div>
 
-<h2>2. Wähle den Vertrag aus, den du erstellen willst:</h2>
+  <h2>2. Wähle den Vertrag aus, den du erstellen willst:</h2>
 
   <h2>Deutsch</h2>
   <h3>Standard</h3>
-    <input type="radio" id="c-rv-pp" value="c-rv-pp" name="radio" @click="confirmed = true">
-    <label for="c-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
-    <input type="radio" id="c-ev-pp" value="c-ev-pp" name="radio" @click="confirmed = true">
-    <label for="c-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
-
+  <input type="radio" id="c-rv-pp" value="c-rv-pp" name="radio" @click="confirmed = true">
+  <label for="c-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+  <input type="radio" id="c-ev-pp" value="c-ev-pp" name="radio" @click="confirmed = true">
+  <label for="c-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
 
   <h3>Engineering</h3>
-    <input type="radio" id="eng-rv-pp" value="eng-rv-pp" name="radio" @click="confirmed = true">
-    <label for="eng-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
-    <input type="radio" id="eng-ev-pp" value="eng-ev-pp" name="radio" @click="confirmed = true">
-    <label for="eng-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
+  <input type="radio" id="eng-rv-pp" value="eng-rv-pp" name="radio" @click="confirmed = true">
+  <label for="eng-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+  <input type="radio" id="eng-ev-pp" value="eng-ev-pp" name="radio" @click="confirmed = true">
+  <label for="eng-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
 
   <h3>Projects</h3>
-    <input type="radio" id="proj-rv-pp" value="proj-rv-pp" name="radio" @click="confirmed = true">
-    <label for="proj-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
-    <input type="radio" id="proj-ev-pp" value="proj-ev-pp" name="radio" @click="confirmed = true">
-    <label for="proj-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
+  <input type="radio" id="proj-rv-pp" value="proj-rv-pp" name="radio" @click="confirmed = true">
+  <label for="proj-rv-pp" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+  <input type="radio" id="proj-ev-pp" value="proj-ev-pp" name="radio" @click="confirmed = true">
+  <label for="proj-ev-pp" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
 
   <h2>Englisch</h2>
   <h3>Standard</h3>
-    <input type="radio" id="c-rv-pp-eng" value="c-rv-pp-eng" name="radio" @click="confirmed = true">
-    <label for="c-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
-    <input type="radio" id="c-ev-pp-eng" value="c-ev-pp-eng" name="radio" @click="confirmed = true">
-    <label for="c-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
+  <input type="radio" id="c-rv-pp-eng" value="c-rv-pp-eng" name="radio" @click="confirmed = true">
+  <label for="c-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+  <input type="radio" id="c-ev-pp-eng" value="c-ev-pp-eng" name="radio" @click="confirmed = true">
+  <label for="c-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
 
   <h3>Engineering</h3>
-    <input type="radio" id="eng-rv-pp-eng" value="eng-rv-pp-eng" name="radio" @click="confirmed = true">
-    <label for="eng-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
-    <input type="radio" id="eng-ev-pp-eng" value="eng-ev-pp-eng" name="radio" @click="confirmed = true">
-    <label for="eng-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
+  <input type="radio" id="eng-rv-pp-eng" value="eng-rv-pp-eng" name="radio" @click="confirmed = true">
+  <label for="eng-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+  <input type="radio" id="eng-ev-pp-eng" value="eng-ev-pp-eng" name="radio" @click="confirmed = true">
+  <label for="eng-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
 
   <h3>Projects</h3>
-    <input type="radio" id="proj-rv-pp-eng" value="proj-rv-pp-eng" name="radio" @click="confirmed = true">
-    <label for="proj-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
-    <input type="radio" id="proj-ev-pp-eng" value="proj-ev-pp-eng" name="radio" @click="confirmed = true">
-    <label for="proj-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
+  <input type="radio" id="proj-rv-pp-eng" value="proj-rv-pp-eng" name="radio" @click="confirmed = true">
+  <label for="proj-rv-pp-eng" @click="confirmed = true">Rahmenvertrag Projektpartner</label><br/>
+  <input type="radio" id="proj-ev-pp-eng" value="proj-ev-pp-eng" name="radio" @click="confirmed = true">
+  <label for="proj-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
 
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
 
@@ -64,7 +63,12 @@
   <label for="cc_name">Name:</label>
   <input v-model="ccName" type="text" id="cc_name"><br />
 
-  <button class="btn" v-bind:class="{'bestatigen-button btn-outline-primary': !confirmed, 'btn-primary': confirmed}" @click="chooseTemplate()">Bestätigen</button>
+  <button class="btn" :class="{'bestatigen-button btn-outline-primary': !confirmed || aufgabenbeschreibungError, 'btn-primary': confirmed && !aufgabenbeschreibungError}" :disabled="aufgabenbeschreibungError" @click="chooseTemplate()">Bestätigen</button>
+
+  <p class="error" v-if="aufgabenbeschreibungError" style="color: red;">
+    Die Aufgabenbeschreibung überschreitet die Grenze von 4000 Zeichen.<br />
+    Bitte kürze sie in Bullhorn und gib die Match-ID erneut ein!
+  </p>
 
   <div id="buttonContainer">
     <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
@@ -100,6 +104,7 @@ export default {
       absenderMail: localStorage.getItem('wematchAnsprechpartnerMail'),
       ccName: "",
       ccMail: "",
+      aufgabenbeschreibungError: false
     }
   },
   methods: {
@@ -108,6 +113,11 @@ export default {
       router.go(-1);
     },
     chooseTemplate() {
+      this.checkAufgabenbeschreibung();
+      if (this.aufgabenbeschreibungError) {
+        return;
+      }
+
       verguetungssatzSwitchPP();
       kuendigungsfristTranslator();
 
@@ -152,7 +162,7 @@ export default {
       }
 
       //RV projektpartner Englisch - Projects
-     /* if (document.getElementById('proj-rv-pp-eng').checked) {
+      /* if (document.getElementById('proj-rv-pp-eng').checked) {
         crv("proj-rv-pp-eng")
       }*/
 
@@ -168,77 +178,92 @@ export default {
       if (document.getElementById('proj-ev-pp-eng').checked) {
         projevppEng()
       }
+    },
+    checkAufgabenbeschreibung() {
+      const newValue = localStorage.getItem('aufgabenbeschreibung');
+      if (newValue && encodeURIComponent(newValue).length > 4000) {
+        this.aufgabenbeschreibungError = true;
+        this.confirmed = false;
+      } else {
+        this.aufgabenbeschreibungError = false;
+      }
     }
   },
 
   mounted() {
-      localStorage.setItem("empfaengerName", this.empfaengerName);
-      localStorage.setItem("empfaengerMail", this.empfaengerMail);
-      localStorage.setItem("absenderName", this.absenderName);
-      localStorage.setItem("absenderMail", this.absenderMail);
+    localStorage.setItem("empfaengerName", this.empfaengerName);
+    localStorage.setItem("empfaengerMail", this.empfaengerMail);
+    localStorage.setItem("absenderName", this.absenderName);
+    localStorage.setItem("absenderMail", this.absenderMail);
 
-      document.getElementById("helpButton").addEventListener("click", function() {
-        sendHelpMail();
-      })
+    document.getElementById("helpButton").addEventListener("click", function() {
+      sendHelpMail();
+    });
+
+    this.checkAufgabenbeschreibung();
+    window.addEventListener('storage', this.checkAufgabenbeschreibung);
   },
 
   watch: {
-      empfaengerName(newValue) {
-        localStorage.setItem("empfaengerName", newValue);
-      },
-      empfaengerMail(newValue) {
-        localStorage.setItem("empfaengerMail", newValue);
-      },
-      absenderName(newValue) {
-        localStorage.setItem("absenderName", newValue);
-      },
-      absenderMail(newValue) {
-        localStorage.setItem("absenderMail", newValue);
-      },
-      ccName(newValue) {
-        localStorage.setItem("ccName", newValue);
-      },
-      ccMail(newValue) {
-        localStorage.setItem("ccMail", newValue);
-      }
+    empfaengerName(newValue) {
+      localStorage.setItem("empfaengerName", newValue);
+    },
+    empfaengerMail(newValue) {
+      localStorage.setItem("empfaengerMail", newValue);
+    },
+    absenderName(newValue) {
+      localStorage.setItem("absenderName", newValue);
+    },
+    absenderMail(newValue) {
+      localStorage.setItem("absenderMail", newValue);
+    },
+    ccName(newValue) {
+      localStorage.setItem("ccName", newValue);
+    },
+    ccMail(newValue) {
+      localStorage.setItem("ccMail", newValue);
     }
+  }
 }
 </script>
 
 <style scoped>
 
-  #helpButton {
-    margin-right: 10px;
-  }
+#helpButton {
+  margin-right: 10px;
+}
 
-  #buttonContainer {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-  }
+#buttonContainer {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
 
-  [type="email"] {
-    margin-left: 0.5rem;
-    margin-right: 2rem;
-  }
+[type="email"] {
+  margin-left: 0.5rem;
+  margin-right: 2rem;
+}
 
-  [type="text"] {
-    margin-left: 0.5rem;
-  }
+[type="text"] {
+  margin-left: 0.5rem;
+}
 
-  .bestatigen-button {
-    margin-top: 1rem;
-    margin-bottom: 2rem;
-    pointer-events: none;
-  }
+.bestatigen-button {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  pointer-events: none;
+}
 
-  h3 {
-    font-size: 1.5rem;
-    margin-top: 2rem;
-  }
+h3 {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+}
 
-  [type="radio"] {
-    margin-right: 5px;
-  }
+[type="radio"] {
+  margin-right: 5px;
+}
 
+.error {
+  color: red;
+}
 </style>

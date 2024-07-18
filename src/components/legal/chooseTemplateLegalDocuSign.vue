@@ -61,9 +61,6 @@
   <input type="radio" id="c-ev-k-p-eng" value="c-ev-k-p-eng" name="radio" @click="confSecond(false)">
   <label for="c-ev-k-p-eng" @click="confSecond(false)">Projekteinzelauftrag Kunde</label><br/>
 
-
-
-
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
 
   <h3>Vertrag Absender</h3>
@@ -92,8 +89,9 @@
   <label for="cc_name">Name:</label>
   <input v-model="ccName" type="text" id="cc_name"><br />
 
-  <button class="btn" v-bind:class="{'bestatigen-button btn-outline-primary': !confirmed, 'btn-primary': confirmed}" @click="chooseTemplate()">Bestätigen</button>
+  <p class="error" v-if="aufgabenbeschreibungError">Die Aufgabenbeschreibung überschreitet die Grenze von 4000 Zeichen.<br />Bitte kürze sie in Bullhorn und gib die Match-ID erneut ein!</p>
 
+  <button class="btn" :class="{'bestatigen-button btn-outline-primary': !confirmed || aufgabenbeschreibungError, 'btn-primary': confirmed && !aufgabenbeschreibungError}" :disabled="aufgabenbeschreibungError" @click="chooseTemplate()">Bestätigen</button>
   <div id="buttonContainer">
     <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
     <button id="logoutButton" class="btn btn-primary" @click="logout()"><b>Logout</b></button>
@@ -111,9 +109,8 @@ import {
   cevk,
   cevkEng,
   cevkEng2,
-
 } from "@/services/MethodService";
-import {logout} from "@/firebase-config";
+import { logout } from "@/firebase-config";
 
 export default {
   name: "chooseTemplateLegalDocuSign",
@@ -130,7 +127,8 @@ export default {
       ccName: "",
       ccMail: "",
       zweiterEmpfaenger: false,
-    }
+      aufgabenbeschreibungError: false,
+    };
   },
   methods: {
     logout,
@@ -138,114 +136,118 @@ export default {
       router.go(-1);
     },
     confSecond(cond) {
-      if(cond){
+      if (cond) {
         this.confirmed = true;
         this.zweiterEmpfaenger = true;
-      } else if(!cond){
+      } else if (!cond) {
         this.confirmed = true;
         this.zweiterEmpfaenger = false;
       }
     },
-
     chooseTemplate() {
+      this.checkAufgabenbeschreibung();
+      if (this.aufgabenbeschreibungError) {
+        return;
+      }
+
       verguetungssatzSwitchKunde();
       kuendigungsfristTranslator();
 
-      //RV Kunde Deutsch : WeMatch, Engineering, Projects
-      if (document.getElementById('c-rv-k').checked) {
+      // RV Kunde Deutsch : WeMatch, Engineering, Projects
+      if (document.getElementById("c-rv-k").checked) {
         crv("c-rv-k");
       }
 
-      if (document.getElementById('c-rv-k-e').checked) {
+      if (document.getElementById("c-rv-k-e").checked) {
         crv("c-rv-k-e");
       }
 
-      if (document.getElementById('c-rv-k-p').checked) {
+      if (document.getElementById("c-rv-k-p").checked) {
         crv("c-rv-k-p");
       }
 
-
-      //RV Kunde Englisch: WeMatch, Engineering, Projects
-      if (document.getElementById('c-rv-k-eng').checked) {
-        crv("c-rv-k-eng")
+      // RV Kunde Englisch: WeMatch, Engineering, Projects
+      if (document.getElementById("c-rv-k-eng").checked) {
+        crv("c-rv-k-eng");
       }
 
-      if (document.getElementById('c-rv-k-e-eng').checked) {
-        crv("c-rv-k-e-eng")
+      if (document.getElementById("c-rv-k-e-eng").checked) {
+        crv("c-rv-k-e-eng");
       }
 
-      if (document.getElementById('c-rv-k-p-eng').checked) {
-        crv("c-rv-k-p-eng")
+      if (document.getElementById("c-rv-k-p-eng").checked) {
+        crv("c-rv-k-p-eng");
       }
 
-
-      //EV Kunde Deutsch : WeMatch, Engineering, Projects
-      if (document.getElementById('c-ev-k').checked) {
-        cevk("c-ev-k")
+      // EV Kunde Deutsch : WeMatch, Engineering, Projects
+      if (document.getElementById("c-ev-k").checked) {
+        cevk("c-ev-k");
       }
 
-      if (document.getElementById('c-ev-k-e').checked) {
-        cevk("c-ev-k-e")
+      if (document.getElementById("c-ev-k-e").checked) {
+        cevk("c-ev-k-e");
       }
 
-      if (document.getElementById('c-ev-k-p').checked) {
-        cevk("c-ev-k-p")
+      if (document.getElementById("c-ev-k-p").checked) {
+        cevk("c-ev-k-p");
       }
 
-      //EV Kunde Englisch: WeMatch, Engineering, Projects
-      if (document.getElementById('c-ev-k-eng').checked) {
-        cevkEng("c-ev-k-eng")
+      // EV Kunde Englisch: WeMatch, Engineering, Projects
+      if (document.getElementById("c-ev-k-eng").checked) {
+        cevkEng("c-ev-k-eng");
       }
 
-      if (document.getElementById('c-ev-k-e-eng').checked) {
-        cevkEng("c-ev-k-e-eng")
+      if (document.getElementById("c-ev-k-e-eng").checked) {
+        cevkEng("c-ev-k-e-eng");
       }
-      if (document.getElementById('c-ev-k-p-eng').checked) {
-        cevkEng("c-ev-k-p-eng")
-      }
-
-      //EV Kunde - 2 Unterschriftsblöcke
-
-      if (document.getElementById('c-ev-k-2').checked) {
-        cevk2("c-ev-k-2")
+      if (document.getElementById("c-ev-k-p-eng").checked) {
+        cevkEng("c-ev-k-p-eng");
       }
 
-      if(document.getElementById('c-rv-k-2').checked) {
-        cevk2("c-ev-k-2")
+      // EV Kunde - 2 Unterschriftsblöcke
+
+      if (document.getElementById("c-ev-k-2").checked) {
+        cevk2("c-ev-k-2");
       }
 
-      if(document.getElementById('c-rv-k-e-2').checked) {
-        cevk2("c-rv-k-e-2")
+      if (document.getElementById("c-rv-k-2").checked) {
+        cevk2("c-ev-k-2");
       }
 
-      if(document.getElementById('c-ev-k-e-2').checked) {
-        cevk2("c-ev-k-e-2")
+      if (document.getElementById("c-rv-k-e-2").checked) {
+        cevk2("c-rv-k-e-2");
       }
 
-      if(document.getElementById('c-ev-k-2-eng').checked) {
-        cevkEng2("c-ev-k-2-eng")
+      if (document.getElementById("c-ev-k-e-2").checked) {
+        cevk2("c-ev-k-e-2");
       }
 
-      if(document.getElementById('c-rv-k-2-eng').checked) {
-        cevkEng2("c-rv-k-2-eng")
+      if (document.getElementById("c-ev-k-2-eng").checked) {
+        cevkEng2("c-ev-k-2-eng");
       }
 
-      if(document.getElementById('c-rv-k-e-2-eng').checked){
-        cevkEng2("c-rv-k-2-e-eng")
+      if (document.getElementById("c-rv-k-2-eng").checked) {
+        cevkEng2("c-rv-k-2-eng");
       }
 
-      if(document.getElementById('c-ev-k-e-2-eng').checked){
-        cevkEng2("c-ev-k-e-2-eng")
+      if (document.getElementById("c-rv-k-e-2-eng").checked) {
+        cevkEng2("c-rv-2-e-eng");
       }
 
-
-
-
-
-      //ToDO: Implementierung für 2 Unterschriftsblöcke für Engineering und +Englisch
-    }
+      if (document.getElementById("c-ev-k-e-2-eng").checked) {
+        cevkEng2("c-ev-k-e-2-eng");
+      }
+    },
+    checkAufgabenbeschreibung() {
+      const newValue = localStorage.getItem('aufgabenbeschreibung');
+      if (newValue && encodeURIComponent(newValue).length > 4000) {
+        this.aufgabenbeschreibungError = true;
+        this.confirmed = false;
+      } else {
+        this.aufgabenbeschreibungError = false;
+      }
+    },
   },
-
   mounted() {
     localStorage.setItem("empfaengerName", this.empfaengerName);
     localStorage.setItem("empfaengerMail", this.empfaengerMail);
@@ -254,7 +256,15 @@ export default {
 
     document.getElementById("helpButton").addEventListener("click", function() {
       sendHelpMail();
-    })
+    });
+
+    // Watch for changes in the aufgabenbeschreibung in localStorage
+    this.checkAufgabenbeschreibung();
+    window.addEventListener('storage', this.checkAufgabenbeschreibung);
+  },
+
+  beforeUnmount() {
+    window.removeEventListener('storage', this.checkAufgabenbeschreibung);
   },
 
   watch: {
@@ -281,12 +291,16 @@ export default {
     },
     ccMail(newValue) {
       localStorage.setItem("ccMail", newValue);
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
+.error {
+  color: red;
+  margin-top: 15px;
+}
 
 #helpButton {
   margin-right: 10px;
@@ -321,5 +335,4 @@ h3 {
 [type="radio"] {
   margin-right: 5px;
 }
-
 </style>
