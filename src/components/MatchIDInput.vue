@@ -96,7 +96,6 @@
       </tbody>
     </table>
   </div>
-  <p class="error" v-if="aufgabenbeschreibungError">Die Aufgabenbeschreibung überschreitet die Grenze von 4000 Zeichen.<br />Bitte kürze sie in bullhorn und gib die Match-ID erneut ein!</p>
   <button class="btn weiter-button-gen" v-bind:class="{'weiter-button': !confirmed, 'btn-primary': confirmed}" @click="goToChooseTemplate"><b>Weiter</b></button><br />
   <div id="buttonContainer">
     <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
@@ -119,7 +118,6 @@ export default {
       matches: [],
       confirmed: false,
       isLoading: false,
-      aufgabenbeschreibungError: false,
       wematchAnsprechpartnerName: "",
       wematchAnsprechpartnerMail: "",
       projektpartnerName: "",
@@ -173,7 +171,7 @@ export default {
               this.wematchAnsprechpartnerName = this.matches.at(33);
               localStorage.setItem('projektpartnerMail', this.matches.at(22));
               this.projektpartnerMail = this.matches.at(22);
-              localStorage.setItem('wematchAnsprechpartnerMail', absenderMail());
+              localStorage.setItem('wematchAnsprechpartnerMail', absenderMail().toString());
               this.wematchAnsprechpartnerMail = localStorage.getItem('wematchAnsprechpartnerMail');
               localStorage.setItem('startdatum', this.dateFormatter(this.matches.at(11)));
               this.startdatum = this.dateFormatter(this.matches.at(11));
@@ -280,16 +278,6 @@ export default {
     document.getElementById("helpButton").addEventListener("click", function() {
       sendHelpMail();
     })
-  },
-  watch: {
-    aufgabenbeschreibung(newValue) {
-      if (encodeURIComponent(newValue).length > 4000) {
-        this.aufgabenbeschreibungError = true;
-        this.confirmed = false;
-      } else {
-        this.aufgabenbeschreibungError = false;
-      }
-    }
   }
 }
 </script>
