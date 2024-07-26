@@ -38,15 +38,11 @@ function sendHelpMail(){
 
 function absenderMail(){
     const name= localStorage.getItem('wematchAnsprechpartnerName');
-    console.log(name);
     if(name!= null){
-        const [firstName, lastName] = name.split(" ");
-        var mail = `${firstName[0].toLowerCase()}.${lastName.toLowerCase()}@wematch.de`;
-        localStorage.setItem('absenderMail',mail);
-        console.log(mail);
+        const [firstName, lastName] = name.split(" "),
+            mail = `${firstName[0].toLowerCase()}.${lastName.toLowerCase()}@wematch.de`;
         return mail;
     }
-    return "";
 }
 
 /**
@@ -247,7 +243,6 @@ function crv(docId){
                 "&Projektpartner_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
                 "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
-
                 "&PPName=" + encodeURIComponent(ppNameLocal) +
                 "&Adresse1=" + encodeURIComponent(localStorage.getItem('ppStreet')) +
                 "&Adresse2=" + encodeURIComponent(localStorage.getItem('ppCity'));
@@ -538,7 +533,7 @@ function cevk2(docId){
         .then(response => {
             finalURL = response.data.toString() +
                 "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
-                "&Absender_Email=" + encodeURIComponent(absenderMail) +
+                "&Absender_Mail=" + encodeURIComponent(absenderMail) +
                 "&Kunde_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
                 "&Kunde_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
                 "&Kunde2_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName2')) +
@@ -682,6 +677,9 @@ function docxEvk(){
         localStorage.getItem("auslastungEng"),
         localStorage.getItem("aufgabenbeschreibung"),
         localStorage.getItem("addAgreements"),
+        localStorage.getItem("ppStreet"),
+        localStorage.getItem("ppCity"),
+        localStorage.getItem("projektpartnerName")
     ]
 
     BackendService.postDocData(localStorage.getItem("docId"), data).then(response => {
