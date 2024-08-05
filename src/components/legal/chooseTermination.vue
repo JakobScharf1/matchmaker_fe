@@ -46,7 +46,7 @@ import router from "@/router";
 import {
   kuendigungsfristTranslator,
   verguetungssatzSwitchKunde,
-  docxEvk,
+  docxTermination,
   sendHelpMail
 } from "@/services/MethodService";
 import {logout} from "@/firebase-config";
@@ -70,7 +70,7 @@ export default {
 
       if (this.selectedContract) {
         localStorage.setItem("docId", this.selectedContract);
-        docxEvk();
+        docxTermination();
       }
     },
     toggleSelection(contractId) {
