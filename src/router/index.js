@@ -68,7 +68,7 @@ const routes = [
     {
         path: "/chooseTermination",
         component: chooseTermination
-    }
+    },
 
 
 

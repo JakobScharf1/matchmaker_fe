@@ -142,6 +142,9 @@ export default {
       aufgabenbeschreibung: "",
       addAgreements: "",
       jobOwner: "",
+      preFix: "",
+      vkOnSite:"",
+      hoursperDay:""
     }
   },
   methods: {
@@ -218,6 +221,15 @@ export default {
               this.addAgreements = this.matches.at(32);
               localStorage.setItem('jobOwnerFirstName', this.matches.at(33));
               this.jobOwner = this.matches.at(33);
+              localStorage.setItem('preFix', this.matches.at(34));
+              this.preFix= this.matches.at(34);
+              localStorage.setItem('vkOnSite', this.matches.at(35));
+              this.vkOnSite = this.matches.at(35);
+              localStorage.setItem('hoursperDay', this.matches.at(31));
+              this.hoursperDay = this.matches.at(31);
+
+
+
 
               this.isLoading = false;
             //}
