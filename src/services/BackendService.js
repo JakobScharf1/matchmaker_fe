@@ -5,7 +5,8 @@ class BackendService{
     /**
      * Stellt eine Anfrage ans Backend, um die Match-Daten zu erhalten.
      * Hierbei wird eine Anfrage an matchmaker.wematch-intern.de/backend/match/xxx gestellt mit dem token im Body
-     * @param matchId Die entsprechende MatchID
+     * @param dataId Die entsprechende MatchID
+     * @param type "match" or "kunde" or "projektpartner"
      * @returns {Promise<axios.AxiosResponse<any>>} Der Return enthält die Daten des entsprechenden Matches.
      */
     async getBullhornData(dataId, type){
