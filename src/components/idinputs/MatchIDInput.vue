@@ -155,7 +155,7 @@ export default {
     getMatch() {
       this.isLoading = true;
       setTimeout(() => {
-        BackendService.getMatch(this.matchIdFromInput).then((response) => {
+        BackendService.getBullhornData(this.matchIdFromInput, "match").then((response) => {
           try {
            /* if (response.status !== 200 || response.data === null || response.data === "null" || response === "null") {
               alert("Die Match-ID ist nicht korrekt. Bitte gib die ID erneut ein.");
