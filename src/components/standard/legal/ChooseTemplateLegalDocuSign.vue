@@ -104,7 +104,7 @@ import {
   kuendigungsfristTranslator,
   verguetungssatzSwitchKunde,
   sendHelpMail,
-  crvk,
+  crv,
   cevk2,
   cevk,
   cevkEng,
@@ -155,28 +155,28 @@ export default {
 
       // RV Kunde Deutsch : WeMatch, Engineering, Projects
       if (document.getElementById("c-rv-k").checked) {
-        crvk("c-rv-k");
+        crv("c-rv-k");
       }
 
       if (document.getElementById("c-rv-k-e").checked) {
-        crvk("c-rv-k-e");
+        crv("c-rv-k-e");
       }
 
       if (document.getElementById("c-rv-k-p").checked) {
-        crvk("c-rv-k-p");
+        crv("c-rv-k-p");
       }
 
       // RV Kunde Englisch: WeMatch, Engineering, Projects
       if (document.getElementById("c-rv-k-eng").checked) {
-        crvk("c-rv-k-eng");
+        crv("c-rv-k-eng");
       }
 
       if (document.getElementById("c-rv-k-e-eng").checked) {
-        crvk("c-rv-k-e-eng");
+        crv("c-rv-k-e-eng");
       }
 
       if (document.getElementById("c-rv-k-p-eng").checked) {
-        crvk("c-rv-k-p-eng");
+        crv("c-rv-k-p-eng");
       }
 
       // EV Kunde Deutsch : WeMatch, Engineering, Projects
