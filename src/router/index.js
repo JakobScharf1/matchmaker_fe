@@ -1,4 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
+import MatchIDInput from "@/components/MatchIDInput.vue";
+import LoginSSO from "@/views/LoginSSO.vue";
+import chooseTemplateType from "@/components/chooseTemplateType.vue";
+import chooseTemplateFormats from "@/components/chooseTemplateFormats.vue";
+import chooseTemplateDocuSign from "@/components/consultants/chooseTemplateDocuSign.vue";
+import chooseTemplateDocx from "@/components/consultants/chooseTemplateDocx.vue";
+import chooseTemplateLegalDocuSign from "@/components/legal/chooseTemplateLegalDocuSign.vue";
+import chooseTemplateLegalDocx from "@/components/legal/chooseTemplateLegalDocx.vue";
+import chooseTermination from "@/components/legal/chooseTermination.vue";
 import MatchIDInput from "@/components/idinputs/MatchIDInput.vue";
 import LoginSSO from "@/components/LoginSSO.vue";
 import chooseTemplateType from "@/components/standard/ChooseTemplateType.vue";
@@ -65,10 +74,12 @@ const routes = [
         path: "/chooseTemplateDocx",
         component: chooseTemplateDocx
     },
-    //{
-    //    path: "/chooseTermination",
-    //    component: chooseTermination
-    //}
+    {
+        path: "/chooseTermination",
+        component: chooseTermination
+    }
+
+
 
 ]
 

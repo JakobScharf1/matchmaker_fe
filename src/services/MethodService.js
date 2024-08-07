@@ -38,15 +38,11 @@ function sendHelpMail(){
 
 function absenderMail(){
     const name= localStorage.getItem('wematchAnsprechpartnerName');
-    console.log(name);
     if(name!= null){
-        const [firstName, lastName] = name.split(" ");
-        var mail = `${firstName[0].toLowerCase()}.${lastName.toLowerCase()}@wematch.de`;
-        localStorage.setItem('absenderMail',mail);
-        console.log(mail);
+        const [firstName, lastName] = name.split(" "),
+            mail = `${firstName[0].toLowerCase()}.${lastName.toLowerCase()}@wematch.de`;
         return mail;
     }
-    return "";
 }
 
 /**
@@ -54,21 +50,21 @@ function absenderMail(){
  * Die anderen Variablen bleiben beim Wert "X".
  */
 function verguetungssatzSwitchPP(){
-    localStorage.setItem("match:stundensatz", "X");
-    localStorage.setItem("match:tagessatz", "X");
-    localStorage.setItem("match:festpreis", "X");
+    localStorage.setItem("stundensatz", "X");
+    localStorage.setItem("tagessatz", "X");
+    localStorage.setItem("festpreis", "X");
 
-    let ek = localStorage.getItem("match:ek");
+    let ek = localStorage.getItem("ek");
 
-    switch (localStorage.getItem('match:verguetungssatz')){
+    switch (localStorage.getItem('verguetungssatz')){
         case "Stundensatz":
-            localStorage.setItem("match:stundensatz", ek);
+            localStorage.setItem("stundensatz", ek);
             break;
         case "Tagessatz":
-            localStorage.setItem("match:tagessatz", ek);
+            localStorage.setItem("tagessatz", ek);
             break;
         case "Festpreis":
-            localStorage.setItem("match:festpreis", ek);
+            localStorage.setItem("festpreis", ek);
             break;
         default:
             break;
@@ -76,21 +72,21 @@ function verguetungssatzSwitchPP(){
 }
 
 function verguetungssatzSwitchKunde(){
-    localStorage.setItem("match:stundensatz", "X");
-    localStorage.setItem("match:tagessatz", "X");
-    localStorage.setItem("match:festpreis", "X");
+    localStorage.setItem("stundensatz", "X");
+    localStorage.setItem("tagessatz", "X");
+    localStorage.setItem("festpreis", "X");
 
     let vk = localStorage.getItem("vk");
 
-    switch (localStorage.getItem('match:verguetungssatz')){
+    switch (localStorage.getItem('verguetungssatz')){
         case "Stundensatz":
-            localStorage.setItem("match:stundensatz", vk);
+            localStorage.setItem("stundensatz", vk);
             break;
         case "Tagessatz":
-            localStorage.setItem("match:tagessatz", vk);
+            localStorage.setItem("tagessatz", vk);
             break;
         case "Festpreis":
-            localStorage.setItem("match:festpreis", vk);
+            localStorage.setItem("festpreis", vk);
             break;
         default:
             break;
@@ -104,7 +100,7 @@ function verguetungssatzSwitchKunde(){
 function kuendigungsfristTranslator(){
     var kuendigungsfristEnglisch;
 
-    switch (localStorage.getItem("match:kuendigungsfrist")) {
+    switch (localStorage.getItem("kuendigungsfrist")) {
         case "Keine":
             kuendigungsfristEnglisch = "none";
             break;
@@ -136,7 +132,7 @@ function kuendigungsfristTranslator(){
             kuendigungsfristEnglisch = "90 days";
             break;
     }
-    localStorage.setItem("match:kuendigungsfirstEnglisch", kuendigungsfristEnglisch);
+    localStorage.setItem("kuendigungsfirstEnglisch", kuendigungsfristEnglisch);
 }
 
 /*function calculateTermination() {
@@ -196,36 +192,36 @@ function valueMappingTest(){
         "empfaengerMail: " + localStorage.getItem('empfaengerMail') + '\n' +
         "ccName: " + localStorage.getItem('ccName') + '\n' +
         "ccMail: " + localStorage.getItem('ccMail') + '\n' +
-        "ppGesellschaft: " + localStorage.getItem('match:ppGesellschaft') + '\n' +
-        "projektpartnerName: " + localStorage.getItem('match:projektpartnerName') + '\n' +
-        "ppStreet: " + localStorage.getItem('match:ppStreet') + '\n' +
-        "ppCity: " + localStorage.getItem('match:ppCity') + '\n' +
-        "wematchAnsprechpartnerName: " + localStorage.getItem('match:wematchAnsprechpartnerName') + '\n' +
-        "matchID: " + localStorage.getItem('match:matchID') + '\n' +
-        "tagessatz: " + localStorage.getItem('match:tagessatz') + '\n' +
-        "stundensatz: " + localStorage.getItem('match:stundensatz') + '\n' +
-        "festpreis: " + localStorage.getItem('match:festpreis') + '\n' +
-        "startdatum: " + localStorage.getItem('match:startdatum') + '\n' +
-        "enddatum: " + localStorage.getItem('match:enddatum') + '\n' +
-        "kuendigungsfrist: " + localStorage.getItem('match:kuendigungsfrist') + '\n' +
-        "kuendigungsfristEnglisch: " + localStorage.getItem('match:kuendigungsfristEnglisch') + '\n' +
-        "kunde: " + localStorage.getItem('match:kunde') + '\n' +
-        "adresseKundeStr: " + localStorage.getItem('match:adresseKundeStr') + '\n' +
-        "adresseKundeCity: " + localStorage.getItem('match:adresseKundeCity') + '\n' +
-        "ccName: " + localStorage.getItem('match:ccName') + '\n' +
-        "einsatzort: " + localStorage.getItem('match:einsatzort') + '\n' +
-        "position: " + localStorage.getItem('match:position') + '\n' +
-        "aufgabenbeschreibung: " + localStorage.getItem('match:aufgabenbeschreibung')
+        "ppGesellschaft: " + localStorage.getItem('ppGesellschaft') + '\n' +
+        "projektpartnerName: " + localStorage.getItem('projektpartnerName') + '\n' +
+        "ppStreet: " + localStorage.getItem('ppStreet') + '\n' +
+        "ppCity: " + localStorage.getItem('ppCity') + '\n' +
+        "wematchAnsprechpartnerName: " + localStorage.getItem('wematchAnsprechpartnerName') + '\n' +
+        "matchID: " + localStorage.getItem('matchID') + '\n' +
+        "tagessatz: " + localStorage.getItem('tagessatz') + '\n' +
+        "stundensatz: " + localStorage.getItem('stundensatz') + '\n' +
+        "festpreis: " + localStorage.getItem('festpreis') + '\n' +
+        "startdatum: " + localStorage.getItem('startdatum') + '\n' +
+        "enddatum: " + localStorage.getItem('enddatum') + '\n' +
+        "kuendigungsfrist: " + localStorage.getItem('kuendigungsfrist') + '\n' +
+        "kuendigungsfristEnglisch: " + localStorage.getItem('kuendigungsfristEnglisch') + '\n' +
+        "kunde: " + localStorage.getItem('kunde') + '\n' +
+        "adresseKundeStr: " + localStorage.getItem('adresseKundeStr') + '\n' +
+        "adresseKundeCity: " + localStorage.getItem('adresseKundeCity') + '\n' +
+        "ccName: " + localStorage.getItem('ccName') + '\n' +
+        "einsatzort: " + localStorage.getItem('einsatzort') + '\n' +
+        "position: " + localStorage.getItem('position') + '\n' +
+        "aufgabenbeschreibung: " + localStorage.getItem('aufgabenbeschreibung')
 
     );
 }
 
 //ToDO: Logik ändern
 function getPPName() {
-    if(localStorage.getItem("match:ppGesellschaft") == null || localStorage.getItem("match:ppGesellschaft") == ""){
-        return localStorage.getItem("match:projektpartnerName");
+    if(localStorage.getItem("ppGesellschaft") == null || localStorage.getItem("ppGesellschaft") == ""){
+        return localStorage.getItem("projektpartnerName");
     } else {
-        return localStorage.getItem("match:ppGesellschaft") + " Projektinhaber: " + localStorage.getItem("match:projektpartnerName");
+        return localStorage.getItem("ppGesellschaft") + " Projektinhaber: " + localStorage.getItem("projektpartnerName");
     }
 }
 
@@ -247,10 +243,9 @@ function crv(docId){
                 "&Projektpartner_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
                 "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
-
                 "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&Adresse1=" + encodeURIComponent(localStorage.getItem('match:ppStreet')) +
-                "&Adresse2=" + encodeURIComponent(localStorage.getItem('match:ppCity'));
+                "&Adresse1=" + encodeURIComponent(localStorage.getItem('ppStreet')) +
+                "&Adresse2=" + encodeURIComponent(localStorage.getItem('ppCity'));
             window.open(finalURL, "_blank")
         });
 }
@@ -269,26 +264,26 @@ function cevpp(){
                 "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('match:wematchAnsprechpartnerName')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
                 "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('match:matchID')) +
+                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('match:tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('match:stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('match:festpreis')) +
+                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
+                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
+                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
 
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('match:startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('match:enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('match:kuendigungsfrist')) +
+                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
+                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
+                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfrist')) +
 
-                "&Endkunde=" + encodeURIComponent(localStorage.getItem('match:kunde')) +
-                "&Endkunde_Adresse=" + localStorage.getItem('match:adresseKundeStr') + " " + localStorage.getItem('match:adresseKundeCity') +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('match:einsatzort')) +
+                "&Endkunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
+                "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + " " + localStorage.getItem('adresseKundeCity') +
+                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
 
-                "&addAgreements=" + encodeURIComponent(localStorage.getItem('match:addAgreements')) +
+                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
 
-                "&Position=" + encodeURIComponent(localStorage.getItem('match:position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('match:aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
+                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
+                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
             ;
             window.open(finalURL, "_blank");
         });
@@ -308,26 +303,26 @@ function engevpp(){
                 "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('match:wematchAnsprechpartnerName')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
                 "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('match:matchID')) +
+                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('match:tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('match:stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('match:festpreis')) +
+                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
+                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
+                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
 
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('match:startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('match:enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('match:kuendigungsfrist')) +
+                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
+                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
+                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfrist')) +
 
-                "&Endkunde=" + encodeURIComponent(localStorage.getItem('match:kunde')) +
-                "&Endkunde_Adresse=" + localStorage.getItem('match:adresseKundeStr') + " " + localStorage.getItem('match:adresseKundeCity') +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('match:einsatzort')) +
+                "&Endkunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
+                "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + " " + localStorage.getItem('adresseKundeCity') +
+                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
 
-                "&addAgreements=" + encodeURIComponent(localStorage.getItem('match:addAgreements')) +
+                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
 
-                "&Position=" + encodeURIComponent(localStorage.getItem('match:position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('match:aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
+                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
+                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
             ;
             window.open(finalURL, "_blank");
         });
@@ -347,26 +342,26 @@ function projevpp(){
                 "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('match:wematchAnsprechpartnerName')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
                 "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('match:matchID')) +
+                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('match:tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('match:stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('match:festpreis')) +
+                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
+                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
+                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
 
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('match:startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('match:enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('match:kuendigungsfrist')) +
+                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
+                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
+                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfrist')) +
 
-                "&Endkunde=" + encodeURIComponent(localStorage.getItem('match:kunde')) +
-                "&Endkunde_Adresse=" + localStorage.getItem('match:adresseKundeStr') + " " + localStorage.getItem('match:adresseKundeCity') +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('match:einsatzort')) +
+                "&Endkunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
+                "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + " " + localStorage.getItem('adresseKundeCity') +
+                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
 
-                "&addAgreements=" + encodeURIComponent(localStorage.getItem('match:addAgreements')) +
+                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
 
-                "&Position=" + encodeURIComponent(localStorage.getItem('match:position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('match:aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
+                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
+                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
             ;
             window.open(finalURL, "_blank");
         });
@@ -386,26 +381,26 @@ function cevppEng(){
                 "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('match:wematchAnsprechpartnerName')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
                 "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('match:matchID')) +
+                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('match:tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('match:stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('match:festpreis')) +
+                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
+                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
+                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
 
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('match:startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('match:enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('match:kuendigungsfristEnglisch')) +
+                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
+                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
+                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfristEnglisch')) +
 
-                "&Endkunde=" + encodeURIComponent(localStorage.getItem('match:kunde')) +
-                "&Endkunde_Adresse=" + localStorage.getItem('match:adresseKundeStr') + " " + localStorage.getItem('match:adresseKundeCity') +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('match:einsatzort')) +
+                "&Endkunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
+                "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + " " + localStorage.getItem('adresseKundeCity') +
+                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
 
-                "&addAgreements=" + encodeURIComponent(localStorage.getItem('match:addAgreements')) +
+                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
 
-                "&Position=" + encodeURIComponent(localStorage.getItem('match:position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('match:aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
+                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
+                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
             ;
             window.open(finalURL, "_blank");
         });
@@ -425,26 +420,26 @@ function engevppEng(){
                 "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('match:wematchAnsprechpartnerName')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
                 "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('match:matchID')) +
+                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('match:tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('match:stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('match:festpreis')) +
+                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
+                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
+                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
 
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('match:startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('match:enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('match:kuendigungsfristEnglisch')) +
+                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
+                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
+                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfristEnglisch')) +
 
-                "&Endkunde=" + encodeURIComponent(localStorage.getItem('match:kunde')) +
-                "&Endkunde_Adresse=" + localStorage.getItem('match:adresseKundeStr') + " " + localStorage.getItem('match:adresseKundeCity') +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('match:einsatzort')) +
+                "&Endkunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
+                "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + " " + localStorage.getItem('adresseKundeCity') +
+                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
 
-                "&addAgreements=" + encodeURIComponent(localStorage.getItem('match:addAgreements')) +
+                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
 
-                "&Position=" + encodeURIComponent(localStorage.getItem('match:position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('match:aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
+                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
+                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
             ;
             window.open(finalURL, "_blank");
         });
@@ -464,26 +459,26 @@ function projevppEng(){
                 "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('match:wematchAnsprechpartnerName')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
                 "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('match:matchID')) +
+                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('match:tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('match:stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('match:festpreis')) +
+                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
+                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
+                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
 
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('match:startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('match:enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('match:kuendigungsfristEnglisch')) +
+                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
+                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
+                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfristEnglisch')) +
 
-                "&Endkunde=" + encodeURIComponent(localStorage.getItem('match:kunde')) +
-                "&Endkunde_Adresse=" + localStorage.getItem('match:adresseKundeStr') + " " + localStorage.getItem('match:adresseKundeCity') +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('match:einsatzort')) +
+                "&Endkunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
+                "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + " " + localStorage.getItem('adresseKundeCity') +
+                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
 
-                "&addAgreements=" + encodeURIComponent(localStorage.getItem('match:addAgreements')) +
+                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
 
-                "&Position=" + encodeURIComponent(localStorage.getItem('match:position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('match:aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
+                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
+                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
             ;
             window.open(finalURL, "_blank");
         });
@@ -503,28 +498,28 @@ function cevk(docId){
                 "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
-                "&Kunde=" + encodeURIComponent(localStorage.getItem('match:kunde')) +
-                "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('match:adresseKundeStr')) +
-                "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('match:adresseKundeCity')) +
+                "&Kunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
+                "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
+                "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('match:wematchAnsprechpartnerName')) +
-                "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('match:ansprechpartnerKunde')) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('match:matchID')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
+                "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
+                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('match:tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('match:stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('match:festpreis')) +
+                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
+                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
+                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
 
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('match:startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('match:enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('match:kuendigungsfrist')) +
+                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
+                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
+                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfrist')) +
 
                 "&PPName=" + encodeURIComponent(ppNameLocal) +
                 "&Auslastung=" + encodeURIComponent("Nach Abschätzung") +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('match:einsatzort')) +
+                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
 
-                "&Position=" + encodeURIComponent(localStorage.getItem('match:position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('match:aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
+                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
+                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
             ;
             window.open(finalURL, "_blank");
         });
@@ -546,28 +541,28 @@ function cevk2(docId){
                 "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
-                "&Kunde=" + encodeURIComponent(localStorage.getItem('match:kunde')) +
-                "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('match:adresseKundeStr')) +
-                "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('match:adresseKundeCity')) +
+                "&Kunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
+                "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
+                "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('match:wematchAnsprechpartnerName')) +
-                "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('match:ansprechpartnerKunde')) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('match:matchID')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
+                "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
+                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('match:tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('match:stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('match:festpreis')) +
+                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
+                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
+                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
 
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('match:startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('match:enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('match:kuendigungsfrist')) +
+                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
+                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
+                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfrist')) +
 
                 "&PPName=" + encodeURIComponent(ppNameLocal) +
                 "&Auslastung=" + encodeURIComponent("Nach Abschätzung") +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('match:einsatzort')) +
+                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
 
-                "&Position=" + encodeURIComponent(localStorage.getItem('match:position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('match:aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
+                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
+                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
             ;
             window.open(finalURL, "_blank");
         });
@@ -587,28 +582,28 @@ function cevkEng(docId){
                 "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
-                "&Kunde=" + encodeURIComponent(localStorage.getItem('match:kunde')) +
-                "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('match:adresseKundeStr')) +
-                "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('match:adresseKundeCity')) +
+                "&Kunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
+                "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
+                "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('match:wematchAnsprechpartnerName')) +
-                "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('match:ansprechpartnerKunde')) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('match:matchID')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
+                "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
+                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('match:tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('match:stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('match:festpreis')) +
+                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
+                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
+                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
 
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('match:startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('match:enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('match:kuendigungsfristEng')) +
+                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
+                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
+                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfristEng')) +
 
                 "&PPName=" + encodeURIComponent(ppNameLocal) +
                 "&Auslastung=" + encodeURIComponent("after estimation") +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('match:einsatzort')) +
+                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
 
-                "&Position=" + encodeURIComponent(localStorage.getItem('match:position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('match:aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
+                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
+                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
             ;
             window.open(finalURL, "_blank");
         });
@@ -630,28 +625,28 @@ function cevkEng2(docId){
                 "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
                 "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
 
-                "&Kunde=" + encodeURIComponent(localStorage.getItem('match:kunde')) +
-                "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('match:adresseKundeStr')) +
-                "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('match:adresseKundeCity')) +
+                "&Kunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
+                "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
+                "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('match:wematchAnsprechpartnerName')) +
-                "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('match:ansprechpartnerKunde')) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('match:matchID')) +
+                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
+                "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
+                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
 
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('match:tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('match:stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('match:festpreis')) +
+                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
+                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
+                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
 
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('match:startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('match:enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('match:kuendigungsfristEng')) +
+                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
+                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
+                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfristEng')) +
 
                 "&PPName=" + encodeURIComponent(ppNameLocal) +
                 "&Auslastung=" + encodeURIComponent("after estimation") +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('match:einsatzort')) +
+                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
 
-                "&Position=" + encodeURIComponent(localStorage.getItem('match:position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('match:aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
+                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
+                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
             ;
             window.open(finalURL, "_blank");
         });
@@ -663,25 +658,28 @@ function cevkEng2(docId){
 function docxEvk(){
     let ppNameLocal = getPPName();
     let data = [
-        localStorage.getItem("match:matchID"),
+        localStorage.getItem("matchID"),
         ppNameLocal,
-        localStorage.getItem("match:wematchAnsprechpartnerName"),
-        localStorage.getItem("match:startdatum"),
-        localStorage.getItem("match:enddatum"),
-        localStorage.getItem("match:adresseKundeStr"),
-        localStorage.getItem("match:adresseKundeCity"),
-        localStorage.getItem("match:kunde"),
-        localStorage.getItem("match:kuendigungsfrist"),
-        localStorage.getItem("match:einsatzort"),
-        localStorage.getItem("match:position"),
-        localStorage.getItem("match:ansprechpartnerKunde"),
-        localStorage.getItem("match:tagessatz"),
-        localStorage.getItem("match:stundensatz"),
-        localStorage.getItem("match:festpreis"),
-        localStorage.getItem("match:auslastung"),
-        localStorage.getItem("match:auslastungEng"),
-        localStorage.getItem("match:aufgabenbeschreibung"),
-        localStorage.getItem("match:addAgreements"),
+        localStorage.getItem("wematchAnsprechpartnerName"),
+        localStorage.getItem("startdatum"),
+        localStorage.getItem("enddatum"),
+        localStorage.getItem("adresseKundeStr"),
+        localStorage.getItem("adresseKundeCity"),
+        localStorage.getItem("kunde"),
+        localStorage.getItem("kuendigungsfrist"),
+        localStorage.getItem("einsatzort"),
+        localStorage.getItem("position"),
+        localStorage.getItem("ansprechpartnerKunde"),
+        localStorage.getItem("tagessatz"),
+        localStorage.getItem("stundensatz"),
+        localStorage.getItem("festpreis"),
+        localStorage.getItem("auslastung"),
+        localStorage.getItem("auslastungEng"),
+        localStorage.getItem("aufgabenbeschreibung"),
+        localStorage.getItem("addAgreements"),
+        localStorage.getItem("ppStreet"),
+        localStorage.getItem("ppCity"),
+        localStorage.getItem("projektpartnerName")
     ]
 
     BackendService.postDocData(localStorage.getItem("docId"), data).then(response => {

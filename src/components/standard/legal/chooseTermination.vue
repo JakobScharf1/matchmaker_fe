@@ -5,25 +5,33 @@
   <h2>Wähle den kündigung aus, den du erstellen willst:</h2>
   <h2>Deutsch</h2>
   <h3>WeMatch</h3>
-  <input type="radio" id="docx-k-k-fg" value="docx-k-k-fg" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-rv-k')">
+  <input type="radio" id="docx-k-k-fg" value="docx-k-k-fg" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-k-k-fg')">
   <label for="docx-k-k-fg">Kündigung - fristgerecht - Kunde</label><br/>
-  <input type="radio" id="docx-k-k-fl" value="docx-k-k-fl" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-ev-k')">
-  <label for="docx-k-k-fl">Kündigung - firstlos - Kunde</label><br/>
-  <input type="radio" id="docx-k-k-b" value="docx-k-k-b" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-ev-k')">
+  <input type="radio" id="docx-k-k-fl" value="docx-k-k-fl" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-k-k-fl')">
+  <label for="docx-k-k-fl">Kündigung - fristlos - Kunde</label><br/>
+  <input type="radio" id="docx-k-k-b" value="docx-k-k-b" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-k-k-b')">
   <label for="docx-k-k-b">Kündigungsbestätigung - Kunde</label><br/>
-  <input type="radio" id="docx-k-pp-fg" value="docx-k-pp-fg" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-ev-k')">
-  <label for="docx-k-pp-fg">Kündigung - firstgerecht - Projektpartner</label><br/>
-  <input type="radio" id="docx-k-pp-fl" value="docx-k-pp-fl" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-ev-k')">
-  <label for="docx-k-pp-fl">Kündigung - firstlos - Projektpartner</label><br/>
-  <input type="radio" id="docx-ev-k" value="docx-ev-k" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-ev-k')">
-  <label for="docx-ev-k">Kündigungsbestätigung - Projektpartner</label><br/>
+  <input type="radio" id="docx-k-pp-fg" value="docx-k-pp-fg" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-k-pp-fg')">
+  <label for="docx-k-pp-fg">Kündigung - fristgerecht - Projektpartner</label><br/>
+  <input type="radio" id="docx-k-pp-fl" value="docx-k-pp-fl" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-k-pp-fl')">
+  <label for="docx-k-pp-fl">Kündigung - fristlos - Projektpartner</label><br/>
+  <input type="radio" id="docx-k-pp-b" value="docx-k-pp-b" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-k-pp-b')">
+  <label for="docx-k-pp-b">Kündigungsbestätigung - Projektpartner</label><br/>
 
 
   <h3>Engineering</h3>
-  <input type="radio" id="docx-k-pp-fg-e" value="docx-k-pp-fg-e" name="engineering-deu" v-model="selectedContract" @click="toggleSelection('docx-rv-k-e')"  >
-  <label for="docx-k-pp-fg-e">Kündigung - firstgerecht - Projektpartner</label><br/>
-  <input type="radio" id="docx-k-pp-fl-e" value="docx-k-pp-fl-e" name="engineering-deu" v-model="selectedContract" @click="toggleSelection('docx-ev-k-e')">
-  <label for="docx-k-pp-fl-e">Kündigung - firstlos - Projektpartner</label><br/>
+   <input type="radio" id="docx-e-k-k-fg" value="docx-e-k-k-fg" name="engineering" v-model="selectedContract" @click="toggleSelection('docx-e-k-k-fg')">
+   <label for="docx-e-k-k-fg">Kündigung - fristgerecht - Kunde</label><br/>
+   <input type="radio" id="docx-e-k-k-fl" value="docx-e-k-k-fl" name="engineering" v-model="selectedContract" @click="toggleSelection('docx-e-k-k-fl')">
+   <label for="docx-e-k-k-fl">Kündigung - fristlos - Kunde</label><br/>
+   <input type="radio" id="docx-e-k-k-b" value="docx-e-k-k-b" name="engineering" v-model="selectedContract" @click="toggleSelection('docx-e-k-k-b')">
+   <label for="docx-e-k-k-b">Kündigungsbestätigung - Kunde</label><br/>
+   <input type="radio" id="docx-e-k-pp-fg" value="docx-e-k-pp-fg" name="engineering" v-model="selectedContract" @click="toggleSelection('docx-e-k-pp-fg')">
+   <label for="docx-e-k-pp-fg">Kündigung - fristgerecht - Projektpartner</label><br/>
+   <input type="radio" id="docx-e-k-pp-fl" value="docx-e-k-pp-fl" name="engineering" v-model="selectedContract" @click="toggleSelection('docx-e-k-pp-fl')">
+   <label for="docx-e-k-pp-fl">Kündigung - fristlos - Projektpartner</label><br/>
+   <input type="radio" id="docx-e-k-pp-b" value="docx-e-k-pp-b" name="engineering" v-model="selectedContract" @click="toggleSelection('docx-e-k-pp-b')">
+   <label for="docx-e-k-pp-b">Kündigungsbestätigung - Projektpartner</label><br/>
 
   <button class="btn" v-bind:class="{'bestatigen-button btn-outline-primary': !confirmed, 'btn-primary': confirmed}" @click="chooseTemplate()">Bestätigen</button>
 
@@ -31,14 +39,14 @@
     <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
     <button id="logoutButton" class="btn btn-primary" @click="logout"><b>Logout</b></button>
   </div>
-</template>-->
+</template>
 
 <script>
 import router from "@/router";
 import {
   kuendigungsfristTranslator,
   verguetungssatzSwitchKunde,
-  docxEvk,
+  docxTermination,
   sendHelpMail
 } from "@/services/MethodService";
 import {logout} from "@/firebase-config";
@@ -62,7 +70,7 @@ export default {
 
       if (this.selectedContract) {
         localStorage.setItem("docId", this.selectedContract);
-        docxEvk();
+        docxTermination();
       }
     },
     toggleSelection(contractId) {
@@ -105,4 +113,4 @@ h3 {
   cursor: pointer;
   margin-right: 10px;
 }
-</style> -->
+</style>
