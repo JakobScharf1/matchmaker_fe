@@ -61,6 +61,18 @@ class BackendService{
         return axios.post(requestURI, requestBody);
 
     }
+
+    async postDocDataOffer(docId, dataList) {
+        const BACKEND_BASE_URL = process.env.VUE_APP_BACKEND_URL;
+        const token = localStorage.getItem("token");
+        const requestBody = {
+            dataList: dataList,
+            token: token
+        };
+        const requestURI = BACKEND_BASE_URL + "/generateDocxOffer/" + docId;
+        console.log("Übermittelt an: " + requestURI);
+        return axios.post(requestURI, requestBody);
+    }
 }
 
 export default new BackendService()

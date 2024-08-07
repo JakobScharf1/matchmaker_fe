@@ -71,6 +71,97 @@ function verguetungssatzSwitchPP(){
     }
 }
 
+/*function stundensatzAgent(){
+    let vkRemote = localStorage.getItem("vk");
+    let vkOnSite = localStorage.getItem("vkOnSite");
+    let stundensatz = "";
+    if(!vkRemote.equals(null) && vkOnSite == null){
+         localStorage.setItem("stundensatz", vkRemote);
+        return
+    } else if (!vkOnSite.equals(null) && vkRemote.equals(null)){
+        return  localStorage.setItem("stundensatz", vkOnSite);
+    } else if (!vkOnSite.equals(null)  && !vkRemote.equals(null) ){
+        return localStorage.setItem("stundensatzOnSite", vkOnSite);
+        localStorage.setItem("stundensatzRemote", vkRemote);
+    }
+}*/
+
+function calculateDailyRate() {
+    let vk = localStorage.getItem("vk");
+    let vkOnSite = localStorage.getItem("vkOnSite");
+    let hours = localStorage.getItem("hoursperDay");
+
+    vk = vk !== "" ? parseFloat(vk) : null;
+    vkOnSite = vkOnSite !== "" ? parseFloat(vkOnSite) : null;
+    hours = hours !== "" ? parseFloat(hours) : null;
+
+    let tagessatz = 0;
+
+    if (vk === null && vkOnSite !== null) {
+        tagessatz = vkOnSite * hours;
+    } else if (vkOnSite === null && vk !== null) {
+        tagessatz = vk * hours;
+    } else if (vk !== null && vkOnSite !== null) {
+        tagessatz = (vkOnSite + vk) * hours;
+    }
+
+    if (tagessatz === null) {
+        tagessatz = "";
+    }
+    console.log(tagessatz);
+
+    return localStorage.setItem("tagessatz", tagessatz.toString());
+}
+
+
+function calculateOfferPricewithDailyRate() {
+    let tagessatz = calculateDailyRate();
+    console.log(tagessatz);
+    let projectDays =  localStorage.getItem("projectsDay");
+
+    projectDays = projectDays !== 0 ? parseFloat(projectDays): null;
+
+    let totalPrice = 0;
+
+    if (tagessatz > 0) {
+        totalPrice = projectDays * tagessatz;
+    }
+    console.log(totalPrice);
+
+    return localStorage.setItem("gesamtPreis",totalPrice.toString());
+}
+
+function calculateOfferPricewithHourlyRate(){
+    let vk = localStorage.getItem("vk");
+    let vkOnSite = localStorage.getItem("vkOnSite");
+    let hours = localStorage.getItem("projectHours");
+    let remoteHours = localStorage.getItem("remoteHours");
+    let onSiteHours = localStorage.getItem("OnSiteHours");
+
+    vk = vk !== "" ? parseFloat(vk) : null;
+    vkOnSite = vkOnSite !== "" ? parseFloat(vkOnSite) : null;
+    hours = hours !== "" ? parseFloat(hours) : null;
+    remoteHours = remoteHours !== 0 ? parseInt(remoteHours, 10) : 0;
+    onSiteHours = onSiteHours !== 0? parseInt(onSiteHours, 10) : 0;
+
+    let totalPrice = 0.00;
+    if (vk === null && vkOnSite !== null) {
+        totalPrice = vkOnSite * hours;
+
+    } else if (vkOnSite === null && vk !== null) {
+        totalPrice = vk * hours;
+
+    } else if (vk !== null && vkOnSite !== null) {
+        totalPrice = (vkOnSite * remoteHours) + (vkOnSite * onSiteHours);
+
+    }
+     totalPrice = totalPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    console.log(totalPrice);
+    return localStorage.setItem("gesamtPreis", totalPrice);
+}
+
+
+
 function verguetungssatzSwitchKunde(){
     localStorage.setItem("stundensatz", "X");
     localStorage.setItem("tagessatz", "X");
@@ -135,52 +226,6 @@ function kuendigungsfristTranslator(){
     localStorage.setItem("kuendigungsfirstEnglisch", kuendigungsfristEnglisch);
 }
 
-/*function calculateTermination() {
-
-    var terminationdate;
-
-   switch (localStorage.getItem("kuendigungsfrist")){
-       case "Keine":
-           terminationdate = new Date();
-           terminationdate = terminationdate.setDate(terminationdate.getDate());
-           break;
-       case "0 Tage":
-           terminationdate = new Date();
-           terminationdate = terminationdate.setDate(terminationdate.getDate());
-           break;
-       case "5 Tage":
-           terminationdate = new Date();
-           terminationdate = terminationdate.setDate(terminationdate.getDate() + 5);
-           break;
-       case "7 Tage":
-           terminationdate = new Date();
-           terminationdate = terminationdate.setDate(terminationdate.getDate() + 7);
-           break;
-       case "14 Tage":
-           terminationdate = new Date();
-           terminationdate = terminationdate.setDate(terminationdate.getDate() + 14);
-           break;
-       case "14 Tage zum Monatsende":
-           terminationdate = new Date();
-           terminationdate = terminationdate.setDate(terminationdate.getDate() + );
-           break;
-       case "28 Tage":
-           terminationdate = "28 days";
-           break;
-       case "30 Tage":
-           terminationdate = "30 days";
-           break;
-       case "6 Wochen":
-           terminationdate = "6 weeks";
-           break;
-       case "90 Tage":
-           terminationdate = "90 days";
-           break;
-   }
-   }
-
-}*/
-
 /**
  * Eine Test-Methode für die Prod-Umgebung, um zu schauen, ob alle Werte im localStorage korrekt übertragen wurden.
  */
@@ -222,6 +267,15 @@ function getPPName() {
         return localStorage.getItem("projektpartnerName");
     } else {
         return localStorage.getItem("ppGesellschaft") + " Projektinhaber: " + localStorage.getItem("projektpartnerName");
+    }
+}
+
+function ppTermination(){
+    if(localStorage.getItem("ppGesellschaft" )== null || localStorage.getItem("ppGesellschaft") === ""){
+        return localStorage.getItem("projektpartnerName");
+    } else{
+
+        return localStorage.getItem("ppGesellschaft");
     }
 }
 
@@ -484,6 +538,25 @@ function projevppEng(){
         });
 }
 
+//RV Kunde
+function crvk(docId){
+    let finalURL = "";
+    BackendService.getPowerForm(docId)
+        .then(response =>{
+            finalURL = response.data.toString() +
+                "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
+                "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
+                "&Projektpartner_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
+                "&Projektpartner_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
+                "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
+                "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
+                "&PPName=" + encodeURIComponent(localStorage.getItem('kunde')) +
+                "&Adresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
+                "&Adresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity'));
+            window.open(finalURL, "_blank")
+        });
+}
+
 //EV Kunde
 function cevk(docId){
     let finalURL = "";
@@ -653,8 +726,6 @@ function cevkEng2(docId){
 
 }
 
-
-//EV Kunde - DOCX
 function docxEvk(){
     let ppNameLocal = getPPName();
     let data = [
@@ -679,7 +750,11 @@ function docxEvk(){
         localStorage.getItem("addAgreements"),
         localStorage.getItem("ppStreet"),
         localStorage.getItem("ppCity"),
-        localStorage.getItem("projektpartnerName")
+        localStorage.getItem("projektpartnerName"),//21
+        localStorage.getItem("projectHours"),
+        localStorage.getItem("remotePercentage"),
+        localStorage.getItem("daysPerWeek"),
+        localStorage.getItem("ppGesellschaft"),
     ]
 
     BackendService.postDocData(localStorage.getItem("docId"), data).then(response => {
@@ -688,10 +763,70 @@ function docxEvk(){
     );
 }
 
-function docxEvPP() {
+function docxTermination() {
+    let ppNameLocal = ppTermination();
+    let data = [
+        localStorage.getItem("matchID"),
+        ppNameLocal,
+        localStorage.getItem("wematchAnsprechpartnerName"),
+        localStorage.getItem("startdatum"),
+        localStorage.getItem("enddatum"),
+        localStorage.getItem("adresseKundeStr"),
+        localStorage.getItem("adresseKundeCity"),
+        localStorage.getItem("kunde"),
+        localStorage.getItem("kuendigungsfrist"),
+        localStorage.getItem("einsatzort"),
+        localStorage.getItem("position"),
+        localStorage.getItem("ansprechpartnerKunde"),
+        localStorage.getItem("tagessatz"),
+        localStorage.getItem("stundensatz"),
+        localStorage.getItem("festpreis"),
+        localStorage.getItem("auslastung"),
+        localStorage.getItem("auslastungEng"),
+        localStorage.getItem("aufgabenbeschreibung"),
+        localStorage.getItem("addAgreements"),
+        localStorage.getItem("ppStreet"),
+        localStorage.getItem("ppCity"),
+        localStorage.getItem("projektpartnerName"),//21
+        localStorage.getItem("projectHours"),
+        localStorage.getItem("remotePercentage"),
+        localStorage.getItem("daysPerWeek"),
+        localStorage.getItem("ppGesellschaft"),
+        localStorage.getItem("preFix")
+    ]
 
+    BackendService.postDocData(localStorage.getItem("docId"), data).then(response => {
+            window.open(response.data.toString(), "_blank");
+        }
+    );
 }
+function docxOffer() {
+    let ppNameLocal = getPPName();
+    let data = [
+        localStorage.getItem("matchID"),
+        ppNameLocal,
+        localStorage.getItem("startdatum"),
+        localStorage.getItem("enddatum"),
+        localStorage.getItem("adresseKundeStr"),
+        localStorage.getItem("adresseKundeCity"),
+        localStorage.getItem("kunde"),
+        localStorage.getItem("kuendigungsfrist"),
+        localStorage.getItem("einsatzort"),
+        localStorage.getItem("position"),
+        localStorage.getItem("ansprechpartnerKunde"),
+        localStorage.getItem("tagessatz"),
+        localStorage.getItem("auslastung"),
+        localStorage.getItem("aufgabenbeschreibung"),
+        localStorage.getItem("projectHours"),
+        localStorage.getItem("gesamtPreis"),
+        localStorage.getItem("selectedPerson")
+    ]
 
+    BackendService.postDocDataOffer(localStorage.getItem("docId"), data).then(response => {
+            window.open(response.data.toString(), "_blank");
+        }
+    );
+}
 export { verguetungssatzSwitchPP };
 export { verguetungssatzSwitchKunde };
 export { kuendigungsfristTranslator };
@@ -707,8 +842,11 @@ export { valueMappingTest };
 export { cevkEng };
 export { docxEvk };
 export { sendHelpMail };
-export { docxEvPP };
+export { docxTermination };
 export { cevk2 };
 export { cevkEng2 };
 export { absenderMail };
-//export{ calculateTermination };
+export { crvk };
+export { calculateOfferPricewithDailyRate };
+export { docxOffer };
+export { calculateOfferPricewithHourlyRate };

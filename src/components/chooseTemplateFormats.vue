@@ -5,7 +5,9 @@
   <h2>Bitte wähle aus, in welchem Format du den Vertrag erstellen möchtest:</h2>
   <button class="btn btn-primary chooseButtons" @click="toDocx()">Docx-Verträge</button><br/>
   <button class="btn btn-primary chooseButtons" @click="toDocusign()">DocuSign-Verträge</button><br/>
-  <button class="btn btn-primary chooseButtons" @click="toTermination()">Kündigungen</button>
+  <button class="btn btn-primary chooseButtons" @click="toTermination()">Kündigungen</button><br/>
+  <button class="btn btn-primary chooseButtons" @click="toOffer()">Angebot</button><br/>
+
 
   <div id="buttonContainer">
     <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
@@ -29,7 +31,10 @@ export default {
         router.push('chooseTemplateLegalDocuSign');
     },
     toTermination(){
-     router.push("chooseTermination")
+     router.push('chooseTermination')
+    },
+    toOffer(){
+      router.push('createOffer')
     },
     pageBack(){
       router.go(-1);
