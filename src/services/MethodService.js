@@ -5,7 +5,7 @@ import BackendService from "@/services/BackendService";
 function sendHelpMail(){
     let subject = encodeURIComponent("Problem mit MatchMaker - MatchID: " + localStorage.getItem("matchID"));
     let body = encodeURIComponent("\n---\nmatch data: \n" +
-        "User Permission Level=" + localStorage.getItem('permission') + "\n" +
+        "User Permission Level=" + localStorage.getItem( `permission`) + "\n" +
         "Absender_UserName=" + localStorage.getItem('absenderName') + "\n" +
         "Absender_Email=" + localStorage.getItem('absenderMail') + "\n" +
         "Projektpartner_UserName=" + localStorage.getItem('empfaengerName') + "\n" +
@@ -606,7 +606,7 @@ function cevk2(docId){
         .then(response => {
             finalURL = response.data.toString() +
                 "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
-                "&Absender_Mail=" + encodeURIComponent(absenderMail) +
+                "&Absender_Email=" + encodeURIComponent(absenderMail) +
                 "&Kunde_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
                 "&Kunde_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
                 "&Kunde2_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName2')) +
