@@ -1,8 +1,11 @@
 <template>
   <h2>Bitte wähle aus, auf welcher Datengrundlage du einen Vertrag erstellen willst:</h2>
-  <span>Je nach Auswahl musst du später die entsprechende bullhorn ID angeben. Wenn noch kein Match in bullhorn eingetragen wurde, wähle bitte die zweite oder dritte Option</span>
-  <button class="btn btn-primary chooseButtons" @click="toStandard()">Match (Standard)</button><br />
+  <span>Je nach Auswahl musst du später die entsprechende bullhorn ID angeben. Wenn noch kein Match in bullhorn eingetragen wurde, wähle bitte die zweite oder dritte Option.</span>
+  <br />
+  <button class="btn btn-primary chooseButtons" @click="toStandard()">Match (Standard)</button>
+  <br />
   <button class="btn btn-primary chooseButtons" @click="toKunde()">Kunde</button>
+  <br />
   <button class="btn btn-primary chooseButtons" @click="toPP()">Projektpartner</button>
 
   <div id="buttonContainer">
