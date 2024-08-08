@@ -11,6 +11,7 @@ import chooseTermination from "@/components/standard/legal/ChooseTermination.vue
 import chooseRequestType from "@/components/ChooseRequestType.vue";
 import KundeIDInput from "@/components/idinputs/KundeIDInput.vue";
 import PPIDInput from "@/components/idinputs/PPIDInput.vue";
+import createOffer from "@/components/createOffer.vue";
 
 const routes = [
     {
@@ -69,8 +70,10 @@ const routes = [
         path: "/chooseTermination",
         component: chooseTermination
     },
-
-
+    {
+        path: "/createOffer",
+        component: createOffer
+    },
 
 ]
 
