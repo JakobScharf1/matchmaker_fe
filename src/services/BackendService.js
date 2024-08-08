@@ -11,15 +11,15 @@ class BackendService{
      */
     async getBullhornData(dataId, type){
         try {
-            const customPath = "";
+            let customPath = "";
             if(type === "match"){
-                this.customPath = "/match/"
+                customPath = "/match/";
             } else if(type === "kunde"){
-                this.customPath = "/kunde/"
+                customPath = "/kunde/";
             } else if(type === "projektpartner"){
-                this.customPath = "/projektpartner/"
+                customPath = "/projektpartner/";
             } else {
-                return Response.error(500)
+                return Response.error(500);
             }
 
             const BACKEND_BASE_URL = process.env.VUE_APP_BACKEND_URL;
@@ -28,6 +28,7 @@ class BackendService{
             const requestBody = {
                 token: token
             }
+            console.log(requestURI);
             const response = await axios.post(requestURI, requestBody);
 
             if(response.status === 200) {
