@@ -192,7 +192,7 @@ export default {
               this.kuendigungsfrist = this.matches.at(19);
               localStorage.setItem('zahlungszielPP', this.matches.at(3));
               this.zahlungszielPP = this.matches.at(3);
-              localStorage.setItem('zahlungszielKunde', this.matches.at(4));
+              localStorage.setItem('zahlungszielKunde', this.matches.at(4) + " Tage");
               this.zahlungszielKunde = this.matches.at(4);
               localStorage.setItem('verguetungssatz', this.matches.at(5));
               this.verguetungssatz = this.matches.at(5);
@@ -223,10 +223,11 @@ export default {
               this.jobOwner = this.matches.at(33);
               localStorage.setItem('preFix', this.matches.at(34));
               this.preFix= this.matches.at(34);
-              localStorage.setItem('vkOnSite', this.matches.at(35));
+              localStorage.setItem('vkOnSite', this.preisFormatter(this.matches.at(35)));
               this.vkOnSite = this.matches.at(35);
               localStorage.setItem('hoursperDay', this.matches.at(31));
               this.hoursperDay = this.matches.at(31);
+              localStorage.setItem("prefixKunde", this.matches.at(36));
 
 
 
@@ -251,7 +252,9 @@ export default {
      */
     goToChooseTemplate() {
       if (localStorage.getItem('permission') === "2") {
-        router.push('chooseTemplateFormats');
+        router.push('chooseTemplateType');
+      } else if (localStorage.getItem('permission') === "3"){
+        router.push('chooseTypeOffer');
       } else {
         localStorage.setItem("vertragsart","Projektpartner")
         router.push('chooseTemplateDocuSign');
