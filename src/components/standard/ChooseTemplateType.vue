@@ -27,7 +27,7 @@ export default {
     },
     toNormal() {
       localStorage.setItem("vertragsart","Projektpartnervertrag")
-      router.push('chooseTemplateType');
+      router.push('chooseTemplateDocuSign');
     },
     pageBack(){
       router.go(-1);
