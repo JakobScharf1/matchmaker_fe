@@ -71,65 +71,83 @@ function verguetungssatzSwitchPP(){
     }
 }
 
-/*function stundensatzAgent(){
+function tagessatzAgent() {
     let vkRemote = localStorage.getItem("vk");
     let vkOnSite = localStorage.getItem("vkOnSite");
-    let stundensatz = "";
-    if(!vkRemote.equals(null) && vkOnSite == null){
-         localStorage.setItem("stundensatz", vkRemote);
-        return
-    } else if (!vkOnSite.equals(null) && vkRemote.equals(null)){
-        return  localStorage.setItem("stundensatz", vkOnSite);
-    } else if (!vkOnSite.equals(null)  && !vkRemote.equals(null) ){
-        return localStorage.setItem("stundensatzOnSite", vkOnSite);
-        localStorage.setItem("stundensatzRemote", vkRemote);
+    console.log("Vk:" +vkOnSite);
+
+
+
+    if ((vkRemote !== null || vkRemote !== "") && (vkOnSite === null || vkOnSite === "")) {
+        localStorage.setItem("tagessatzRemote", vkRemote + "€");
+        localStorage.setItem("tagessatzOnSite", "-");
+        return { tagessatz: parseFloat(localStorage.getItem("stundensatzRemote")) };
+    } else if ((vkRemote === null || vkRemote === "") && (vkOnSite !== null|| vkOnSite !== "")) {
+        localStorage.setItem("tagessatzOnSite", vkOnSite + "€");
+        localStorage.setItem("tagessatzRemote", "-");
+        return { taggessatz: parseFloat(localStorage.getItem("stundensatzOnSite")) };
+    } else if ((vkRemote !== null || vkRemote !== "") && (vkOnSite !== null|| vkOnSite !== "")) {
+        localStorage.setItem("tagessatzOnSite", vkOnSite + "€");
+        localStorage.setItem("tagessatzRemote", vkRemote + "€");
+        return {
+            stundensatzRemote: localStorage.getItem("tagessatzRemote"),
+            stundensatzOnSite: localStorage.getItem("tagessatzOnSite")
+        };
     }
-}*/
-
-function calculateDailyRate() {
-    let vk = localStorage.getItem("vk");
-    let vkOnSite = localStorage.getItem("vkOnSite");
-    let hours = localStorage.getItem("hoursperDay");
-
-    vk = vk !== "" ? parseFloat(vk) : null;
-    vkOnSite = vkOnSite !== "" ? parseFloat(vkOnSite) : null;
-    hours = hours !== "" ? parseFloat(hours) : null;
-
-    let tagessatz = 0;
-
-    if (vk === null && vkOnSite !== null) {
-        tagessatz = vkOnSite * hours;
-    } else if (vkOnSite === null && vk !== null) {
-        tagessatz = vk * hours;
-    } else if (vk !== null && vkOnSite !== null) {
-        tagessatz = (vkOnSite + vk) * hours;
-    }
-
-    if (tagessatz === null) {
-        tagessatz = "";
-    }
-    console.log(tagessatz);
-
-    return localStorage.setItem("tagessatz", tagessatz.toString());
+    return null;
 }
 
+function stundensatzAgent() {
+    let vkRemote = localStorage.getItem("vk");
+    let vkOnSite = localStorage.getItem("vkOnSite");
 
-function calculateOfferPricewithDailyRate() {
-    let tagessatz = calculateDailyRate();
+    if ((vkRemote !== null || vkRemote !== "") && (vkOnSite === null || vkOnSite === "")) {
+        localStorage.setItem("stundensatzRemote", vkRemote + "€");
+        localStorage.setItem("stundensatzOnSite", "-");
+        return { stundensatz: parseFloat(localStorage.getItem("stundensatzRemote")) };
+    } else if ((vkRemote === null || vkRemote === "") && (vkOnSite !== null|| vkOnSite !== "")) {
+        localStorage.setItem("stundensatzOnSite", vkOnSite + "€");
+        localStorage.setItem("stundensatzRemote", "-");
+        return { stundensatz: parseFloat(localStorage.getItem("stundensatzOnSite")) };
+    } else if ((vkRemote !== null || vkRemote !== "") && (vkOnSite !== null|| vkOnSite !== "")) {
+        localStorage.setItem("stundensatzOnSite", vkOnSite + "€");
+        localStorage.setItem("stundensatzRemote", vkRemote + "€");
+        return {
+            stundensatzRemote: localStorage.getItem("stundensatzRemote"),
+            stundensatzOnSite: localStorage.getItem("stundensatzOnSite")
+        };
+    }
+    return null;
+}
+
+/*function calculateOfferPricewithDailyRate() {
+    let tagessatz = stundensatzAgent();
     console.log(tagessatz);
-    let projectDays =  localStorage.getItem("projectsDay");
+    let projectDays = localStorage.getItem("projectDays");
 
-    projectDays = projectDays !== 0 ? parseFloat(projectDays): null;
-
+    projectDays = projectDays !== null ? parseFloat(projectDays) : null;
+    console.log(projectDays);
     let totalPrice = 0;
 
-    if (tagessatz > 0) {
-        totalPrice = projectDays * tagessatz;
-    }
-    console.log(totalPrice);
 
-    return localStorage.setItem("gesamtPreis",totalPrice.toString());
+    if (tagessatz !== null) {
+        if (tagessatz.stundensatz !== undefined) {
+
+            totalPrice = projectDays * tagessatz.stundensatz;
+        } else {
+
+            totalPrice = (tagessatz.stundensatzRemote + projectDays) * (projectDays + tagessatz.stundensatzOnSite);
+        }
+    }
+
+    totalPrice = totalPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    localStorage.setItem("gesamtPreis", totalPrice);
+    console.log(totalPrice);
+    return totalPrice;
 }
+
+
 
 function calculateOfferPricewithHourlyRate(){
     let vk = localStorage.getItem("vk");
@@ -142,7 +160,7 @@ function calculateOfferPricewithHourlyRate(){
     vkOnSite = vkOnSite !== "" ? parseFloat(vkOnSite) : null;
     hours = hours !== "" ? parseFloat(hours) : null;
     remoteHours = remoteHours !== 0 ? parseInt(remoteHours, 10) : 0;
-    onSiteHours = onSiteHours !== 0? parseInt(onSiteHours, 10) : 0;
+    onSiteHours = onSiteHours !== 0 ? parseInt(onSiteHours, 10) : 0;
 
     let totalPrice = 0.00;
     if (vk === null && vkOnSite !== null) {
@@ -158,7 +176,7 @@ function calculateOfferPricewithHourlyRate(){
      totalPrice = totalPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     console.log(totalPrice);
     return localStorage.setItem("gesamtPreis", totalPrice);
-}
+}*/
 
 
 
@@ -819,7 +837,15 @@ function docxOffer() {
         localStorage.getItem("aufgabenbeschreibung"),
         localStorage.getItem("projectHours"),
         localStorage.getItem("gesamtPreis"),
-        localStorage.getItem("selectedPerson")
+        localStorage.getItem("selectedPerson"),
+        localStorage.getItem("zahlungszielKunde"),
+        localStorage.getItem("stundensatzOnSite"),
+        localStorage.getItem("stundensatzRemote"),
+        localStorage.getItem("projectDays"),
+        localStorage.getItem("auslastung"),
+        localStorage.getItem("tagessatzOnSite"),
+        localStorage.getItem("tagessatzRemote"),
+        localStorage.getItem("prefixKunde")
     ]
 
     BackendService.postDocDataOffer(localStorage.getItem("docId"), data).then(response => {
@@ -847,6 +873,8 @@ export { cevk2 };
 export { cevkEng2 };
 export { absenderMail };
 export { crvk };
-export { calculateOfferPricewithDailyRate };
+//export { calculateOfferPricewithDailyRate };
 export { docxOffer };
-export { calculateOfferPricewithHourlyRate };
+//export { calculateOfferPricewithHourlyRate };
+export { stundensatzAgent };
+export { tagessatzAgent };
