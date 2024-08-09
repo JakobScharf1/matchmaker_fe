@@ -25,16 +25,16 @@ export default {
   methods: {
     logout,
     toDocx() {
-        router.push('chooseTemplateLegalDocx');
-      },
+      router.push('chooseTemplateLegalDocx');
+    },
     toDocusign() {
-        router.push('chooseTemplateLegalDocuSign');
+      router.push('chooseTemplateLegalDocuSign');
     },
     toTermination(){
-     router.push('chooseTermination')
+     router.push('chooseTermination');
     },
     toOffer(){
-      router.push('createOffer')
+      router.push('createOffer');
     },
     pageBack(){
       router.go(-1);
