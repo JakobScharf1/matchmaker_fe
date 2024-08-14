@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import MatchIDInput from "@/components/idinputs/MatchIDInput.vue";
 import LoginSSO from "@/components/LoginSSO.vue";
 import chooseTemplateType from "@/components/standard/ChooseTemplateType.vue";
-import chooseTemplateFormats from "@/components/ChooseTemplateFormats.vue";
+import chooseTemplateFormats from "@/components/standard/ChooseTemplateFormats.vue";
 import chooseTemplateDocuSign from "@/components/standard/consultants/ChooseTemplateDocuSign.vue";
 import chooseTemplateDocx from "@/components/standard/consultants/ChooseTemplateDocx.vue";
 import chooseTemplateLegalDocuSign from "@/components/standard/legal/ChooseTemplateLegalDocuSign.vue";
@@ -11,8 +11,8 @@ import chooseTermination from "@/components/standard/legal/ChooseTermination.vue
 import chooseRequestType from "@/components/ChooseRequestType.vue";
 import KundeIDInput from "@/components/idinputs/KundeIDInput.vue";
 import PPIDInput from "@/components/idinputs/PPIDInput.vue";
-import createOffer from "@/components/createOffer.vue";
-import chooseTypeOffer from "@/components/chooseTypeOffer.vue";
+import createOffer from "@/components/standard/createOffer.vue";
+import chooseTypeOffer from "@/components/standard/chooseTypeOffer.vue";
 
 const routes = [
     {

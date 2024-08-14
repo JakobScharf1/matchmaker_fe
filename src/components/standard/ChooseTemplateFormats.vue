@@ -2,7 +2,7 @@
   <div>
     <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
   </div>
-  <h2>Bitte wähle aus, in welchem Format du den Vertrag erstellen möchtest:</h2>
+  <h2>Bitte wähle aus, ob du ein Vertrag, ein Angebot oder eine Kündigung erstellen möchtest:</h2>
   <button class="btn btn-primary chooseButtons" @click="toDocx()">Docx-Verträge</button><br/>
   <button class="btn btn-primary chooseButtons" @click="toDocusign()">DocuSign-Verträge</button><br/>
   <button class="btn btn-primary chooseButtons" @click="toTermination()">Kündigungen</button><br/>
