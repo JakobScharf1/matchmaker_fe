@@ -227,7 +227,10 @@ export default {
               this.vkOnSite = this.matches.at(35);
               localStorage.setItem('hoursperDay', this.matches.at(31));
               this.hoursperDay = this.matches.at(31);
-              localStorage.setItem("prefixKunde", this.matches.at(36));
+              localStorage.setItem('prefixKunde', this.matches.at(36));
+              localStorage.setItem('umbrellaMail', this.matches.at(37));
+              localStorage.setItem('einstellungsArt', this.matches.at(38));
+              console.log(localStorage.getItem('umbreallMail'));
 
 
 
@@ -257,7 +260,7 @@ export default {
         router.push('chooseTypeOffer');
       } else {
         localStorage.setItem("vertragsart","Projektpartner")
-        router.push('chooseTemplateDocuSign');
+        router.push('ChooseTemplateDocuSign');
       }
     },
 

@@ -44,6 +44,17 @@ function absenderMail(){
         return mail;
     }
 }
+function umbrellaMail(){
+    if(localStorage.getItem('einstellungsArt') === "Umbrella"){
+        const email = localStorage.getItem('umbrellaMail');
+        console.log(email);
+        localStorage.setItem('projektpartnerMail', email );
+
+        return localStorage.getItem('projektpartnerMail');
+    } else {
+        return localStorage.getItem('projektpartnerMail');
+    }
+}
 
 /**
  * Prüft die Variable verguetungssatz und setzt den Wert der entsprechenden Variable stundensatz, tagessatz oder festpreis auf den ek (Einkaufspreis).
@@ -136,7 +147,7 @@ function stundensatzAgent() {
             totalPrice = projectDays * tagessatz.stundensatz;
         } else {
 
-            totalPrice = (tagessatz.stundensatzRemote + projectDays) * (projectDays + tagessatz.stundensatzOnSite);
+            totalPrice = (tagessatz.stundensatzRemote * projectDays) * (projectDays * tagessatz.stundensatzOnSite);
         }
     }
 
@@ -772,7 +783,7 @@ function docxEvk(){
         localStorage.getItem("projectHours"),
         localStorage.getItem("remotePercentage"),
         localStorage.getItem("daysPerWeek"),
-        localStorage.getItem("ppGesellschaft"),
+        localStorage.getItem("ppGesellschaft")
     ]
 
     BackendService.postDocData(localStorage.getItem("docId"), data).then(response => {
@@ -878,3 +889,4 @@ export { docxOffer };
 //export { calculateOfferPricewithHourlyRate };
 export { stundensatzAgent };
 export { tagessatzAgent };
+export { umbrellaMail };
