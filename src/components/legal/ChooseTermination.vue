@@ -3,7 +3,6 @@
     <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
   </div>
   <h2>Wähle die Art der Kündigung aus, die du erstellen möchtest:</h2>
-  <h2>Deutsch</h2>
   <h3>WeMatch</h3>
   <input type="radio" id="docx-k-k-fg" value="docx-k-k-fg" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-k-k-fg')">
   <label for="docx-k-k-fg">Kündigung - fristgerecht - Kunde</label><br/>

@@ -42,7 +42,7 @@ function saveUser(url, requestBody) {
                         console.log("permissionUrl response", response.data.toString())
                         localStorage.setItem("permission", response.data.toString());
                         if(response.data.toString() === "1" || response.data.toString() === "2" || response.data.toString() === "3"){
-                            router.push("/chooseRequestType");
+                            router.push("/matchIDInput");
                         }
                     })
             } else {

@@ -96,7 +96,7 @@
       </tbody>
     </table>
   </div>
-  <button class="btn weiter-button-gen" v-bind:class="{'weiter-button': !confirmed, 'btn-primary': confirmed}" @click="goToChooseTemplate; alert('Es gibt derzeit Probleme bei der Erstellung von DOCX-Verträgen - wir sind dran!')"><b>Weiter</b></button><br />
+  <button class="btn weiter-button-gen" v-bind:class="{'weiter-button': !confirmed, 'btn-primary': confirmed}" @click="goToChooseTemplate"><b>Weiter</b></button><br />
   <div id="buttonContainer">
     <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
     <button id="logoutButton" class="btn btn-primary" @click="logout()"><b>Logout</b></button>

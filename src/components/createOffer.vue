@@ -1,18 +1,18 @@
 <template>
   <div class="container">
     <button @click="pageBack()" class="btn btn-outline-primary center-button">Zurück</button>
-    <h2>Erstelle ein Angebot:</h2><br/>
+    <h2>Erstelle ein Angebot:</h2>
 
     <div class="form-group" style="margin-bottom:0">
       <div class="input-group">
         <label for="project-days">Projekttage:</label>
         <input type="number" id="project-days" v-model="projectDays" placeholder="Anzahl der Projekttage">
-      </div><br/>
+      </div>
 
       <div class="input-group">
         <label for="project-hours">Projektstunden:</label>
         <input type="number" id="project-hours" v-model="projectHours" placeholder="Anzahl der Projektstunden">
-      </div><br/>
+      </div>
 
       <div class="input-group">
         <label for="person-selection">Person auswählen:</label>
@@ -23,14 +23,12 @@
         </select>
       </div><br/>
 
-      <h5 style="text-align:center">Wähle die Firmierung für das Angebot aus:</h5><br/>
+      <h5 style="text-align:center">Wähle die Firmierung für das Angebot aus:</h5>
 
       <div class="radio-group">
         <div class="radio-item">
           <input type="radio" id="docx-a" value="docx-a" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-a')">
           <label for="docx-a">WeMatch </label>
-        </div>
-        <div class="radio-item">
           <input type="radio" id="docx-a-e" value="docx-a-e" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-a-e')">
           <label for="docx-a-e">Engineering </label>
         </div>
@@ -123,11 +121,6 @@ export default {
   text-align: center;
 }
 
-.center-button {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
 .form-group {
   width: 100%;
   max-width: 400px;
@@ -159,31 +152,15 @@ export default {
   margin-bottom: 1rem;
 }
 
-.radio-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-}
-
 .radio-item label {
   cursor: pointer;
-  margin-left: 0.5rem;
+  margin: 0 0.5rem 0 0.5rem;
 }
 
 .radio-item input[type="radio"] {
   cursor: pointer;
 }
 
-h2 {
-  font-size: 1.5rem;
-  margin-top: 2rem;
-}
-
-h5 {
-  text-align: left;
-  margin-left: 15px;
-}
 
 #helpButton {
   margin-right: 10px;
