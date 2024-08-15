@@ -3,7 +3,7 @@
     <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
   </div>
 
-  <h2>2. Wähle den Vertrag aus, den du erstellen willst:</h2>
+  <h2>Wähle den Vertrag aus, den du erstellen willst:</h2>
 
   <h2>Deutsch</h2>
 

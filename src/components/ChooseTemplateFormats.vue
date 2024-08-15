@@ -6,7 +6,7 @@
   <button class="btn btn-primary chooseButtons" @click="toDocx()">Docx-Verträge</button><br/>
   <button class="btn btn-primary chooseButtons" @click="toDocusign()">DocuSign-Verträge</button><br/>
   <button class="btn btn-primary chooseButtons" @click="toTermination()">Kündigungen</button><br/>
-  <button class="btn btn-primary chooseButtons" @click="toOffer()">Angebot</button><br/>
+  <button class="btn btn-primary chooseButtons" @click="toOffer()">Angebote</button><br/>
 
 
   <div id="buttonContainer">

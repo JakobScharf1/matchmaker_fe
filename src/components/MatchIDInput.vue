@@ -1,5 +1,5 @@
 <template>
-  <h2 for="MatchID">1. Bitte gib die ID des Matches ein</h2>
+  <h2 for="MatchID">Bitte gib die ID des Matches ein</h2>
   <p class="secondtitle">Wenn du Fehler in den Werten unterhalb findest, ändere diese bitte in Bullhorn und gib dann die Match-ID erneut ein.<br />Sonst kannst du auch alle Felder gleich im Vertrag in DocuSign ändern.</p>
     <div class="input-group mb-3">
       <input v-model="matchIdFromInput" id="MatchID" type="number" name="Match ID" class="form-control" aria-describedby="basic-addon2" @keyup.enter="getMatch()">
@@ -96,7 +96,7 @@
       </tbody>
     </table>
   </div>
-  <button class="btn weiter-button-gen" v-bind:class="{'weiter-button': !confirmed, 'btn-primary': confirmed}" @click="goToChooseTemplate"><b>Weiter</b></button><br />
+  <button class="btn weiter-button-gen" v-bind:class="{'weiter-button': !confirmed, 'btn-primary': confirmed}" @click="goToChooseTemplate; alert('Es gibt derzeit Probleme bei der Erstellung von DOCX-Verträgen - wir sind dran!')"><b>Weiter</b></button><br />
   <div id="buttonContainer">
     <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
     <button id="logoutButton" class="btn btn-primary" @click="logout()"><b>Logout</b></button>

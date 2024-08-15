@@ -1,22 +1,19 @@
 <template>
   <div class="container">
     <button @click="pageBack()" class="btn btn-outline-primary center-button">Zurück</button>
-    <h2>2. Erstelle ein Angebot:</h2><br/>
+    <h2>Erstelle ein Angebot:</h2><br/>
 
-    <div class="form-group">
-      <h5>3. Gebe die Anzahl der Projekttage an:</h5>
+    <div class="form-group" style="margin-bottom:0">
       <div class="input-group">
         <label for="project-days">Projekttage:</label>
         <input type="number" id="project-days" v-model="projectDays" placeholder="Anzahl der Projekttage">
       </div><br/>
 
-      <h5>4. Gebe die Anzahl der Projektstunden an:</h5>
       <div class="input-group">
         <label for="project-hours">Projektstunden:</label>
         <input type="number" id="project-hours" v-model="projectHours" placeholder="Anzahl der Projektstunden">
       </div><br/>
 
-      <h5>5. Wähle aus, wer das Angebot erstellt:</h5>
       <div class="input-group">
         <label for="person-selection">Person auswählen:</label>
         <select id="person-selection" v-model="selectedPerson">
@@ -26,21 +23,21 @@
         </select>
       </div><br/>
 
-      <h5>6. Wähle das Angebot aus:</h5><br/>
+      <h5 style="text-align:center">Wähle die Firmierung für das Angebot aus:</h5><br/>
 
       <div class="radio-group">
         <div class="radio-item">
           <input type="radio" id="docx-a" value="docx-a" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-a')">
-          <label for="docx-a"> Angebot - WeMatch </label>
+          <label for="docx-a">WeMatch </label>
         </div>
         <div class="radio-item">
           <input type="radio" id="docx-a-e" value="docx-a-e" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-a-e')">
-          <label for="docx-a-e"> Angebot - Engineering </label>
+          <label for="docx-a-e">Engineering </label>
         </div>
       </div>
     </div>
 
-    <button class="btn center-button" v-bind:class="{'bestatigen-button btn-outline-primary': !confirmed, 'btn-primary': confirmed}" @click="chooseTemplate()">Bestätigen</button>
+    <button class="btn center-button" v-bind:class="{'bestatigen-button btn-outline-primary': !confirmed, 'btn-primary': confirmed}" style="" @click="chooseTemplate()">Bestätigen</button>
 
     <div id="buttonContainer">
       <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
