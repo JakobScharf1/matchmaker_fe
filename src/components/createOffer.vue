@@ -49,6 +49,7 @@ import router from "@/router";
 import {
   stundensatzAgent,
   tagessatzAgent,
+  calculateDailyPrice,
   docxOffer,
   kuendigungsfristTranslator,
   sendHelpMail
@@ -88,8 +89,7 @@ export default {
         localStorage.setItem("stundensatzOnSite", "-");
         tagessatzAgent();
       } else {
-        localStorage.setItem("tagessatzRemote", "-");
-        localStorage.setItem("tagessatzOnSite", "-");
+        calculateDailyPrice();
         stundensatzAgent();
       }
 

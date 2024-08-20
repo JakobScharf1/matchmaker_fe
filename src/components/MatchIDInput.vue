@@ -230,7 +230,7 @@ export default {
               localStorage.setItem('prefixKunde', this.matches.at(36));
               localStorage.setItem('umbrellaMail', this.matches.at(37));
               localStorage.setItem('einstellungsArt', this.matches.at(38));
-              console.log(localStorage.getItem('umbreallMail'));
+
 
 
 
@@ -255,7 +255,7 @@ export default {
      */
     goToChooseTemplate() {
       if (localStorage.getItem('permission') === "2") {
-        router.push('chooseTemplateType');
+        router.push('chooseTemplateFormats');
       } else if (localStorage.getItem('permission') === "3"){
         router.push('chooseTypeOffer');
       } else {
