@@ -8,12 +8,12 @@ import firebase from "firebase/compat/app";
 
 // Firebase Config
 const firebaseConfig = {
-    apiKey: "AIzaSyDTib2x4aE7llVddi_GDa72vGxYqHGHtQg",
-    authDomain: "matchmaker-406610.firebaseapp.com",
-    projectId: "matchmaker-406610",
-    storageBucket: "matchmaker-406610.appspot.com",
-    messagingSenderId: "171953949131",
-    appId: "1:171953949131:web:a14665b8293c3a05d6ce4e"
+    apiKey: process.env.VUE_APP_FB_API_KEY,
+    authDomain: process.env.VUE_APP_FB_AUTH_DOMAIN,
+    projectId: process.env.VUE_APP_FB_PROJECT_ID,
+    storageBucket: process.env.VUE_APP_FB_STORAGE_BUCKET,
+    messagingSenderId: process.env.VUE_APP_FB_SENDER_ID,
+    appId: process.env.VUE_APP_FB_APP_ID
 };
 
 // Initialize Firebase

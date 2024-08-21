@@ -1,6 +1,6 @@
 <template>
   <div class="background-image" :class="{ 'hidden': isMobile }"></div>
-  <img alt="MatchMaker logo" src="./assets/logo.png">
+  <img alt="MatchMaker logo" src="assets/logo1.png">
 
   <!-- Integration einer Fehlermeldung, wenn man Mobile Devices nutzt.
      Außerdem der Login-Button, der die login-Methode aus der firebase-config.js aufruft -->
@@ -78,6 +78,7 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  z-index: -1;
 }
 
 body {
@@ -114,23 +115,48 @@ img {
 }
 
 .btn-outline-primary {
-  color: #007772;
-  border-color: #007772;
+  height: fit-content;
+  padding: 7px 35px;
+  border-radius: 0;
+  border: 1px solid #fff;
+  font-family: Jost, sans-serif;
+  font-size: large;
+  color: white;
+  background-color: transparent;
 }
 
 .btn-outline-primary:hover {
-  color: white;
-  background-color: #007772;
+  background-color: white;
+  box-shadow: 0px 0px 10px white;
+  cursor: pointer;
+  color: black
 }
 
 .btn-primary {
-  background-color: #007772;
-  border-color: #007772;
+  padding: 7px 35px;
+  border-radius: 0;
+  border: 0;
+  font-family: Jost, sans-serif;
+  font-size: large;
+  font-weight: bold;
+  background-color: #fff;
+  height: fit-content;
+  color: #000;
 }
 
 .btn-primary:hover {
+  box-shadow: 0px 0px 10px #fff;
+  cursor: pointer;
+  background-color: white;
+  color: #000;
+}
+
+.btn-primary:active, .btn-primary:focus {
+  color: #fff;
   background-color: transparent;
-  color: #007772;
+  border: 1px solid #fff;
+  box-shadow: 0px 0px 10px #fff;
+  transform: scale(0.98);
 }
 
 h2 {

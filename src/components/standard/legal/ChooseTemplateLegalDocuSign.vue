@@ -3,7 +3,7 @@
     <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
   </div>
 
-  <h2>2. Wähle den Vertrag aus, den du erstellen willst:</h2>
+  <h2>Wähle den Vertrag aus, den du erstellen willst:</h2>
 
   <h2>Deutsch</h2>
 
@@ -61,7 +61,7 @@
   <input type="radio" id="c-ev-k-p-eng" value="c-ev-k-p-eng" name="radio" @click="confSecond(false)">
   <label for="c-ev-k-p-eng" @click="confSecond(false)">Projekteinzelauftrag Kunde</label><br/>
 
-  <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
+  <h2>Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
 
   <h3>Vertrag Absender</h3>
   <label for="absender_mail">E-Mail:</label>

@@ -1,14 +1,14 @@
 <template>
-  <h2 for="MatchID">1. Bitte gib die ID des Matches ein</h2>
+  <h2 for="MatchID">Bitte gib die ID des Matches ein</h2>
   <p class="secondtitle">Wenn du Fehler in den Werten unterhalb findest, ändere diese bitte in Bullhorn und gib dann die Match-ID erneut ein.<br />Sonst kannst du auch alle Felder gleich im Vertrag in DocuSign ändern.</p>
     <div class="input-group mb-3">
-      <input v-model="matchIdFromInput" id="MatchID" type="number" name="Match ID" class="form-control" aria-describedby="basic-addon2" @keyup.enter="getMatch()">
-      <div class="input-group-append">
+      <div class="input-wrapper">
+        <input placeholder="Match ID" v-model="matchIdFromInput" id="MatchID" type="number" name="Match ID" class="form-control" aria-describedby="basic-addon2" @keyup.enter="getMatch()">
         <button class="btn btn-primary" @click="getMatch()"><b>Bestätigen</b></button>
       </div>
     </div>
   <div class="loading-div">
-    <dot-loader :loading="isLoading" :color="'#007772'"></dot-loader>
+    <dot-loader :loading="isLoading" :color="'#fff'"></dot-loader>
   </div>
   <div class="valueTable" v-if="!isLoading">
     <table>
@@ -96,7 +96,7 @@
       </tbody>
     </table>
   </div>
-  <button class="btn weiter-button-gen" v-bind:class="{'weiter-button': !confirmed, 'btn-primary': confirmed}" @click="goToChooseTemplate"><b>Weiter</b></button><br />
+  <button class="btn btn-outline-primary weiter-button-gen" v-bind:class="{'weiter-button': !confirmed, 'btn-primary': confirmed}" @click="goToChooseTemplate"><b>Weiter</b></button><br />
   <div id="buttonContainer">
     <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
     <button id="logoutButton" class="btn btn-primary" @click="logout()"><b>Logout</b></button>
@@ -158,7 +158,7 @@ export default {
     getMatch() {
       this.isLoading = true;
       setTimeout(() => {
-        BackendService.getBullhornData(this.matchIdFromInput, "match").then((response) => {
+        BackendService.getBullhornData(this.matchIdFromInput).then((response) => {
           try {
            /* if (response.status !== 200 || response.data === null || response.data === "null" || response === "null") {
               alert("Die Match-ID ist nicht korrekt. Bitte gib die ID erneut ein.");
@@ -320,13 +320,33 @@ td {
   padding-right: 10px;
 }
 
+.input-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.input-wrapper input {
+  flex: 1;
+  margin-right: 2px;
+}
+
+.input-wrapper button {
+  flex: 1;
+  padding-left: 20px!important;
+  padding-right: 20px!important;
+}
+
 .input-group {
   width: 300px;
   margin: 0 auto;
 }
 
+.input-group input {
+  border-radius: 0;
+}
+
 .btn-primary:active {
-  box-shadow: #007772;
+  box-shadow: #fff;
 }
 
 .valueTable {
@@ -335,8 +355,8 @@ td {
 
 .weiter-button {
   background-color: transparent;
-  border-color: #007772;
-  color: #007772;
+  border-color: #fff;
+  color: #fff;
   pointer-events: none;
 }
 

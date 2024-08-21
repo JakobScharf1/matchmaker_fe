@@ -71,20 +71,28 @@ function verguetungssatzSwitchPP(){
     }
 }
 
-/*function stundensatzAgent(){
+function stundensatzAgent() {
     let vkRemote = localStorage.getItem("vk");
     let vkOnSite = localStorage.getItem("vkOnSite");
-    let stundensatz = "";
-    if(!vkRemote.equals(null) && vkOnSite == null){
-         localStorage.setItem("stundensatz", vkRemote);
-        return
-    } else if (!vkOnSite.equals(null) && vkRemote.equals(null)){
-        return  localStorage.setItem("stundensatz", vkOnSite);
-    } else if (!vkOnSite.equals(null)  && !vkRemote.equals(null) ){
-        return localStorage.setItem("stundensatzOnSite", vkOnSite);
-        localStorage.setItem("stundensatzRemote", vkRemote);
+
+    if ((vkRemote !== null || vkRemote !== "") && (vkOnSite === null || vkOnSite === "")) {
+        localStorage.setItem("stundensatzRemote", vkRemote + "€");
+        localStorage.setItem("stundensatzOnSite", "-");
+        return { stundensatz: parseFloat(localStorage.getItem("stundensatzRemote")) };
+    } else if ((vkRemote === null || vkRemote === "") && (vkOnSite !== null|| vkOnSite !== "")) {
+        localStorage.setItem("stundensatzOnSite", vkOnSite + "€");
+        localStorage.setItem("stundensatzRemote", "-");
+        return { stundensatz: parseFloat(localStorage.getItem("stundensatzOnSite")) };
+    } else if ((vkRemote !== null || vkRemote !== "") && (vkOnSite !== null|| vkOnSite !== "")) {
+        localStorage.setItem("stundensatzOnSite", vkOnSite + "€");
+        localStorage.setItem("stundensatzRemote", vkRemote + "€");
+        return {
+            stundensatzRemote: localStorage.getItem("stundensatzRemote"),
+            stundensatzOnSite: localStorage.getItem("stundensatzOnSite")
+        };
     }
-}*/
+    return null;
+}
 
 function calculateDailyRate() {
     let vk = localStorage.getItem("vk");
@@ -850,3 +858,4 @@ export { crvk };
 export { calculateOfferPricewithDailyRate };
 export { docxOffer };
 export { calculateOfferPricewithHourlyRate };
+export { stundensatzAgent };

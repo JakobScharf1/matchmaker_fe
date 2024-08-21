@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import MatchIDInput from "@/components/idinputs/MatchIDInput.vue";
+import MatchIDInput from "@/components/MatchIDInput.vue";
 import LoginSSO from "@/components/LoginSSO.vue";
 import chooseTemplateType from "@/components/standard/ChooseTemplateType.vue";
 import chooseTemplateFormats from "@/components/ChooseTemplateFormats.vue";
@@ -8,9 +8,7 @@ import chooseTemplateDocx from "@/components/standard/consultants/ChooseTemplate
 import chooseTemplateLegalDocuSign from "@/components/standard/legal/ChooseTemplateLegalDocuSign.vue";
 import chooseTemplateLegalDocx from "@/components/standard/legal/ChooseTemplateLegalDocx.vue";
 import chooseTermination from "@/components/standard/legal/ChooseTermination.vue";
-import chooseRequestType from "@/components/ChooseRequestType.vue";
-import KundeIDInput from "@/components/idinputs/KundeIDInput.vue";
-import PPIDInput from "@/components/idinputs/PPIDInput.vue";
+import createOffer from "@/components/createOffer.vue";
 
 const routes = [
     {
@@ -22,20 +20,8 @@ const routes = [
         component: LoginSSO
     },
     {
-      path: '/chooseRequestType',
-      component: chooseRequestType
-    },
-    {
-        path: '/matchIDInput',
+        path: '/start',
         component: MatchIDInput,
-    },
-    {
-      path: '/kundeIDInput',
-      component: KundeIDInput
-    },
-    {
-        path: '/ppIDInput',
-        component: PPIDInput
     },
     {
         path: "/chooseTemplateFormats",
@@ -69,6 +55,10 @@ const routes = [
         path: "/chooseTermination",
         component: chooseTermination
     },
+    {
+        path: "/createOffer",
+        component: createOffer
+    }
 
 
 
