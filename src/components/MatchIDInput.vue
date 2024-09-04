@@ -250,8 +250,10 @@ export default {
     },
 
     /**
-     * Wenn der Nutzer bei legalMail hinterlegt wurde, wird er zu chooseTemplateType weitergeleitet, weil der Nutzer,
-     * berechtigt ist, auch Kundenverträge erstellen zu können. Wenn nicht, wird er normal zu chooseTemplate weitergeleitet und kann PP-Verträge erstellen.
+     * Folgende Permissons haben folgende Zugriffe:
+     * Permission 1:  Nutzer haben ausschließlich Zugriff auf die Erstellung von Projektpatner-Verträgen, die über DocuSing versendet werden.
+     * Permission 2: Nutzer haben Zugriff auf die Erstellung von Kundenverträgen. Dabei sind folgende Vertragsarten inkludiert: Docx-Verträge, DocuSing-Verträge, Angebote und Kündingungen ( für Projektparnter als auch Kunden)
+     * Permission 3: Nutzer haben Zugriff auf die Erstellung von Projektpartnerverträgen sowie Angeboten.
      */
     goToChooseTemplate() {
       if (localStorage.getItem('permission') === "2") {
