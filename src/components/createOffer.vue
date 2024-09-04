@@ -31,6 +31,8 @@
           <label for="docx-a">WeMatch </label>
           <input type="radio" id="docx-a-e" value="docx-a-e" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-a-e')">
           <label for="docx-a-e">Engineering </label>
+          <input type="radio" id="docx-a-p" value="docx-a-p" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-a-p')">
+          <label for="docx-a-p">Engineering </label>
         </div>
       </div>
     </div>
