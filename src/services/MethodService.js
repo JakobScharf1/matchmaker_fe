@@ -1,7 +1,5 @@
 import BackendService from "@/services/BackendService";
 
-
-
 function sendHelpMail(){
     let subject = encodeURIComponent("Problem mit MatchMaker - MatchID: " + localStorage.getItem("matchID"));
     let body = encodeURIComponent("\n---\nmatch data: \n" +
@@ -36,6 +34,7 @@ function sendHelpMail(){
     window.open(mailtoLink, '_blank');
 }
 
+/* DEPRECATED SINCE 1.2.7
 function absenderMail(){
     const name= localStorage.getItem('wematchAnsprechpartnerName');
     if(name!= null){
@@ -44,6 +43,8 @@ function absenderMail(){
         return mail;
     }
 }
+ */
+
 function umbrellaMail(){
     if(localStorage.getItem('einstellungsArt') === "Umbrella"){
         const email = localStorage.getItem('umbrellaMail');
@@ -917,7 +918,7 @@ export { sendHelpMail };
 export { docxTermination };
 export { cevk2 };
 export { cevkEng2 };
-export { absenderMail };
+//export { absenderMail };
 export { crvk };
 //export { calculateOfferPricewithDailyRate };
 export { docxOffer };
