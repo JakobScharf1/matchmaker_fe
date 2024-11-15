@@ -107,7 +107,7 @@
 import router from "@/router";
 import BackendService from "@/services/BackendService";
 import {logout} from "@/firebase-config";
-import {absenderMail, sendHelpMail} from "@/services/MethodService";
+import {sendHelpMail} from "@/services/MethodService";
 
 
 export default {
@@ -173,8 +173,8 @@ export default {
               localStorage.setItem('wematchAnsprechpartnerName', this.matches.at(33));
               this.wematchAnsprechpartnerName = this.matches.at(33);
               localStorage.setItem('projektpartnerMail', this.matches.at(22));
-              this.projektpartnerMail = this.matches.at(22);
-              localStorage.setItem('wematchAnsprechpartnerMail', absenderMail().toString());
+              this.projektpartnerMail = this.matches.at(22)
+              localStorage.setItem('wematchAnsprechpartnerMail', this.matches.at(23))
               this.wematchAnsprechpartnerMail = localStorage.getItem('wematchAnsprechpartnerMail');
               localStorage.setItem('startdatum', this.dateFormatter(this.matches.at(11)));
               this.startdatum = this.dateFormatter(this.matches.at(11));
