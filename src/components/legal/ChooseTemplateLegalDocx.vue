@@ -41,7 +41,6 @@
   <input type="radio" id="docx-ev-k-p-eng" value="docx-ev-k-p-eng" name="projects-eng" v-model="selectedContract" @click="toggleSelection('docx-ev-k-p-eng')">
   <label for="docx-ev-k-p-eng">Projekteinzelauftrag</label><br/>
 
-  <!-- Repeat the same structure for other sections -->
 
   <button class="btn" v-bind:class="{'bestatigen-button btn-outline-primary': !confirmed, 'btn-primary': confirmed}" @click="chooseTemplate()">Bestätigen</button>
 

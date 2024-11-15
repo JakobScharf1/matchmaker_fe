@@ -10,6 +10,7 @@ import chooseTemplateLegalDocx from "@/components/legal/ChooseTemplateLegalDocx.
 import chooseTermination from "@/components/legal/ChooseTermination.vue";
 import createOffer from "@/components/createOffer.vue";
 import chooseTypeOffer from "@/components/chooseTypeOffer.vue";
+import createAdditionalAgreements from "@/components/legal/createAdditionalAgreements.vue";
 
 const routes = [
     {
@@ -25,44 +26,48 @@ const routes = [
         component: MatchIDInput,
     },
     {
-        path: "/chooseTemplateFormats",
+        path: '/chooseTemplateFormats',
         component: chooseTemplateFormats
     },
     {
-        path: "/chooseTemplateType",
+        path: '/chooseTemplateType',
         component: chooseTemplateType
     },
     {
-        path: "/chooseTemplateDocuSign",
+        path: '/chooseTemplateDocuSign',
         component: chooseTemplateDocuSign
     },
     {
-        path: "/consultants/chooseTemplateDocx",
+        path: '/consultants/chooseTemplateDocx',
         component: chooseTemplateDocx
     },
     {
-        path: "/chooseTemplateLegalDocuSign",
+        path: '/chooseTemplateLegalDocuSign',
         component: chooseTemplateLegalDocuSign
     },
     {
-        path: "/chooseTemplateLegalDocx",
+        path: '/chooseTemplateLegalDocx',
         component: chooseTemplateLegalDocx
     },
     {
-        path: "/chooseTemplateDocx",
+        path: '/chooseTemplateDocx',
         component: chooseTemplateDocx
     },
     {
-        path: "/chooseTermination",
+        path: '/chooseTermination',
         component: chooseTermination
     },
     {
-        path: "/createOffer",
+        path: '/createOffer',
         component: createOffer
     },
     {
-        path: "/chooseTypeOffer",
+        path: '/chooseTypeOffer',
         component: chooseTypeOffer
+    },
+    {
+        path: '/createAdditionalAgreements',
+        component: createAdditionalAgreements
     }
 
 ]
