@@ -36,22 +36,22 @@ const routes = [
         component: chooseTemplateType,
     },
     {
-        name: 'DocuSign-Vorlagen',
+        name: 'DocuSign-Verträge',
         path: "/chooseTemplateDocuSign",
         component: chooseTemplateDocuSign,
     },
     {
-        name: 'DOCX-Vorlagen',
+        name: 'DOCX-Verträge',
         path: "/chooseTemplateDocx",
         component: chooseTemplateDocx,
     },
     {
-        name: 'DocuSign-Vorlagen Legal',
+        name: 'DocuSign-Verträge Legal',
         path: "/chooseTemplateLegalDocuSign",
         component: chooseTemplateLegalDocuSign,
     },
     {
-        name: 'DOCX-Vorlagen Legal',
+        name: 'DOCX-Verträge Legal',
         path: "/chooseTemplateLegalDocx",
         component: chooseTemplateLegalDocx,
     },

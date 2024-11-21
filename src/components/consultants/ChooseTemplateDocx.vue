@@ -67,7 +67,7 @@ export default {
       breadcrumbs: [
         { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
         { name: 'Format', path: this.$router.resolve({ name: 'Format'}).href },
-        { name: 'DOCX-Vorlagen', path: this.$router.resolve({ name: 'DOCX-Vorlagen'}).href },
+        { name: 'DOCX-Verträge', path: this.$router.resolve({ name: 'DOCX-Verträge'}).href },
       ],
       confirmed: false,
       selectedContract: null

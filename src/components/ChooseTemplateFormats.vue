@@ -47,7 +47,7 @@ export default {
       router.push('createOffer');
     },
     toAdditionalAgreement(){
-      router.push('createAdditionalAgreements')
+      router.push('createAgreement')
     },
   },
   mounted() {

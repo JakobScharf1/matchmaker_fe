@@ -19,6 +19,14 @@ import BreadCrumbs from "@/elements/BreadCrumbs.vue";
 export default {
   name: 'chooseTypeOffer',
   components: {BreadCrumbs},
+  data() {
+    return {
+      breadcrumbs: [
+        { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
+        { name: 'Typ', path: this.$router.resolve({ name: 'Typ' }).href }
+      ]
+    }
+  },
   methods: {
     logout,
     toPP() {

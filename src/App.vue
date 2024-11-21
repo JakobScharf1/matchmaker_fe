@@ -7,7 +7,7 @@
 
   <RouterView/>
   <div class="bottom-right">
-    <p>MatchMaker v1.2.7 made with &#10084;&#65039; by WeMatch Team Operations</p>
+    <p>MatchMaker v2 made with &#10084;&#65039; by WeMatch Team Operations</p>
   </div>
 </template>
 
@@ -161,4 +161,33 @@ img {
 h2 {
   margin-top: 2rem;
 }
+
+.input-group {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+.form-group {
+  width: 100%;
+  max-width: 400px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 </style>

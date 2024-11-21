@@ -1,94 +1,79 @@
 <template>
   <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
-  <h2>Wähle den Vertrag aus, den du erstellen willst:</h2>
+  <div class="container">
+      <div class="form-group">
+        <div class="input-group">
+          <label for="lang-select">Sprache</label>
+          <select id="lang-select" v-model="lang">
+            <option value="de">Deutsch</option>
+            <option value="en">Englisch</option>
+          </select>
+        </div>
 
-  <h2>Deutsch</h2>
+        <div class="input-group">
+          <label for="company-select">Firmierung</label>
+          <select id="company-select" v-model="company">
+            <option value="wm">WeMatch Consulting GmbH</option>
+            <option value="we">WeMatch Engineering GmbH</option>
+            <option value="proj">WeMatch Projects GmbH</option>
+          </select>
+        </div>
 
-  <h3>WeMatch</h3>
-  <input type="radio" id="c-rv-k" value="c-rv-k" name="radio" @click="confSecond(false)">
-  <label for="c-rv-k" @click="confSecond(false)">Rahmenvertrag Kunde</label><br/>
-  <input type="radio" id="c-ev-k" value="c-ev-k" name="radio" @click="confSecond(false)">
-  <label for="c-ev-k" @click="confSecond(false)">Projekteinzelauftrag Kunde</label><br/>
-  <input type="radio" id="c-rv-k-2" value="c-rv-k-2" name="radio" @click="confSecond(true)">
-  <label for="c-rv-k-2" @click="confSecond(true)">Rahmenvertrag Kunde: 2 Unterschriftsblöcke</label><br/>
-  <input type="radio" id="c-ev-k-2" value="c-ev-k-2" name="radio" @click="confSecond(true)">
-  <label for="c-ev-k-2" @click="confSecond(true)">Projekteinzelauftrag Kunde: 2 Unterschriftsblöcke</label><br/>
+        <div class="input-group">
+          <label for="contract-select">Vertragsart</label>
+          <select id="contract-select" v-model="contracttype">
+            <option value="rv">Rahmenvereinbarung</option>
+            <option value="ev">Projekteinzelauftrag</option>
+          </select>
+        </div>
 
-  <h3>Engineering</h3>
-  <input type="radio" id="c-rv-k-e" value="c-rv-k-e" name="radio" @click="confSecond(false)">
-  <label for="c-rv-k-e" @click="confSecond(false)">Rahmenvertrag Kunde</label><br/>
-  <input type="radio" id="c-ev-k-e" value="c-ev-k-e" name="radio" @click="confSecond(false)">
-  <label for="c-ev-k-e" @click="confSecond(false)">Projekteinzelauftrag Kunde</label><br/>
-  <input type="radio" id="c-rv-k-e-2" value="c-rv-k-e-2" name="radio" @click="confSecond(true)">
-  <label for="c-rv-k-e-2" @click="confSecond(true)">Rahmenvertrag Kunde: 2 Unterschriftsblöcke</label><br/>
-  <input type="radio" id="c-ev-k-e-2" value="c-ev-k-e-2" name="radio" @click="confSecond(true)">
-  <label for="c-ev-k-e-2" @click="confSecond(true)">Projekteinzelauftrag Kunde: 2 Unterschriftsblöcke</label><br/>
+        <div class="input-group">
+          <label for="signing-select">Anzahl Unterschriftsblöcke</label>
+          <select id="signing-select" v-model="zweiterEmpfaenger">
+            <option :value="false">1</option>
+            <option :value="true">2</option>
+          </select>
+        </div>
 
-  <h3>Projects</h3>
-  <input type="radio" id="c-rv-k-p" value="c-rv-k-p" name="radio" @click="confSecond(false)">
-  <label for="c-rv-k-p" @click="confSecond(false)">Rahmenvertrag Kunde</label><br/>
-  <input type="radio" id="c-ev-k-p" value="c-ev-k-p" name="radio" @click="confSecond(false)">
-  <label for="c-ev-k-p" @click="confSecond(false)">Projekteinzelauftrag Kunde</label><br/>
+        <h3>Vertrag Absender</h3>
+        <div class="input-group">
+          <label for="absender_mail">E-Mail:</label>
+          <input v-model="absenderMail" type="email" id="absender_mail">
+          <label for="absender_name">Name:</label>
+          <input v-model="absenderName" type="text" id="absender_mail">
+        </div>
 
-  <h2>Englisch</h2>
+        <h3>Vertrag Empfänger</h3>
+        <div class="input-group">
+          <label for="empfaenger_mail">E-Mail:</label>
+          <input v-model="empfaengerMail" type="email" id="empfaenger_mail">
+          <label for="empfaenger_name">Name:</label>
+          <input v-model="empfaengerName" type="text" id="empfaenger_mail">
+        </div>
 
-  <h3>WeMatch</h3>
-  <input type="radio" id="c-rv-k-eng" value="c-rv-k-eng" name="radio" @click="confSecond(false)">
-  <label for="c-rv-k-eng" @click="confSecond(false)">Rahmenvertrag Kunde</label><br/>
-  <input type="radio" id="c-ev-k-eng" value="c-ev-k-eng" name="radio" @click="confSecond(false)">
-  <label for="c-ev-k-eng" @click="confSecond(false)">Projekteinzelauftrag Kunde</label><br/>
-  <input type="radio" id="c-rv-k-2-eng" value="c-rv-k-2-eng" name="radio" @click="confSecond(true)">
-  <label for="c-rv-k-2-eng" @click="confSecond(true)">Rahmenvertrag Kunde: 2 Unterschriftsblöcke</label><br/>
-  <input type="radio" id="c-ev-k-2-eng" value="c-ev-k-2-eng" name="radio" @click="confSecond(true)">
-  <label for="c-ev-k-2-eng" @click="confSecond(true)">Projekteinzelauftrag Kunde: 2 Unterschriftsblöcke</label><br/>
+        <div v-if="zweiterEmpfaenger">
+          <div class="input-group">
+            <h3>Vertrag Zweiter Empfänger</h3>
+            <label for="empfaenger_mail2">E-Mail:</label>
+            <input v-model="empfaengerMail2" type="email" id="empfaenger_mail2">
+            <label for="empfaenger_name2">Name:</label>
+            <input v-model="empfaengerName2" type="text" id="empfaenger_mail2">
+          </div>
+        </div>
 
-  <h3>Engineering</h3>
-  <input type="radio" id="c-rv-k-e-eng" value="c-rv-k-e-eng" name="radio" @click="confSecond(false)">
-  <label for="c-rv-k-e-eng" @click="confSecond(false)">Rahmenvertrag Kunde</label><br/>
-  <input type="radio" id="c-ev-k-e-eng" value="c-ev-k-e-eng" name="radio" @click="confSecond(false)">
-  <label for="c-ev-k-e-eng" @click="confSecond(true)">Projekteinzelauftrag Kunde</label><br/>
-  <input type="radio" id="c-rv-k-e-2-eng" value="c-rv-k-e-2-eng" name="radio" @click="confSecond(true)">
-  <label for="c-rv-k-e-2-eng" @click="confSecond(true)">Rahmenvertrag Kunde: 2 Unterschriftsblöcke</label><br/>
-  <input type="radio" id="c-ev-k-e-2-eng" value="c-ev-k-e-2-eng" name="radio" @click="confSecond(true)">
-  <label for="c-ev-k-e-2-eng" @click="confSecond(false)">Projekteinzelauftrag Kunde: 2 Unterschriftsblöcke</label><br/>
-
-  <h3>Projects</h3>
-  <input type="radio" id="c-rv-k-p-eng" value="c-rv-k-p-eng" name="radio" @click="confSecond(false)">
-  <label for="c-rv-k-p-eng" @click="confSecond(false)">Rahmenvertrag Kunde</label><br/>
-  <input type="radio" id="c-ev-k-p-eng" value="c-ev-k-p-eng" name="radio" @click="confSecond(false)">
-  <label for="c-ev-k-p-eng" @click="confSecond(false)">Projekteinzelauftrag Kunde</label><br/>
-
-  <h2>Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
-
-  <h3>Vertrag Absender</h3>
-  <label for="absender_mail">E-Mail:</label>
-  <input v-model="absenderMail" type="email" id="absender_mail">
-  <label for="absender_name">Name:</label>
-  <input v-model="absenderName" type="text" id="absender_mail"><br />
-
-  <h3>Vertrag Empfänger</h3>
-  <label for="empfaenger_mail">E-Mail:</label>
-  <input v-model="empfaengerMail" type="email" id="empfaenger_mail">
-  <label for="empfaenger_name">Name:</label>
-  <input v-model="empfaengerName" type="text" id="empfaenger_mail"><br />
-
-  <div v-if="zweiterEmpfaenger">
-    <h3>Vertrag Zweiter Empfänger</h3>
-    <label for="empfaenger_mail2">E-Mail:</label>
-    <input v-model="empfaengerMail2" type="email" id="empfaenger_mail2">
-    <label for="empfaenger_name2">Name:</label>
-    <input v-model="empfaengerName2" type="text" id="empfaenger_mail2"><br />
+        <h3>Consultant in CC</h3>
+        <div class="input-group">
+          <label for="cc_mail">E-Mail:</label>
+          <input v-model="ccMail" type="email" id="cc_mail">
+          <label for="cc_name">Name:</label>
+          <input v-model="ccName" type="text" id="cc_name">
+        </div>
+      </div>
   </div>
-
-  <h3>Consultant in CC</h3>
-  <label for="cc_mail">E-Mail:</label>
-  <input v-model="ccMail" type="email" id="cc_mail">
-  <label for="cc_name">Name:</label>
-  <input v-model="ccName" type="text" id="cc_name"><br />
-
   <p class="error" v-if="aufgabenbeschreibungError">Die Aufgabenbeschreibung überschreitet die Grenze von 4000 Zeichen.<br />Bitte kürze sie in Bullhorn und gib die Match-ID erneut ein!</p>
 
-  <button class="btn" :class="{'bestatigen-button btn-outline-primary': !confirmed || aufgabenbeschreibungError, 'btn-primary': confirmed && !aufgabenbeschreibungError}" :disabled="aufgabenbeschreibungError" @click="chooseTemplate()">Bestätigen</button>
+  <span class="error" v-if="inputMissing">Bitte fülle alle Felder aus.</span><br/>
+  <button class="btn btn-primary bestatigen-button" @click="chooseTemplate()">Bestätigen</button>
   <div id="buttonContainer">
     <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
     <button id="logoutButton" class="btn btn-primary" @click="logout()"><b>Logout</b></button>
@@ -117,9 +102,8 @@ export default {
       breadcrumbs: [
         { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
         { name: 'Format', path: this.$router.resolve({ name: 'Format'}).href },
-        { name: 'DocuSign-Vorlagen', path: this.$router.resolve({ name: 'DocuSign-Vorlagen Legal'}).href },
+        { name: 'DocuSign-Verträge', path: this.$router.resolve({ name: 'DocuSign-Verträge Legal'}).href },
       ],
-      confirmed: false,
       verguetungssatzList: [],
       empfaengerName: localStorage.getItem('projektpartnerName'),
       empfaengerMail: localStorage.getItem('projektpartnerMail'),
@@ -131,111 +115,90 @@ export default {
       ccMail: "",
       zweiterEmpfaenger: false,
       aufgabenbeschreibungError: false,
+      lang: "",
+      company: "",
+      contracttype: "",
+      inputMissing: false
     };
   },
   methods: {
     logout,
-    confSecond(cond) {
-      if (cond) {
-        this.confirmed = true;
-        this.zweiterEmpfaenger = true;
-      } else if (!cond) {
-        this.confirmed = true;
-        this.zweiterEmpfaenger = false;
-      }
-    },
     chooseTemplate() {
-      this.checkAufgabenbeschreibung();
-      if (this.aufgabenbeschreibungError) {
-        return;
-      }
+      if(this.lang && this.company && this.contracttype && this.empfaengerName && this.empfaengerMail && this.absenderName && this.absenderMail) {
+        this.inputMissing = false;
 
-      verguetungssatzSwitchKunde();
-      kuendigungsfristTranslator();
+        this.checkAufgabenbeschreibung();
+        if (this.aufgabenbeschreibungError) {
+          return;
+        }
 
-      // RV Kunde Deutsch : WeMatch, Engineering, Projects
-      if (document.getElementById("c-rv-k").checked) {
-        crvk("c-rv-k");
-      }
+        verguetungssatzSwitchKunde();
+        kuendigungsfristTranslator();
 
-      if (document.getElementById("c-rv-k-e").checked) {
-        crvk("c-rv-k-e");
-      }
+        const key = `${this.lang}-${this.company}-${this.contracttype}-${this.zweiterEmpfaenger.toString()}`;
+        switch (key) {
+          case "de-wm-rv-false":
+            console.log("Erfolg")
+            //crvk("c-rv-k");
+            break;
+          case "de-we-rv-false":
+            crvk("c-rv-k-e");
+            break;
+          case "de-proj-rv-false":
+            crvk("c-rv-k-p");
+            break;
+          case "en-wm-rv-false":
+            crvk("c-rv-k-eng");
+            break;
+          case "en-we-rv-false":
+            crvk("c-rv-k-e-eng");
+            break;
+          case "en-proj-rv-false":
+            crvk("c-rv-k-p-eng");
+            break;
+          case "de-wm-ev-false":
+            cevk("c-ev-k");
+            break;
+          case "de-we-ev-false":
+            cevk("c-ev-k-e");
+            break;
+          case "de-proj-ev-false":
+            cevk("c-ev-k-p");
+            break;
+          case "en-wm-ev-false":
+            cevkEng("c-ev-k-eng");
+            break;
+          case "en-we-ev-false":
+            cevkEng("c-ev-k-e-eng");
+            break;
+          case "en-proj-ev-false":
+            cevkEng("c-ev-k-p-eng");
+            break;
+          case "de-wm-ev-true":
+            cevk2("c-ev-k-2");
+            break;
+          case "de-wm-rv-true":
+            cevk2("c-rv-k-2"); //TODO: Wieso wird rv über cevk2-Methode erstellt?
+            break;
+          case "de-we-rv-true":
+            cevk2("c-rv-k-e-2"); //TODO: Wieso wird rv über cevk2-Methode erstellt?
+            break;
+          case "de-we-ev-true":
+            cevk2("c-ev-k-e-2");
+            break;
+          case "en-wm-rv-true":
+            cevkEng2("c-rv-k-2-eng"); //TODO: Wieso wird rv über cevkEng2-Methode erstellt?
+            break;
+          case "en-we-rv-true":
+            cevkEng2("c-rv-2-e-eng"); //TODO: Wieso wird rv über cevkEng2-Methode erstellt?
+            break;
+          case "en-we-ev-true":
+            cevkEng2("c-ev-k-e-2-eng");
+            break;
+        }
 
-      if (document.getElementById("c-rv-k-p").checked) {
-        crvk("c-rv-k-p");
-      }
-
-      // RV Kunde Englisch: WeMatch, Engineering, Projects
-      if (document.getElementById("c-rv-k-eng").checked) {
-        crvk("c-rv-k-eng");
-      }
-
-      if (document.getElementById("c-rv-k-e-eng").checked) {
-        crvk("c-rv-k-e-eng");
-      }
-
-      if (document.getElementById("c-rv-k-p-eng").checked) {
-        crvk("c-rv-k-p-eng");
-      }
-
-      // EV Kunde Deutsch : WeMatch, Engineering, Projects
-      if (document.getElementById("c-ev-k").checked) {
-        cevk("c-ev-k");
-      }
-
-      if (document.getElementById("c-ev-k-e").checked) {
-        cevk("c-ev-k-e");
-      }
-
-      if (document.getElementById("c-ev-k-p").checked) {
-        cevk("c-ev-k-p");
-      }
-
-      // EV Kunde Englisch: WeMatch, Engineering, Projects
-      if (document.getElementById("c-ev-k-eng").checked) {
-        cevkEng("c-ev-k-eng");
-      }
-
-      if (document.getElementById("c-ev-k-e-eng").checked) {
-        cevkEng("c-ev-k-e-eng");
-      }
-      if (document.getElementById("c-ev-k-p-eng").checked) {
-        cevkEng("c-ev-k-p-eng");
-      }
-
-      // EV Kunde - 2 Unterschriftsblöcke
-
-      if (document.getElementById("c-ev-k-2").checked) {
-        cevk2("c-ev-k-2");
-      }
-
-      if (document.getElementById("c-rv-k-2").checked) {
-        cevk2("c-ev-k-2");
-      }
-
-      if (document.getElementById("c-rv-k-e-2").checked) {
-        cevk2("c-rv-k-e-2");
-      }
-
-      if (document.getElementById("c-ev-k-e-2").checked) {
-        cevk2("c-ev-k-e-2");
-      }
-
-      if (document.getElementById("c-ev-k-2-eng").checked) {
-        cevkEng2("c-ev-k-2-eng");
-      }
-
-      if (document.getElementById("c-rv-k-2-eng").checked) {
-        cevkEng2("c-rv-k-2-eng");
-      }
-
-      if (document.getElementById("c-rv-k-e-2-eng").checked) {
-        cevkEng2("c-rv-2-e-eng");
-      }
-
-      if (document.getElementById("c-ev-k-e-2-eng").checked) {
-        cevkEng2("c-ev-k-e-2-eng");
+      } else {
+        this.inputMissing = true;
       }
     },
     checkAufgabenbeschreibung() {
@@ -312,19 +275,9 @@ export default {
   right: 10px;
 }
 
-[type="email"] {
-  margin-left: 0.5rem;
-  margin-right: 2rem;
-}
-
-[type="text"] {
-  margin-left: 0.5rem;
-}
-
 .bestatigen-button {
   margin-top: 1rem;
   margin-bottom: 2rem;
-  pointer-events: none;
 }
 
 h3 {
@@ -332,7 +285,8 @@ h3 {
   margin-top: 2rem;
 }
 
-[type="radio"] {
-  margin-right: 5px;
+label {
+
 }
+
 </style>

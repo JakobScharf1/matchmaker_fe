@@ -98,7 +98,7 @@ export default {
     return {
       breadcrumbs: [
         { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
-        { name: 'DocuSign-Vorlagen', path: this.$router.resolve({ name: 'DocuSign-Vorlagen' }).href }
+        { name: 'DocuSign-Verträge', path: this.$router.resolve({ name: 'DocuSign-Verträge' }).href }
       ],
       confirmed: false,
       verguetungssatzList: [],

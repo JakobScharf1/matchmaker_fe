@@ -126,29 +126,6 @@ export default {
   text-align: center;
 }
 
-.form-group {
-  width: 100%;
-  max-width: 400px;
-  text-align: left;
-}
-
-.input-group {
-  margin-bottom: 1rem;
-  width: 100%;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.input-group input,
-.input-group select {
-  width: 100%;
-  padding: 0.5rem;
-  box-sizing: border-box;
-}
-
 .radio-group {
   display: flex;
   flex-direction: column;
