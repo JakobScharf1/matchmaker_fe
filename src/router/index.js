@@ -9,6 +9,7 @@ import chooseTemplateLegalDocuSign from "@/components/legal/ChooseTemplateLegalD
 import chooseTemplateLegalDocx from "@/components/legal/ChooseTemplateLegalDocx.vue";
 import chooseTermination from "@/components/legal/ChooseTermination.vue";
 import createOffer from "@/components/createOffer.vue";
+import createAdditionalAgreements from "@/components/legal/createAdditionalAgreements.vue";
 
 const routes = [
     {
@@ -58,9 +59,11 @@ const routes = [
     {
         path: "/createOffer",
         component: createOffer
+    },
+    {
+        path: '/createAdditionalAgreements',
+        component: createAdditionalAgreements
     }
-
-
 
 ]
 

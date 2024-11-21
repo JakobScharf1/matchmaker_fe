@@ -5,6 +5,7 @@
   <h2>Bitte wähle die Vertragskategorie:</h2>
   <button class="btn btn-primary chooseButtons" @click="toDocx()">Docx-Verträge</button><br/>
   <button class="btn btn-primary chooseButtons" @click="toDocusign()">DocuSign-Verträge</button><br/>
+  <button class="btn btn-primary chooseButtons" @click="toAdditionalAgreement()">Zusatzvereinbarung</button><br/>
   <button class="btn btn-primary chooseButtons" @click="toTermination()">Kündigungen</button><br/>
   <button class="btn btn-primary chooseButtons" @click="toOffer()">Angebote</button><br/>
 
@@ -35,6 +36,9 @@ export default {
     },
     toOffer(){
       router.push('createOffer');
+    },
+    toAdditionalAgreement(){
+      router.push('createAdditionalAgreements')
     },
     pageBack(){
       router.go(-1);
