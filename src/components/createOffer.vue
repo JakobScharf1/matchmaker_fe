@@ -1,37 +1,19 @@
 <template>
   <div class="container">
     <button @click="pageBack()" class="btn btn-outline-primary center-button">Zurück</button>
-    <h2>2. Erstelle ein Angebot:</h2><br/>
+    <h2>Erstelle ein Angebot:</h2>
 
-    <h2> Die Angaben der Projektstunden und Aufteilung der Projektstunden in Remote-/On-Site-Stunden sind ausschlaggebend für die Errechnung des Gesamtpreises.</h2><br/>
+    <div class="form-group" style="margin-bottom:0">
+      <div class="input-group">
+        <label for="project-days">Projekttage:</label>
+        <input type="number" id="project-days" v-model="projectDays" placeholder="Anzahl der Projekttage">
+      </div>
 
-
-    <div class="form-group">
-        <h5>3. Gebe die Anzahl der ProjektTage an:</h5>
-        <div class="input-group">
-          <label for="project-days">Projektstunden:</label>
-          <input type="number" id="project-days" v-model="projectDays" placeholder="Anzahl der Projekttage">
-        </div><br/>
-
-      <h5>4. Gebe die Anzahl der Projektstunden an:</h5>
       <div class="input-group">
         <label for="project-hours">Projektstunden:</label>
         <input type="number" id="project-hours" v-model="projectHours" placeholder="Anzahl der Projektstunden">
-      </div><br/>
+      </div>
 
-      <h5>5. Davon sind es Remote-Stunden:</h5>
-      <div class="input-group">
-        <label for="remote-hours">Anzahl Remote-Stunden:</label>
-        <input type="number" id="remote-hours" v-model="remoteHours" placeholder="Anzahl der Remote-Stunden">
-      </div><br/>
-
-      <h5>6. Davon sind es On-Site-Stunden:</h5>
-      <div class="input-group">
-        <label for="onSite-hours">Anzahl der OnSide-Stunden:</label>
-        <input type="number" id="onSite-Hours" v-model="onSiteHours" placeholder="Anzahl der On-Site-Stunden">
-      </div><br/>
-
-      <h5>7. Wähle aus, wer das Angebot erstellt:</h5>
       <div class="input-group">
         <label for="person-selection">Person auswählen:</label>
         <select id="person-selection" v-model="selectedPerson">
@@ -41,24 +23,21 @@
         </select>
       </div><br/>
 
-      <h5>8. Wähle den Rechnungssatz aus:</h5>
-      <div class="input-group">
-        <label for="person-selection">Rechnungssatz auswählen:</label>
-        <select id="person-selection" v-model="selectedCalculateType">
-          <option value="Carolin Lins">Stundensatz</option>
-          <option value="Hassan Berrada">Tagessatz</option>
-        </select>
-      </div><br/>
-
-      <h5>9. Wähle das Angebot aus:</h5><br/>
+      <h5 style="text-align:center">Wähle die Firmierung für das Angebot aus:</h5>
 
       <div class="radio-group">
-        <input type="radio" id="docx-a" value="docx-a" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-a')">
-        <label for="docx-a"> Angebot </label>
+        <div class="radio-item">
+          <input type="radio" id="docx-a" value="docx-a" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-a')">
+          <label for="docx-a">WeMatch </label>
+          <input type="radio" id="docx-a-e" value="docx-a-e" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-a-e')">
+          <label for="docx-a-e">Engineering </label>
+          <input type="radio" id="docx-a-p" value="docx-a-p" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-a-p')">
+          <label for="docx-a-p">Engineering </label>
+        </div>
       </div>
     </div>
 
-    <button class="btn center-button" v-bind:class="{'bestatigen-button btn-outline-primary': !confirmed, 'btn-primary': confirmed}" @click="chooseTemplate()">Bestätigen</button>
+    <button class="btn center-button" v-bind:class="{'bestatigen-button btn-outline-primary': !confirmed, 'btn-primary': confirmed}" style="" @click="chooseTemplate()">Bestätigen</button>
 
     <div id="buttonContainer">
       <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
@@ -71,8 +50,8 @@
 import router from "@/router";
 import {
   stundensatzAgent,
-  calculateOfferPricewithDailyRate,
-  calculateOfferPricewithHourlyRate,
+  tagessatzAgent,
+  calculateDailyPrice,
   docxOffer,
   kuendigungsfristTranslator,
   sendHelpMail
@@ -85,14 +64,9 @@ export default {
     return {
       confirmed: false,
       projectHours: 0,
-      remoteHours: 0,
-      onSiteHours: 0,
       selectedContract: null,
       selectedPerson: '',
-      selectedCalculateType: '',
-      projectDays: 0
-
-
+      projectDays: 0,
     }
   },
   methods: {
@@ -101,31 +75,25 @@ export default {
       router.go(-1);
     },
     chooseTemplate() {
-      stundensatzAgent();
-      kuendigungsfristTranslator();
 
-
-      if (this.projectHours < 0 || this.remoteHours < 0 || this.onSiteHours < 0) {
+      if (this.projectHours < 0 || this.projectDays < 0) {
         alert("Bitte geben Sie gültige Stundenangaben ein.");
         return;
       }
 
-      localStorage.setItem("projectHours", this.projectHours);
-      localStorage.setItem("onSiteHours", this.onSiteHours);
-      localStorage.setItem("remoteHours", this.remoteHours);
+      localStorage.setItem("projectHours", this.projectHours + " Stunden");
       localStorage.setItem("selectedPerson", this.selectedPerson);
-      localStorage.setItem("calculationType", this.selectedCalculateType);
-      localStorage.setItem("projetDays", this.projectDays);
+      localStorage.setItem("projectDays", this.projectDays + " Tage");
 
-      if(localStorage.getItem("calculationType") === "Tagessatz"){
-        calculateOfferPricewithDailyRate();
+      kuendigungsfristTranslator();
+      if (localStorage.getItem("verguetungssatz") === "Tagessatz") {
+        localStorage.setItem("stundensatzRemote", "-");
+        localStorage.setItem("stundensatzOnSite", "-");
+        tagessatzAgent();
       } else {
-        localStorage.setItem("tagessatz","");
-        calculateOfferPricewithHourlyRate();
+        calculateDailyPrice();
+        stundensatzAgent();
       }
-
-
-
 
       if (this.selectedContract) {
         localStorage.setItem("docId", this.selectedContract);
@@ -140,7 +108,7 @@ export default {
     }
   },
   mounted() {
-    document.getElementById("helpButton").addEventListener("click", function() {
+    document.getElementById("helpButton").addEventListener("click", function () {
       sendHelpMail();
     });
   },
@@ -153,11 +121,6 @@ export default {
   flex-direction: column;
   align-items: center;
   text-align: center;
-}
-
-.center-button {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
 }
 
 .form-group {
@@ -185,24 +148,21 @@ export default {
 
 .radio-group {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-bottom: 1rem;
 }
 
-.radio-group input[type="radio"] {
-  margin-right: 0.5rem;
+.radio-item label {
+  cursor: pointer;
+  margin: 0 0.5rem 0 0.5rem;
 }
 
-h2 {
-  font-size: 1.5rem;
-  margin-top: 2rem;
+.radio-item input[type="radio"] {
+  cursor: pointer;
 }
 
-h5 {
-  text-align: left;
-  margin-left: 15px;
-}
 
 #helpButton {
   margin-right: 10px;

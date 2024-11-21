@@ -36,12 +36,25 @@ function sendHelpMail(){
     window.open(mailtoLink, '_blank');
 }
 
+/* DEPRECATED SINCE 1.2.7
 function absenderMail(){
     const name= localStorage.getItem('wematchAnsprechpartnerName');
     if(name!= null){
         const [firstName, lastName] = name.split(" "),
             mail = `${firstName[0].toLowerCase()}.${lastName.toLowerCase()}@wematch.de`;
         return mail;
+    }
+}
+ */
+
+function umbrellaMail(){
+    if(localStorage.getItem('einstellungsArt') === "Umbrella"){
+        const email = localStorage.getItem('umbrellaMail');
+        localStorage.setItem('projektpartnerMail', email );
+
+        return localStorage.getItem('projektpartnerMail');
+    } else {
+        return localStorage.getItem('projektpartnerMail');
     }
 }
 
@@ -71,6 +84,29 @@ function verguetungssatzSwitchPP(){
     }
 }
 
+function tagessatzAgent() {
+    let vkRemote = localStorage.getItem("vk");
+    let vkOnSite = localStorage.getItem("vkOnSite");
+
+    if ((vkRemote !== null || vkRemote !== "") && (vkOnSite === null || vkOnSite === "")) {
+        localStorage.setItem("tagessatzRemote", vkRemote + "€");
+        localStorage.setItem("tagessatzOnSite", "-");
+        return { tagessatz: parseFloat(localStorage.getItem("stundensatzRemote")) };
+    } else if ((vkRemote === null || vkRemote === "") && (vkOnSite !== null|| vkOnSite !== "")) {
+        localStorage.setItem("tagessatzOnSite", vkOnSite + "€");
+        localStorage.setItem("tagessatzRemote", "-");
+        return { taggessatz: parseFloat(localStorage.getItem("stundensatzOnSite")) };
+    } else if ((vkRemote !== null || vkRemote !== "") && (vkOnSite !== null|| vkOnSite !== "")) {
+        localStorage.setItem("tagessatzOnSite", vkOnSite + "€");
+        localStorage.setItem("tagessatzRemote", vkRemote + "€");
+        return {
+            stundensatzRemote: localStorage.getItem("tagessatzRemote"),
+            stundensatzOnSite: localStorage.getItem("tagessatzOnSite")
+        };
+    }
+    return null;
+}
+
 function stundensatzAgent() {
     let vkRemote = localStorage.getItem("vk");
     let vkOnSite = localStorage.getItem("vkOnSite");
@@ -94,80 +130,42 @@ function stundensatzAgent() {
     return null;
 }
 
-function calculateDailyRate() {
-    let vk = localStorage.getItem("vk");
-    let vkOnSite = localStorage.getItem("vkOnSite");
-    let hours = localStorage.getItem("hoursperDay");
 
-    vk = vk !== "" ? parseFloat(vk) : null;
+function calculateDailyPrice(){
+    var vkRemote = localStorage.getItem("vk");
+    var vkOnSite = localStorage.getItem("vkOnSite");
+
+    vkRemote = vkRemote !== "" ? parseFloat(vkRemote) : null;
     vkOnSite = vkOnSite !== "" ? parseFloat(vkOnSite) : null;
-    hours = hours !== "" ? parseFloat(hours) : null;
 
-    let tagessatz = 0;
+    var tagessatz;
+    var tagessatzOnSite;
 
-    if (vk === null && vkOnSite !== null) {
-        tagessatz = vkOnSite * hours;
-    } else if (vkOnSite === null && vk !== null) {
-        tagessatz = vk * hours;
-    } else if (vk !== null && vkOnSite !== null) {
-        tagessatz = (vkOnSite + vk) * hours;
+    if ((vkRemote !== null || vkRemote !== "") && (vkOnSite === null || vkOnSite === "")){
+        tagessatz = vkRemote * 8;
+        tagessatz = tagessatz.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        localStorage.setItem("tagessatzRemote", tagessatz + "€");
+        localStorage.setItem("tagessatzOnSite", "-");
+
+    } else if ((vkRemote === null || vkRemote === "") && (vkOnSite !== null|| vkOnSite !== "")){
+        tagessatzOnSite= vkOnSite * 8;
+        tagessatzOnSite = tagessatzOnSite.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+        localStorage.setItem("tagessatzOnSite", tagessatzOnSite + "€");
+        localStorage.setItem("tagessatzRemote", "-");
+
+    }  else if ((vkRemote !== null || vkRemote !== "") && (vkOnSite !== null|| vkOnSite !== "")){
+        tagessatz = vkRemote * 8;
+        tagessatzOnSite = vkOnSite * 8;
+
+        tagessatz = tagessatz.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        tagessatzOnSite = tagessatzOnSite.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+        localStorage.setItem("tagessatzOnSite", tagessatz + "€");
+        localStorage.setItem("tagessatzRemote", tagessatzOnSite + "€");
     }
-
-    if (tagessatz === null) {
-        tagessatz = "";
-    }
-    console.log(tagessatz);
-
-    return localStorage.setItem("tagessatz", tagessatz.toString());
+    return null;
 }
-
-
-function calculateOfferPricewithDailyRate() {
-    let tagessatz = calculateDailyRate();
-    console.log(tagessatz);
-    let projectDays =  localStorage.getItem("projectsDay");
-
-    projectDays = projectDays !== 0 ? parseFloat(projectDays): null;
-
-    let totalPrice = 0;
-
-    if (tagessatz > 0) {
-        totalPrice = projectDays * tagessatz;
-    }
-    console.log(totalPrice);
-
-    return localStorage.setItem("gesamtPreis",totalPrice.toString());
-}
-
-function calculateOfferPricewithHourlyRate(){
-    let vk = localStorage.getItem("vk");
-    let vkOnSite = localStorage.getItem("vkOnSite");
-    let hours = localStorage.getItem("projectHours");
-    let remoteHours = localStorage.getItem("remoteHours");
-    let onSiteHours = localStorage.getItem("OnSiteHours");
-
-    vk = vk !== "" ? parseFloat(vk) : null;
-    vkOnSite = vkOnSite !== "" ? parseFloat(vkOnSite) : null;
-    hours = hours !== "" ? parseFloat(hours) : null;
-    remoteHours = remoteHours !== 0 ? parseInt(remoteHours, 10) : 0;
-    onSiteHours = onSiteHours !== 0? parseInt(onSiteHours, 10) : 0;
-
-    let totalPrice = 0.00;
-    if (vk === null && vkOnSite !== null) {
-        totalPrice = vkOnSite * hours;
-
-    } else if (vkOnSite === null && vk !== null) {
-        totalPrice = vk * hours;
-
-    } else if (vk !== null && vkOnSite !== null) {
-        totalPrice = (vkOnSite * remoteHours) + (vkOnSite * onSiteHours);
-
-    }
-     totalPrice = totalPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    console.log(totalPrice);
-    return localStorage.setItem("gesamtPreis", totalPrice);
-}
-
 
 
 function verguetungssatzSwitchKunde(){
@@ -763,6 +761,8 @@ function docxEvk(){
         localStorage.getItem("remotePercentage"),
         localStorage.getItem("daysPerWeek"),
         localStorage.getItem("ppGesellschaft"),
+        localStorage.getItem("preFix"),
+        localStorage.getItem("kuendigungsfirstEnglisch")
     ]
 
     BackendService.postDocData(localStorage.getItem("docId"), data).then(response => {
@@ -800,7 +800,7 @@ function docxTermination() {
         localStorage.getItem("remotePercentage"),
         localStorage.getItem("daysPerWeek"),
         localStorage.getItem("ppGesellschaft"),
-        localStorage.getItem("preFix")
+        localStorage.getItem("preFix"),
     ]
 
     BackendService.postDocData(localStorage.getItem("docId"), data).then(response => {
@@ -827,7 +827,15 @@ function docxOffer() {
         localStorage.getItem("aufgabenbeschreibung"),
         localStorage.getItem("projectHours"),
         localStorage.getItem("gesamtPreis"),
-        localStorage.getItem("selectedPerson")
+        localStorage.getItem("selectedPerson"),
+        localStorage.getItem("zahlungszielKunde"),
+        localStorage.getItem("stundensatzOnSite"),
+        localStorage.getItem("stundensatzRemote"),
+        localStorage.getItem("projectDays"),
+        localStorage.getItem("auslastung"),
+        localStorage.getItem("tagessatzOnSite"),
+        localStorage.getItem("tagessatzRemote"),
+        localStorage.getItem("prefixKunde")
     ]
 
     BackendService.postDocDataOffer(localStorage.getItem("docId"), data).then(response => {
@@ -853,9 +861,9 @@ export { sendHelpMail };
 export { docxTermination };
 export { cevk2 };
 export { cevkEng2 };
-export { absenderMail };
 export { crvk };
-export { calculateOfferPricewithDailyRate };
 export { docxOffer };
-export { calculateOfferPricewithHourlyRate };
 export { stundensatzAgent };
+export { tagessatzAgent };
+export { umbrellaMail };
+export {calculateDailyPrice };

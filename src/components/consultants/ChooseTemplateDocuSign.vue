@@ -44,6 +44,7 @@
   <label for="proj-ev-pp-eng" @click="confirmed = true">Projekteinzelauftrag Projektpartner</label><br/>
 
   <h2>3. Prüfe, ob folgende Daten<br />zum Versand des Vertrags korrekt sind:</h2>
+  <p>(Bei Umbrella bitte den Namen des Ansprechpatnera als Empfänger der Consultancy angeben)</p>
 
   <h3>Vertrag Absender</h3>
   <label for="absender_mail">E-Mail:</label>
@@ -88,7 +89,8 @@ import {
   kuendigungsfristTranslator,
   verguetungssatzSwitchPP,
   sendHelpMail,
-  crv
+  crv,
+  umbrellaMail
 } from "@/services/MethodService";
 import {logout} from "@/firebase-config";
 
@@ -98,7 +100,7 @@ export default {
     return {
       confirmed: false,
       verguetungssatzList: [],
-      empfaengerMail: localStorage.getItem('projektpartnerMail'),
+      empfaengerMail: umbrellaMail(),
       empfaengerName: localStorage.getItem('projektpartnerName'),
       absenderName: localStorage.getItem('wematchAnsprechpartnerName'),
       absenderMail: localStorage.getItem('wematchAnsprechpartnerMail'),

@@ -2,12 +2,9 @@
   <div>
     <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
   </div>
-  <h2>Bitte wähle die Vertragskategorie:</h2>
-  <button class="btn btn-primary chooseButtons" @click="toDocx()">Docx-Verträge</button><br/>
-  <button class="btn btn-primary chooseButtons" @click="toDocusign()">DocuSign-Verträge</button><br/>
-  <button class="btn btn-primary chooseButtons" @click="toTermination()">Kündigungen</button><br/>
-  <button class="btn btn-primary chooseButtons" @click="toOffer()">Angebote</button><br/>
-
+  <h2>Bitte wähle aus, was Du erstellen möchtest:</h2>
+  <button class="btn btn-primary chooseButtons" @click="toPP()">Projektpartnervertrag</button><br />
+  <button class="btn btn-primary chooseButtons" @click="toOffer()">Angebot</button>
 
   <div id="buttonContainer">
     <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
@@ -21,19 +18,13 @@ import { logout } from "@/firebase-config";
 import {sendHelpMail} from "@/services/MethodService";
 
 export default {
-  name: 'chooseTemplateFormats',
+  name: 'chooseTypeOffer',
   methods: {
     logout,
-    toDocx() {
-      router.push('chooseTemplateLegalDocx');
+    toPP() {
+      router.push('chooseTemplateDocuSign');
     },
-    toDocusign() {
-      router.push('chooseTemplateLegalDocuSign');
-    },
-    toTermination(){
-     router.push('chooseTermination');
-    },
-    toOffer(){
+    toOffer() {
       router.push('createOffer');
     },
     pageBack(){
@@ -62,6 +53,5 @@ export default {
 
 .chooseButtons {
   margin-top: 10px;
-  width: 250px;
 }
 </style>

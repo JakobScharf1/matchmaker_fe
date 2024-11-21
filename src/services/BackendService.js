@@ -9,11 +9,21 @@ class BackendService{
      * @param type "match" or "kunde" or "projektpartner"
      * @returns {Promise<axios.AxiosResponse<any>>} Der Return enthält die Daten des entsprechenden Matches.
      */
-    async getBullhornData(dataId){
+    async getBullhornData(dataId, type){
         try {
+            let customPath = "";
+            if(type === "match"){
+                customPath = "/match/";
+            } else if(type === "kunde"){
+                customPath = "/kunde/";
+            } else if(type === "projektpartner"){
+                customPath = "/projektpartner/";
+            } else {
+                return Response.error(500);
+            }
 
             const BACKEND_BASE_URL = process.env.VUE_APP_BACKEND_URL;
-            const requestURI = BACKEND_BASE_URL + "/match/" + dataId;
+            const requestURI = BACKEND_BASE_URL + customPath + dataId;
             const token = localStorage.getItem("token");
             const requestBody = {
                 token: token

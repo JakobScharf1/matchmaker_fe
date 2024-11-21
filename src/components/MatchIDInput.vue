@@ -107,7 +107,7 @@
 import router from "@/router";
 import BackendService from "@/services/BackendService";
 import {logout} from "@/firebase-config";
-import {absenderMail, sendHelpMail} from "@/services/MethodService";
+import {sendHelpMail} from "@/services/MethodService";
 
 
 export default {
@@ -173,8 +173,8 @@ export default {
               localStorage.setItem('wematchAnsprechpartnerName', this.matches.at(33));
               this.wematchAnsprechpartnerName = this.matches.at(33);
               localStorage.setItem('projektpartnerMail', this.matches.at(22));
-              this.projektpartnerMail = this.matches.at(22);
-              localStorage.setItem('wematchAnsprechpartnerMail', absenderMail().toString());
+              this.projektpartnerMail = this.matches.at(22)
+              localStorage.setItem('wematchAnsprechpartnerMail', this.matches.at(23))
               this.wematchAnsprechpartnerMail = localStorage.getItem('wematchAnsprechpartnerMail');
               localStorage.setItem('startdatum', this.dateFormatter(this.matches.at(11)));
               this.startdatum = this.dateFormatter(this.matches.at(11));
@@ -192,7 +192,7 @@ export default {
               this.kuendigungsfrist = this.matches.at(19);
               localStorage.setItem('zahlungszielPP', this.matches.at(3));
               this.zahlungszielPP = this.matches.at(3);
-              localStorage.setItem('zahlungszielKunde', this.matches.at(4));
+              localStorage.setItem('zahlungszielKunde', this.matches.at(4) + " Tage");
               this.zahlungszielKunde = this.matches.at(4);
               localStorage.setItem('verguetungssatz', this.matches.at(5));
               this.verguetungssatz = this.matches.at(5);
@@ -223,10 +223,14 @@ export default {
               this.jobOwner = this.matches.at(33);
               localStorage.setItem('preFix', this.matches.at(34));
               this.preFix= this.matches.at(34);
-              localStorage.setItem('vkOnSite', this.matches.at(35));
+              localStorage.setItem('vkOnSite', this.preisFormatter(this.matches.at(35)));
               this.vkOnSite = this.matches.at(35);
               localStorage.setItem('hoursperDay', this.matches.at(31));
               this.hoursperDay = this.matches.at(31);
+              localStorage.setItem('prefixKunde', this.matches.at(36));
+              localStorage.setItem('umbrellaMail', this.matches.at(37));
+              localStorage.setItem('einstellungsArt', this.matches.at(38));
+
 
 
 
@@ -246,15 +250,19 @@ export default {
     },
 
     /**
-     * Wenn der Nutzer bei legalMail hinterlegt wurde, wird er zu chooseTemplateType weitergeleitet, weil der Nutzer,
-     * berechtigt ist, auch Kundenverträge erstellen zu können. Wenn nicht, wird er normal zu chooseTemplate weitergeleitet und kann PP-Verträge erstellen.
+     * Folgende Permissons haben folgende Zugriffe:
+     * Permission 1:  Nutzer haben ausschließlich Zugriff auf die Erstellung von Projektpatner-Verträgen, die über DocuSing versendet werden.
+     * Permission 2: Nutzer haben Zugriff auf die Erstellung von Kundenverträgen. Dabei sind folgende Vertragsarten inkludiert: Docx-Verträge, DocuSing-Verträge, Angebote und Kündingungen ( für Projektparnter als auch Kunden)
+     * Permission 3: Nutzer haben Zugriff auf die Erstellung von Projektpartnerverträgen sowie Angeboten.
      */
     goToChooseTemplate() {
       if (localStorage.getItem('permission') === "2") {
         router.push('chooseTemplateFormats');
+      } else if (localStorage.getItem('permission') === "3"){
+        router.push('chooseTypeOffer');
       } else {
         localStorage.setItem("vertragsart","Projektpartner")
-        router.push('chooseTemplateDocuSign');
+        router.push('ChooseTemplateDocuSign');
       }
     },
 
