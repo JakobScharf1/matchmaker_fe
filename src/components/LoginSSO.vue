@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="btn btn-primary" @click="login()">Login mt Google</button>
+    <button class="btn btn-primary" @click="login()">Login mit Google</button>
   </div>
 </template>
 

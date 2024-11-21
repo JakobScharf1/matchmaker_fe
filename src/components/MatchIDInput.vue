@@ -1,4 +1,6 @@
 <template>
+  <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
+
   <h2 for="MatchID">Bitte gib die ID des Matches ein</h2>
   <p class="secondtitle">Wenn du Fehler in den Werten unterhalb findest, ändere diese bitte in Bullhorn und gib dann die Match-ID erneut ein.<br />Sonst kannst du auch alle Felder gleich im Vertrag in DocuSign ändern.</p>
     <div class="input-group mb-3">
@@ -108,12 +110,17 @@ import router from "@/router";
 import BackendService from "@/services/BackendService";
 import {logout} from "@/firebase-config";
 import {sendHelpMail} from "@/services/MethodService";
+import BreadCrumbs from "@/elements/BreadCrumbs.vue";
 
 
 export default {
   name: 'MatchIDInput',
+  components: {BreadCrumbs},
   data() {
     return {
+      breadcrumbs: [
+        { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
+      ],
       matchIdFromInput: "",
       matches: [],
       confirmed: false,

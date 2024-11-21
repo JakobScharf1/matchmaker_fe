@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
-  </div>
+  <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
   <h2>Bitte wähle aus, was Du erstellen möchtest:</h2>
   <button class="btn btn-primary chooseButtons" @click="toPP()">Projektpartnervertrag</button><br />
   <button class="btn btn-primary chooseButtons" @click="toOffer()">Angebot</button>
@@ -16,9 +14,11 @@
 import router from "@/router";
 import { logout } from "@/firebase-config";
 import {sendHelpMail} from "@/services/MethodService";
+import BreadCrumbs from "@/elements/BreadCrumbs.vue";
 
 export default {
   name: 'chooseTypeOffer',
+  components: {BreadCrumbs},
   methods: {
     logout,
     toPP() {
@@ -26,9 +26,6 @@ export default {
     },
     toOffer() {
       router.push('createOffer');
-    },
-    pageBack(){
-      router.go(-1);
     },
   },
   mounted() {

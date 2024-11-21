@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
-  </div>
-
+  <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
   <h2>Wähle den Vertrag aus, den du erstellen willst:</h2>
 
   <h2>Deutsch</h2>
@@ -99,7 +96,6 @@
 </template>
 
 <script>
-import router from "@/router";
 import {
   kuendigungsfristTranslator,
   verguetungssatzSwitchKunde,
@@ -111,11 +107,18 @@ import {
   cevkEng2,
 } from "@/services/MethodService";
 import { logout } from "@/firebase-config";
+import BreadCrumbs from "@/elements/BreadCrumbs.vue";
 
 export default {
   name: "chooseTemplateLegalDocuSign",
+  components: {BreadCrumbs},
   data() {
     return {
+      breadcrumbs: [
+        { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
+        { name: 'Format', path: this.$router.resolve({ name: 'Format'}).href },
+        { name: 'DocuSign-Vorlagen', path: this.$router.resolve({ name: 'DocuSign-Vorlagen Legal'}).href },
+      ],
       confirmed: false,
       verguetungssatzList: [],
       empfaengerName: localStorage.getItem('projektpartnerName'),
@@ -132,9 +135,6 @@ export default {
   },
   methods: {
     logout,
-    pageBack() {
-      router.go(-1);
-    },
     confSecond(cond) {
       if (cond) {
         this.confirmed = true;

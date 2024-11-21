@@ -1,7 +1,6 @@
 <template>
   <div class="background-image" :class="{ 'hidden': isMobile }"></div>
-  <img alt="MatchMaker logo" src="assets/logo1.png">
-
+  <img alt="MatchMaker logo" src="@/assets/logo.png">
   <!-- Integration einer Fehlermeldung, wenn man Mobile Devices nutzt.
      Außerdem der Login-Button, der die login-Methode aus der firebase-config.js aufruft -->
   <div class="mobileDeviceError" v-if="isMobile"><p>Diese Website ist für die Verwendung auf Mobilgeräten nicht optimiert. Bitte verwende einen PC oder ein Tablet.</p></div>

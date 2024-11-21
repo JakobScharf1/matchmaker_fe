@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
-  </div>
+  <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
 <h2>Bitte wähle aus, was für eine Vertragsart du erstellen willst:</h2>
   <button class="btn btn-primary chooseButtons" @click="toLegal()">Kundenvertrag</button><br />
   <button class="btn btn-primary chooseButtons" @click="toNormal()">Projektpartnervertrag</button>
@@ -16,9 +14,19 @@
 import router from "@/router";
 import { logout } from "@/firebase-config";
 import {sendHelpMail} from "@/services/MethodService";
+import BreadCrumbs from "@/elements/BreadCrumbs.vue";
 
 export default {
   name: 'chooseTemplateType',
+  components: {BreadCrumbs},
+  data() {
+    return {
+      breadcrumbs: [
+        { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
+        { name: 'Typ', path: this.$router.resolve({ name: 'Typ' }).href }
+      ]
+    }
+  },
   methods: {
     logout,
     toLegal() {
@@ -28,9 +36,6 @@ export default {
     toNormal() {
       localStorage.setItem("vertragsart","Projektpartnervertrag")
       router.push('chooseTemplateDocuSign');
-    },
-    pageBack(){
-      router.go(-1);
     },
   },
   mounted() {

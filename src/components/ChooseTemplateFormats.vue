@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
-  </div>
+  <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
+
   <h2>Bitte wähle die Vertragskategorie:</h2>
   <button class="btn btn-primary chooseButtons" @click="toDocx()">Docx-Verträge</button><br/>
   <button class="btn btn-primary chooseButtons" @click="toDocusign()">DocuSign-Verträge</button><br/>
@@ -20,9 +19,19 @@
 import router from "@/router";
 import { logout } from "@/firebase-config";
 import {sendHelpMail} from "@/services/MethodService";
+import BreadCrumbs from "@/elements/BreadCrumbs.vue";
 
 export default {
   name: 'chooseTemplateFormats',
+  components: {BreadCrumbs},
+  data() {
+    return {
+      breadcrumbs: [
+        { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
+        { name: 'Format', path: this.$router.resolve({ name: 'Format' }).href }
+      ]
+    }
+  },
   methods: {
     logout,
     toDocx() {
@@ -39,9 +48,6 @@ export default {
     },
     toAdditionalAgreement(){
       router.push('createAdditionalAgreements')
-    },
-    pageBack(){
-      router.go(-1);
     },
   },
   mounted() {

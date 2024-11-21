@@ -1,7 +1,5 @@
  <template>
-  <div>
-    <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
-  </div>
+   <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
   <h2>Wähle die Art der Kündigung aus, die du erstellen möchtest:</h2>
   <h3>WeMatch</h3>
   <input type="radio" id="docx-k-k-fg" value="docx-k-k-fg" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-k-k-fg')">
@@ -41,7 +39,6 @@
 </template>
 
 <script>
-import router from "@/router";
 import {
   kuendigungsfristTranslator,
   verguetungssatzSwitchKunde,
@@ -49,20 +46,24 @@ import {
   sendHelpMail
 } from "@/services/MethodService";
 import {logout} from "@/firebase-config";
+import BreadCrumbs from "@/elements/BreadCrumbs.vue";
 
 export default {
   name: 'chooseTemplateTermination',
+  components: {BreadCrumbs},
   data() {
     return {
+      breadcrumbs: [
+        { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
+        { name: 'Format', path: this.$router.resolve({ name: 'Format' }).href },
+        { name: 'Kündigungen', path: this.$router.resolve({ name: 'Kündigungen' }).href }
+      ],
       confirmed: false,
       selectedContract: null
     }
   },
   methods: {
     logout,
-    pageBack() {
-      router.go(-1);
-    },
     chooseTemplate() {
       verguetungssatzSwitchKunde();
       kuendigungsfristTranslator();

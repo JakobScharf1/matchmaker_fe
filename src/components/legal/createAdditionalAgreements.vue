@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
-  </div>
+  <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
   <h2>Wähle die passende Vereinbarung und Firmierung aus, die du erstellen möchtest:</h2>
   <h3>WeMatch</h3>
   <input type="radio" id="docx-z-pp" value="docx-z-pp" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-z-pp')">
@@ -24,25 +22,28 @@
   </div>
 </template>
 <script>
-import router from "@/router";
 import {
   docxTermination,
   sendHelpMail
 } from "@/services/MethodService";
 import {logout} from "@/firebase-config";
+import BreadCrumbs from "@/elements/BreadCrumbs.vue";
 export default {
   name: 'createAdditionalAgreements',
+  components: {BreadCrumbs},
   data() {
     return {
+      breadcrumbs: [
+        { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
+        { name: 'Format', path: this.$router.resolve({ name: 'Format' }).href },
+        { name: 'Zusatzvereinbarungen', path: this.$router.resolve({ name: 'Zusatzvereinbarungen' }).href }
+      ],
       confirmed: false,
       selectedContract: null
     }
   },
   methods: {
     logout,
-    pageBack() {
-      router.go(-1);
-    },
     chooseTemplate() {
       if (this.selectedContract) {
         localStorage.setItem("docId", this.selectedContract);

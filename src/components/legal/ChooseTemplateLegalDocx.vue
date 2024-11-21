@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
-  </div>
+  <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
   <h2>Wähle den Vertrag aus, den du erstellen willst:</h2>
   <h2>Deutsch</h2>
   <h3>WeMatch</h3>
@@ -52,7 +50,6 @@
 </template>
 
 <script>
-import router from "@/router";
 import {
   kuendigungsfristTranslator,
   verguetungssatzSwitchKunde,
@@ -60,20 +57,24 @@ import {
   sendHelpMail
 } from "@/services/MethodService";
 import {logout} from "@/firebase-config";
+import BreadCrumbs from "@/elements/BreadCrumbs.vue";
 
 export default {
   name: 'chooseTemplateLegalDocx',
+  components: {BreadCrumbs},
   data() {
     return {
+      breadcrumbs: [
+        { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
+        { name: 'Format', path: this.$router.resolve({ name: 'Format'}).href },
+        { name: 'DOCX-Vorlagen', path: this.$router.resolve({ name: 'DOCX-Vorlagen Legal'}).href },
+      ],
       confirmed: false,
       selectedContract: null
     }
   },
   methods: {
     logout,
-    pageBack() {
-      router.go(-1);
-    },
     chooseTemplate() {
       verguetungssatzSwitchKunde();
       kuendigungsfristTranslator();

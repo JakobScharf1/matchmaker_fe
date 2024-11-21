@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
-  </div>
-
+  <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
   <h2>2. Wähle den Vertrag aus, den du erstellen willst:</h2>
 
   <h2>Deutsch</h2>
@@ -78,7 +75,6 @@
 </template>
 
 <script>
-import router from "@/router";
 import {
   cevpp,
   cevppEng,
@@ -93,11 +89,17 @@ import {
   umbrellaMail
 } from "@/services/MethodService";
 import {logout} from "@/firebase-config";
+import BreadCrumbs from "@/elements/BreadCrumbs.vue";
 
 export default {
   name: "chooseTemplateDocuSign",
+  components: {BreadCrumbs},
   data() {
     return {
+      breadcrumbs: [
+        { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
+        { name: 'DocuSign-Vorlagen', path: this.$router.resolve({ name: 'DocuSign-Vorlagen' }).href }
+      ],
       confirmed: false,
       verguetungssatzList: [],
       empfaengerMail: umbrellaMail(),
@@ -111,9 +113,6 @@ export default {
   },
   methods: {
     logout,
-    pageBack() {
-      router.go(-1);
-    },
     chooseTemplate() {
       this.checkAufgabenbeschreibung();
       if (this.aufgabenbeschreibungError) {

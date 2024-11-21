@@ -21,47 +21,53 @@ const routes = [
         component: LoginSSO
     },
     {
+        name: 'ID-Input',
         path: '/start',
         component: MatchIDInput,
     },
     {
-        path: "/chooseTemplateFormats",
-        component: chooseTemplateFormats
+        name: 'Format',
+        path: "/chooseFormat",
+        component: chooseTemplateFormats,
     },
     {
+        name: 'Typ',
         path: "/chooseTemplateType",
-        component: chooseTemplateType
+        component: chooseTemplateType,
     },
     {
+        name: 'DocuSign-Vorlagen',
         path: "/chooseTemplateDocuSign",
-        component: chooseTemplateDocuSign
+        component: chooseTemplateDocuSign,
     },
     {
-        path: "/consultants/chooseTemplateDocx",
-        component: chooseTemplateDocx
-    },
-    {
-        path: "/chooseTemplateLegalDocuSign",
-        component: chooseTemplateLegalDocuSign
-    },
-    {
-        path: "/chooseTemplateLegalDocx",
-        component: chooseTemplateLegalDocx
-    },
-    {
+        name: 'DOCX-Vorlagen',
         path: "/chooseTemplateDocx",
-        component: chooseTemplateDocx
+        component: chooseTemplateDocx,
     },
     {
+        name: 'DocuSign-Vorlagen Legal',
+        path: "/chooseTemplateLegalDocuSign",
+        component: chooseTemplateLegalDocuSign,
+    },
+    {
+        name: 'DOCX-Vorlagen Legal',
+        path: "/chooseTemplateLegalDocx",
+        component: chooseTemplateLegalDocx,
+    },
+    {
+        name: 'Kündigungen',
         path: "/chooseTermination",
-        component: chooseTermination
+        component: chooseTermination,
     },
     {
+        name: 'Angebotserstellung',
         path: "/createOffer",
-        component: createOffer
+        component: createOffer,
     },
     {
-        path: '/createAdditionalAgreements',
+        name: 'Zusatzvereinbarungen',
+        path: '/createAgreement',
         component: createAdditionalAgreements
     }
 

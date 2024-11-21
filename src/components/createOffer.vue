@@ -1,6 +1,6 @@
 <template>
+  <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
   <div class="container">
-    <button @click="pageBack()" class="btn btn-outline-primary center-button">Zurück</button>
     <h2>Erstelle ein Angebot:</h2>
 
     <div class="form-group" style="margin-bottom:0">
@@ -47,7 +47,6 @@
 </template>
 
 <script>
-import router from "@/router";
 import {
   stundensatzAgent,
   tagessatzAgent,
@@ -57,11 +56,18 @@ import {
   sendHelpMail
 } from "@/services/MethodService";
 import { logout } from "@/firebase-config";
+import BreadCrumbs from "@/elements/BreadCrumbs.vue";
 
 export default {
   name: 'createOffer',
+  components: {BreadCrumbs},
   data() {
     return {
+      breadcrumbs: [
+        { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
+        { name: 'Format', path: this.$router.resolve({ name: 'Format'}).href },
+        { name: 'Angebotserstellung', path: this.$router.resolve({ name: 'Angebotserstellung'}).href },
+      ],
       confirmed: false,
       projectHours: 0,
       selectedContract: null,
@@ -71,9 +77,6 @@ export default {
   },
   methods: {
     logout,
-    pageBack() {
-      router.go(-1);
-    },
     chooseTemplate() {
 
       if (this.projectHours < 0 || this.projectDays < 0) {
