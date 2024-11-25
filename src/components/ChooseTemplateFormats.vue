@@ -59,16 +59,6 @@ export default {
 </script>
 
 <style>
-#helpButton {
-  margin-right: 10px;
-}
-
-#buttonContainer {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-}
-
 .chooseButtons {
   margin-top: 10px;
   width: 250px;

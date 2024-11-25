@@ -98,10 +98,6 @@
     </table>
   </div>
   <button class="btn btn-outline-primary weiter-button-gen" v-bind:class="{'weiter-button': !confirmed, 'btn-primary': confirmed}" @click="goToChooseTemplate"><b>Weiter</b></button><br />
-  <div id="buttonContainer">
-    <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
-    <button id="logoutButton" class="btn btn-primary" @click="logout()"><b>Logout</b></button>
-  </div>
 </template>
 
 <script>
@@ -311,11 +307,6 @@ export default {
   right: 10px;
 }
 
-.error {
-  color: red;
-  margin-top: 15px;
-}
-
 .secondtitle {
   font-size: 0.8rem;
 }
@@ -348,10 +339,6 @@ td {
 
 .input-group input {
   border-radius: 0;
-}
-
-.btn-primary:active {
-  box-shadow: #fff;
 }
 
 .valueTable {

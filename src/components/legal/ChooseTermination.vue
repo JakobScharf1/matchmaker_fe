@@ -36,11 +36,6 @@
 
    <span class="error" v-if="inputMissing">Bitte fülle alle Felder aus.</span><br v-if="inputMissing"/>
    <button class="btn btn-primary bestatigen-button" @click="chooseTemplate()">Bestätigen</button>
-
-  <div id="buttonContainer">
-    <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
-    <button id="logoutButton" class="btn btn-primary" @click="logout"><b>Logout</b></button>
-  </div>
 </template>
 
 <script>
@@ -139,29 +134,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-
-#helpButton {
-  margin-right: 10px;
-}
-
-#buttonContainer {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-}
-
-.bestatigen-button {
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-}
-h3 {
-  font-size: 1.5rem;
-  margin-top: 2rem;
-}
-
-.error {
-  color: red;
-}
-</style>

@@ -9,13 +9,17 @@
   <div class="bottom-right">
     <p>MatchMaker v2 made with &#10084;&#65039; by WeMatch Team Operations</p>
   </div>
+
+  <logout-help-buttons v-if="!isLoginPage"/>
 </template>
 
 <script>
 import router from "@/router";
+import LogoutHelpButtons from "@/elements/LogoutHelpButtons.vue";
 
 export default {
   name: 'App',
+  components: {LogoutHelpButtons},
   data(){
     return {
       userType: "",
@@ -41,11 +45,18 @@ export default {
   beforeUnmount() {
     window.removeEventListener("resize", this.checkIfMobile);
   },
+  computed: {
+    isLoginPage() {
+      const loginPage = ['/login'];
+      return loginPage.includes(this.$route.path);
+    }
+  }
 }
 </script>
 
 <style>
 @import url('./assets/font/font.css');
+@import url('./assets/main.css');
 
 .hidden {
   display: none;
@@ -80,12 +91,6 @@ export default {
   z-index: -1;
 }
 
-body {
-  background-color: #001f25;
-  text-align: center;
-  font-family: Jost, sans-serif;
-}
-
 #app {
   -webkit-font-smoothing: antialiased;
 
@@ -111,92 +116,6 @@ img {
 
 #helpButton {
   margin-right: 10px;
-}
-
-.btn-outline-primary {
-  height: fit-content;
-  padding: 7px 35px;
-  border-radius: 0;
-  border: 1px solid #fff;
-  font-family: Jost, sans-serif;
-  font-size: large;
-  color: white;
-  background-color: transparent;
-}
-
-.btn-outline-primary:hover {
-  background-color: white;
-  box-shadow: 0px 0px 10px white;
-  cursor: pointer;
-  color: black
-}
-
-.btn-primary {
-  padding: 7px 35px;
-  border-radius: 0;
-  border: 0;
-  font-family: Jost, sans-serif;
-  font-size: large;
-  font-weight: bold;
-  background-color: #fff;
-  height: fit-content;
-  color: #000;
-}
-
-.btn-primary:hover {
-  box-shadow: 0px 0px 10px #fff;
-  cursor: pointer;
-  background-color: white;
-  color: #000;
-}
-
-.btn-primary:active, .btn-primary:focus {
-  color: #fff;
-  background-color: transparent;
-  border: 1px solid #fff;
-  box-shadow: 0px 0px 10px #fff;
-  transform: scale(0.98);
-}
-
-h2 {
-  margin-top: 2rem;
-}
-
-.input-group {
-  margin-bottom: 1rem;
-  width: 100%;
-}
-
-.input-group label {
-  display: block;
-  margin: 0.5rem 0 0.2rem 0;
-}
-
-.input-group input,
-.input-group select {
-  width: 100%;
-  padding: 0.5rem;
-  box-sizing: border-box;
-}
-
-.form-group {
-  width: 100%;
-  max-width: 400px;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.bestatigen-button {
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-}
-
-.bestatigen-button:hover {
-  cursor: pointer;
 }
 
 </style>
