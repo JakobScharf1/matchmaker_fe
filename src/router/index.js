@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
 import MatchIDInput from "@/components/MatchIDInput.vue";
 import LoginSSO from "@/components/LoginSSO.vue";
-import chooseTemplateType from "@/components/ChooseTemplateType.vue";
 import chooseTemplateFormats from "@/components/ChooseTemplateFormats.vue";
 import chooseTemplateDocuSign from "@/components/consultants/ChooseTemplateDocuSign.vue";
 import chooseTemplateDocx from "@/components/consultants/ChooseTemplateDocx.vue";
 import chooseTemplateLegalDocuSign from "@/components/legal/ChooseTemplateLegalDocuSign.vue";
 import chooseTemplateLegalDocx from "@/components/legal/ChooseTemplateLegalDocx.vue";
 import chooseTermination from "@/components/legal/ChooseTermination.vue";
-import createOffer from "@/components/createOffer.vue";
+import createOffer from "@/components/leaders/createOffer.vue";
 import createAdditionalAgreements from "@/components/legal/createAdditionalAgreements.vue";
+import chooseType from "@/components/leaders/chooseType.vue";
 
 const routes = [
     {
@@ -26,14 +26,14 @@ const routes = [
         component: MatchIDInput,
     },
     {
+        name: 'Typ-Auswahl',
+        path: '/chooseType',
+        component: chooseType
+    },
+    {
         name: 'Format',
         path: "/chooseFormat",
         component: chooseTemplateFormats,
-    },
-    {
-        name: 'Typ',
-        path: "/chooseTemplateType",
-        component: chooseTemplateType,
     },
     {
         name: 'DocuSign-Verträge',

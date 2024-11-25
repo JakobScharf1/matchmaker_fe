@@ -138,8 +138,7 @@ export default {
         const key = `${this.lang}-${this.company}-${this.contracttype}-${this.zweiterEmpfaenger.toString()}`;
         switch (key) {
           case "de-wm-rv-false":
-            console.log("Erfolg")
-            //crvk("c-rv-k");
+            crvk("c-rv-k");
             break;
           case "de-we-rv-false":
             crvk("c-rv-k-e");
@@ -275,18 +274,9 @@ export default {
   right: 10px;
 }
 
-.bestatigen-button {
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-}
-
 h3 {
   font-size: 1.5rem;
   margin-top: 2rem;
-}
-
-label {
-
 }
 
 </style>

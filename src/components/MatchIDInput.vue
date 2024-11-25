@@ -167,10 +167,6 @@ export default {
       setTimeout(() => {
         BackendService.getBullhornData(this.matchIdFromInput).then((response) => {
           try {
-           /* if (response.status !== 200 || response.data === null || response.data === "null" || response === "null") {
-              alert("Die Match-ID ist nicht korrekt. Bitte gib die ID erneut ein.");
-              this.isLoading = false;
-            } else {*/
               this.matches = response.data;
               this.confirmClick();
 
@@ -238,12 +234,7 @@ export default {
               localStorage.setItem('umbrellaMail', this.matches.at(37));
               localStorage.setItem('einstellungsArt', this.matches.at(38));
 
-
-
-
-
               this.isLoading = false;
-            //}
           } catch(error) {
             alert("Die Match-ID ist nicht korrekt. Bitte gib die ID erneut ein.");
             this.isLoading = false;
@@ -266,10 +257,10 @@ export default {
       if (localStorage.getItem('permission') === "2") {
         router.push('chooseTemplateFormats');
       } else if (localStorage.getItem('permission') === "3"){
-        router.push('chooseTypeOffer');
+        router.push('/chooseType');
       } else {
         localStorage.setItem("vertragsart","Projektpartner")
-        router.push('ChooseTemplateDocuSign');
+        router.push('/chooseTemplateDocuSign');
       }
     },
 

@@ -169,7 +169,7 @@ h2 {
 
 .input-group label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0 0.2rem 0;
 }
 
 .input-group input,
@@ -188,6 +188,15 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.bestatigen-button {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.bestatigen-button:hover {
+  cursor: pointer;
 }
 
 </style>

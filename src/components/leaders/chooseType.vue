@@ -1,8 +1,8 @@
 <template>
   <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
-<h2>Bitte wähle aus, was für eine Vertragsart du erstellen willst:</h2>
-  <button class="btn btn-primary chooseButtons" @click="toLegal()">Kundenvertrag</button><br />
-  <button class="btn btn-primary chooseButtons" @click="toNormal()">Projektpartnervertrag</button>
+  <h2>Bitte wähle aus, was Du erstellen möchtest:</h2>
+  <button class="btn btn-primary chooseButtons" @click="toPP()">Projektpartnervertrag</button><br />
+  <button class="btn btn-primary chooseButtons" @click="toOffer()">Angebot</button>
 
   <div id="buttonContainer">
     <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
@@ -17,7 +17,7 @@ import {sendHelpMail} from "@/services/MethodService";
 import BreadCrumbs from "@/elements/BreadCrumbs.vue";
 
 export default {
-  name: 'chooseTemplateType',
+  name: 'chooseType',
   components: {BreadCrumbs},
   data() {
     return {
@@ -29,13 +29,11 @@ export default {
   },
   methods: {
     logout,
-    toLegal() {
-      localStorage.setItem("vertragsart","Kundenvertrag")
-      router.push('chooseTemplateFormats');
-    },
-    toNormal() {
-      localStorage.setItem("vertragsart","Projektpartnervertrag")
+    toPP() {
       router.push('chooseTemplateDocuSign');
+    },
+    toOffer() {
+      router.push('createOffer');
     },
   },
   mounted() {
