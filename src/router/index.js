@@ -26,51 +26,68 @@ const routes = [
         component: MatchIDInput,
     },
     {
-        name: 'Typ-Auswahl',
-        path: '/chooseType',
-        component: chooseType
-    },
-    {
         name: 'Format',
-        path: "/chooseFormat",
+        path: "/format",
         component: chooseTemplateFormats,
     },
     {
-        name: 'DocuSign-Verträge',
-        path: "/chooseTemplateDocuSign",
-        component: chooseTemplateDocuSign,
+        name: 'Legal',
+        path: '/legal',
+        children: [
+            {
+                name: 'DocuSign-Verträge Legal',
+                path: "docusign",
+                component: chooseTemplateLegalDocuSign,
+            },
+            {
+                name: 'DOCX-Verträge Legal',
+                path: "docx",
+                component: chooseTemplateLegalDocx,
+            },
+            {
+                name: 'Kündigungen',
+                path: "termination",
+                component: chooseTermination,
+            },
+            {
+                name: 'Zusatzvereinbarungen',
+                path: 'agreement',
+                component: createAdditionalAgreements
+            }
+        ]
     },
     {
-        name: 'DOCX-Verträge',
-        path: "/chooseTemplateDocx",
-        component: chooseTemplateDocx,
+        name: 'Consultants',
+        path: '/consultants',
+        children: [
+            {
+                name: 'DocuSign-Verträge',
+                path: "docusign",
+                component: chooseTemplateDocuSign,
+            },
+            {
+                name: 'DOCX-Verträge',
+                path: "docx",
+                component: chooseTemplateDocx,
+            },
+        ]
     },
     {
-        name: 'DocuSign-Verträge Legal',
-        path: "/chooseTemplateLegalDocuSign",
-        component: chooseTemplateLegalDocuSign,
+      name: 'Leaders',
+      path: '/leaders',
+      children: [
+          {
+              name: 'Angebotserstellung',
+              path: "offer",
+              component: createOffer,
+          },
+          {
+              name: 'Typ',
+              path: 'type',
+              component: chooseType
+          },
+      ]
     },
-    {
-        name: 'DOCX-Verträge Legal',
-        path: "/chooseTemplateLegalDocx",
-        component: chooseTemplateLegalDocx,
-    },
-    {
-        name: 'Kündigungen',
-        path: "/chooseTermination",
-        component: chooseTermination,
-    },
-    {
-        name: 'Angebotserstellung',
-        path: "/createOffer",
-        component: createOffer,
-    },
-    {
-        name: 'Zusatzvereinbarungen',
-        path: '/createAgreement',
-        component: createAdditionalAgreements
-    }
-
 ]
 
 const router = createRouter({

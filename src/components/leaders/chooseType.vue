@@ -1,6 +1,5 @@
 <template>
   <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
-  <h2>Bitte wähle aus, was Du erstellen möchtest:</h2>
   <button class="btn btn-primary chooseButtons" @click="toPP()">Projektpartnervertrag</button><br />
   <button class="btn btn-primary chooseButtons" @click="toOffer()">Angebot</button>
 
@@ -30,10 +29,10 @@ export default {
   methods: {
     logout,
     toPP() {
-      router.push('chooseTemplateDocuSign');
+      router.push('/consultants/docusign');
     },
     toOffer() {
-      router.push('createOffer');
+      router.push('/leaders/offer');
     },
   },
   mounted() {

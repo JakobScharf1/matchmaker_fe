@@ -732,7 +732,7 @@ function cevkEng2(docId){
 
 }
 
-function docxEvk(){
+function docxContract(){
     let ppNameLocal = getPPName();
     let data = [
         localStorage.getItem("matchID"),
@@ -856,7 +856,7 @@ export { projevppEng };
 export { cevk };
 export { valueMappingTest };
 export { cevkEng };
-export { docxEvk };
+export { docxContract };
 export { sendHelpMail };
 export { docxTermination };
 export { cevk2 };

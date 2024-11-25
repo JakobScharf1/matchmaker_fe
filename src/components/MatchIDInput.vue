@@ -1,7 +1,6 @@
 <template>
   <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
 
-  <h2 for="MatchID">Bitte gib die ID des Matches ein</h2>
   <p class="secondtitle">Wenn du Fehler in den Werten unterhalb findest, ändere diese bitte in Bullhorn und gib dann die Match-ID erneut ein.<br />Sonst kannst du auch alle Felder gleich im Vertrag in DocuSign ändern.</p>
     <div class="input-group mb-3">
       <div class="input-wrapper">
@@ -255,12 +254,12 @@ export default {
      */
     goToChooseTemplate() {
       if (localStorage.getItem('permission') === "2") {
-        router.push('chooseTemplateFormats');
+        router.push('/format');
       } else if (localStorage.getItem('permission') === "3"){
-        router.push('/chooseType');
+        router.push('/leaders/type');
       } else {
         localStorage.setItem("vertragsart","Projektpartner")
-        router.push('/chooseTemplateDocuSign');
+        router.push('/consultants/docusign');
       }
     },
 

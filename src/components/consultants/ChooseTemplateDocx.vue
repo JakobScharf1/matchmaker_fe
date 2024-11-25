@@ -1,47 +1,33 @@
 <template>
   <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
-  <h2>Wähle den Vertrag aus, den du erstellen willst:</h2>
-  <h2>Deutsch</h2>
-  <h3>WeMatch</h3>
-  <input type="radio" id="docx-rv-k" value="docx-rv-k" name="wematch-deu" v-model="selectedContract" @click="toggleSelection('docx-rv-k')">
-  <label for="docx-rv-k">Rahmenvereinbarung Kunde</label><br/>
-  <input type="radio" id="docx-ev-k" value="docx-ev-k" name="wematch-deu" v-model="selectedContract" @click="toggleSelection('docx-ev-k')">
-  <label for="docx-ev-k">Projekteinzelauftrag Kunde</label><br/>
 
-  <h3>Engineering</h3>
-  <input type="radio" id="docx-rv-k-e" value="docx-rv-k-e" name="engineering-deu" v-model="selectedContract" @click="toggleSelection('docx-rv-k-e')"  >
-  <label for="docx-rv-k-e">Rahmenvereinbarung Kunde</label><br/>
-  <input type="radio" id="docx-ev-k-e" value="docx-ev-k-e" name="engineering-deu" v-model="selectedContract" @click="toggleSelection('docx-ev-k-e')">
-  <label for="docx-ev-k-e">Projekteinzelauftrag Kunde</label><br/>
+  <div class="container">
+    <div class="form-group">
+      <div class="input-group">
+        <label for="lang-select">Sprache</label>
+        <select id="lang-select" v-model="lang">
+          <option value="de">Deutsch</option>
+          <option value="en">Englisch</option>
+        </select>
 
-  <h3>Projects</h3>
-  <input type="radio" id="docx-rv-k-p" value="docx-rv-k-p" name="projects-deu" v-model="selectedContract" @click="toggleSelection('docx-rv-k-p')">
-  <label for="docx-rv-k-p">Rahmenvereinbarung Kunde</label><br/>
-  <input type="radio" id="docx-ev-k-p" value="docx-ev-k-p" name="projects-deu" v-model="selectedContract" @click="toggleSelection('docx-ev-k-p')">
-  <label for="docx-ev-k-p">Projekteinzelauftrag Kunde</label><br/>
+        <label for="company-select">Firmierung</label>
+        <select id="company-select" v-model="company">
+          <option value="wm">WeMatch Consulting GmbH</option>
+          <option value="we">WeMatch Engineering GmbH</option>
+          <option value="proj">WeMatch Projects GmbH</option>
+        </select>
 
-  <h2>Englisch</h2>
-  <h3>WeMatch</h3>
-  <input type="radio" id="docx-rv-k-eng" value="docx-rv-k-eng" name="wematch-eng" v-model="selectedContract" @click="toggleSelection('docx-rv-k-eng')">
-  <label for="docx-rv-k-eng">Rahmenvereinbarung Kunde</label><br/>
-  <input type="radio" id="docx-ev-k-eng" value="docx-ev-k-eng" name="wematch-eng" v-model="selectedContract" @click="toggleSelection('docx-ev-p-eng')">
-  <label for="docx-ev-k-eng">Projekteinzelauftrag Kunde</label><br/>
+        <label for="contract-select">Vertragsart</label>
+        <select id="contract-select" v-model="contracttype">
+          <option value="rv">Rahmenvereinbarung</option>
+          <option value="ev">Projekteinzelauftrag</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <span class="error" v-if="inputMissing">Bitte fülle alle Felder aus.</span><br v-if="inputMissing"/>
 
-  <h3>Engineering</h3>
-  <input type="radio" id="docx-rv-k-e-eng" value="docx-rv-k-e-eng" name="engineering-eng" v-model="selectedContract" @click="toggleSelection('docx-rv-k-e-eng')">
-  <label for="docx-rv-k-e-eng">Rahmenvereinbarung Kunde</label><br/>
-  <input type="radio" id="docx-ev-k-e-eng" value="docx-ev-k-e-eng" name="engineering-eng" v-model="selectedContract" @click="toggleSelection('docx-ev-k-e-eng')">
-  <label for="docx-ev-k-e-eng">Projekteinzelauftrag Kunde</label><br/>
-
-  <h3>Projects</h3>
-  <input type="radio" id="docx-rv-k-p-eng" value="docx-rv-k-p-eng" name="projects-rv-eng" v-model="selectedContract" @click="toggleSelection('docx-rv-k-p-eng')">
-  <label for="docx-rv-k-p-eng">Rahmenvereinbarung Kunde</label><br/>
-  <input type="radio" id="docx-ev-k-p-eng" value="docx-ev-k-p-eng" name="projects-eng" v-model="selectedContract" @click="toggleSelection('docx-ev-k-p-eng')">
-  <label for="docx-ev-k-p-eng">Projekteinzelauftrag Kunde</label><br/>
-
-  <!-- Repeat the same structure for other sections -->
-
-  <button class="btn" v-bind:class="{'bestatigen-button btn-outline-primary': !confirmed, 'btn-primary': confirmed}" @click="chooseTemplate()">Bestätigen</button>
+  <button class="btn btn-primary bestatigen-button" @click="chooseTemplate()">Bestätigen</button>
 
   <div id="buttonContainer">
     <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
@@ -53,7 +39,7 @@
 import {
   kuendigungsfristTranslator,
   verguetungssatzSwitchKunde,
-  docxEvk,
+  docxContract,
   sendHelpMail
 } from "@/services/MethodService";
 import {logout} from "@/firebase-config";
@@ -69,30 +55,66 @@ export default {
         { name: 'Format', path: this.$router.resolve({ name: 'Format'}).href },
         { name: 'DOCX-Verträge', path: this.$router.resolve({ name: 'DOCX-Verträge'}).href },
       ],
-      confirmed: false,
-      selectedContract: null
+      lang: '',
+      company: '',
+      contracttype: '',
+      inputMissing: false,
     }
   },
   methods: {
     logout,
     chooseTemplate() {
-      verguetungssatzSwitchKunde();
-      kuendigungsfristTranslator();
+      if(this.lang && this.company && this.contracttype) {
+        this.inputMissing = false;
 
-      if (this.selectedContract) {
-        localStorage.setItem("docId", this.selectedContract);
-        docxEvk();
+        verguetungssatzSwitchKunde();
+        kuendigungsfristTranslator();
+
+        const key = `${this.lang}-${this.company}-${this.contracttype}`;
+        switch (key) {
+          case "de-wm-rv":
+            localStorage.setItem("docId", "docx-rv-k");
+            break;
+          case "de-wm-ev":
+            localStorage.setItem("docId", "docx-ev-k");
+            break;
+          case "de-we-rv":
+            localStorage.setItem("docId", "docx-rv-k-e");
+            break;
+          case "de-we-ev":
+            localStorage.setItem("docId", "docx-ev-k-e");
+            break;
+          case "de-proj-rv":
+            localStorage.setItem("docId", "docx-rv-k-p");
+            break;
+          case "de-proj-ev":
+            localStorage.setItem("docId", "docx-ev-k-p");
+            break;
+          case "en-wm-rv":
+            localStorage.setItem("docId", "docx-rv-k-eng");
+            break;
+          case "en-wm-ev":
+            localStorage.setItem("docId", "docx-ev-k-eng");
+            break;
+          case "en-we-rv":
+            localStorage.setItem("docId", "docx-rv-k-e-eng");
+            break;
+          case "en-we-ev":
+            localStorage.setItem("docId", "docx-ev-k-e-eng");
+            break;
+          case "en-proj-rv":
+            localStorage.setItem("docId", "docx-rv-k-p-eng");
+            break;
+          case "en-proj-ev":
+            localStorage.setItem("docId", "docx-ev-k-p-eng");
+            break;
+        }
+
+        docxContract();
       } else {
-        alert("Bitte wähle einen Vertrag aus.");
+        this.inputMissing = true;
       }
     },
-    toggleSelection(contractId) {
-      if (this.selectedContract === contractId) {
-        this.selectedContract = contractId;
-        this.confirmed = true;
-      }
-
-    }
   },
   mounted() {
     document.getElementById("helpButton").addEventListener("click", function() {
@@ -123,8 +145,7 @@ h3 {
   margin-top: 2rem;
 }
 
-[type="radio"] {
-  cursor: pointer;
-  margin-right: 10px;
+.error {
+  color: red;
 }
 </style>

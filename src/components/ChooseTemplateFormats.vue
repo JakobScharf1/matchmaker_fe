@@ -1,7 +1,6 @@
 <template>
   <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
 
-  <h2>Bitte wähle die Vertragskategorie:</h2>
   <button class="btn btn-primary chooseButtons" @click="toDocx()">Docx-Verträge</button><br/>
   <button class="btn btn-primary chooseButtons" @click="toDocusign()">DocuSign-Verträge</button><br/>
   <button class="btn btn-primary chooseButtons" @click="toAdditionalAgreement()">Zusatzvereinbarung</button><br/>
@@ -35,19 +34,19 @@ export default {
   methods: {
     logout,
     toDocx() {
-      router.push('chooseTemplateLegalDocx');
+      router.push('/legal/docx');
     },
     toDocusign() {
-      router.push('chooseTemplateLegalDocuSign');
+      router.push('/legal/docusign');
     },
     toTermination(){
-     router.push('chooseTermination');
+     router.push('/legal/termination');
     },
     toOffer(){
-      router.push('createOffer');
+      router.push('/leaders/offer');
     },
     toAdditionalAgreement(){
-      router.push('createAgreement')
+      router.push('/legal/agreement')
     },
   },
   mounted() {

@@ -8,26 +8,20 @@
             <option value="de">Deutsch</option>
             <option value="en">Englisch</option>
           </select>
-        </div>
 
-        <div class="input-group">
           <label for="company-select">Firmierung</label>
           <select id="company-select" v-model="company">
             <option value="wm">WeMatch Consulting GmbH</option>
             <option value="we">WeMatch Engineering GmbH</option>
             <option value="proj">WeMatch Projects GmbH</option>
           </select>
-        </div>
 
-        <div class="input-group">
           <label for="contract-select">Vertragsart</label>
           <select id="contract-select" v-model="contracttype">
             <option value="rv">Rahmenvereinbarung</option>
             <option value="ev">Projekteinzelauftrag</option>
           </select>
-        </div>
 
-        <div class="input-group">
           <label for="signing-select">Anzahl Unterschriftsblöcke</label>
           <select id="signing-select" v-model="zweiterEmpfaenger">
             <option :value="false">1</option>
@@ -37,42 +31,42 @@
 
         <h3>Vertrag Absender</h3>
         <div class="input-group">
-          <label for="absender_mail">E-Mail:</label>
+          <label for="absender_mail">E-Mail</label>
           <input v-model="absenderMail" type="email" id="absender_mail">
-          <label for="absender_name">Name:</label>
+          <label for="absender_name">Name</label>
           <input v-model="absenderName" type="text" id="absender_mail">
         </div>
 
         <h3>Vertrag Empfänger</h3>
         <div class="input-group">
-          <label for="empfaenger_mail">E-Mail:</label>
+          <label for="empfaenger_mail">E-Mail</label>
           <input v-model="empfaengerMail" type="email" id="empfaenger_mail">
-          <label for="empfaenger_name">Name:</label>
+          <label for="empfaenger_name">Name</label>
           <input v-model="empfaengerName" type="text" id="empfaenger_mail">
         </div>
 
         <div v-if="zweiterEmpfaenger">
           <div class="input-group">
             <h3>Vertrag Zweiter Empfänger</h3>
-            <label for="empfaenger_mail2">E-Mail:</label>
+            <label for="empfaenger_mail2">E-Mail</label>
             <input v-model="empfaengerMail2" type="email" id="empfaenger_mail2">
-            <label for="empfaenger_name2">Name:</label>
+            <label for="empfaenger_name2">Name</label>
             <input v-model="empfaengerName2" type="text" id="empfaenger_mail2">
           </div>
         </div>
 
         <h3>Consultant in CC</h3>
         <div class="input-group">
-          <label for="cc_mail">E-Mail:</label>
+          <label for="cc_mail">E-Mail</label>
           <input v-model="ccMail" type="email" id="cc_mail">
-          <label for="cc_name">Name:</label>
+          <label for="cc_name">Name</label>
           <input v-model="ccName" type="text" id="cc_name">
         </div>
       </div>
   </div>
   <p class="error" v-if="aufgabenbeschreibungError">Die Aufgabenbeschreibung überschreitet die Grenze von 4000 Zeichen.<br />Bitte kürze sie in Bullhorn und gib die Match-ID erneut ein!</p>
 
-  <span class="error" v-if="inputMissing">Bitte fülle alle Felder aus.</span><br/>
+  <span class="error" v-if="inputMissing">Bitte fülle alle Felder aus.</span><br v-if="inputMissing"/>
   <button class="btn btn-primary bestatigen-button" @click="chooseTemplate()">Bestätigen</button>
   <div id="buttonContainer">
     <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>

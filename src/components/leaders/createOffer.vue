@@ -1,43 +1,34 @@
 <template>
   <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
   <div class="container">
-    <h2>Erstelle ein Angebot:</h2>
-
-    <div class="form-group" style="margin-bottom:0">
+    <div class="form-group">
       <div class="input-group">
-        <label for="project-days">Projekttage:</label>
-        <input type="number" id="project-days" v-model="projectDays" placeholder="Anzahl der Projekttage">
-      </div>
+        <label for="project-days">Projekttage</label>
+        <input type="number" id="project-days" v-model="projectDays">
 
-      <div class="input-group">
-        <label for="project-hours">Projektstunden:</label>
-        <input type="number" id="project-hours" v-model="projectHours" placeholder="Anzahl der Projektstunden">
-      </div>
+        <label for="project-hours">Projektstunden</label>
+        <input type="number" id="project-hours" v-model="projectHours">
 
-      <div class="input-group">
-        <label for="person-selection">Person auswählen:</label>
+        <label for="person-selection">Person</label>
         <select id="person-selection" v-model="selectedPerson">
           <option value="Carolin Lins">Carolin Lins</option>
           <option value="Hassan Berrada">Hassan Berrada</option>
           <option value="Anett Peikert">Anett Peikert</option>
         </select>
-      </div><br/>
 
-      <h5 style="text-align:center">Wähle die Firmierung für das Angebot aus:</h5>
-
-      <div class="radio-group">
-        <div class="radio-item">
-          <input type="radio" id="docx-a" value="docx-a" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-a')">
-          <label for="docx-a">WeMatch </label>
-          <input type="radio" id="docx-a-e" value="docx-a-e" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-a-e')">
-          <label for="docx-a-e">Engineering </label>
-          <input type="radio" id="docx-a-p" value="docx-a-p" name="wematch" v-model="selectedContract" @click="toggleSelection('docx-a-p')">
-          <label for="docx-a-p">Engineering </label>
-        </div>
+        <label for="company-selection">Firmierung</label>
+        <select id="company-selection" v-model="company">
+          <option value="wm">WeMatch Consulting GmbH</option>
+          <option value="we">WeMatch Engineering GmbH</option>
+          <option value="proj">WeMatch Projects GmbH</option>
+        </select>
       </div>
-    </div>
 
-    <button class="btn center-button" v-bind:class="{'bestatigen-button btn-outline-primary': !confirmed, 'btn-primary': confirmed}" style="" @click="chooseTemplate()">Bestätigen</button>
+    </div>
+    <span class="error" v-if="inputMissing">Bitte fülle alle Felder aus.</span>
+    <span class="error" v-if="inputInvalid">Projekttage oder Projektstunden haben einen ungültigen Wert</span>
+
+    <button class="btn btn-primary bestatigen-button" @click="chooseTemplate()">Bestätigen</button>
 
     <div id="buttonContainer">
       <button id="helpButton" class="btn btn-outline-primary"><b>Problem melden</b></button>
@@ -65,7 +56,6 @@ export default {
     return {
       breadcrumbs: [
         { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
-        { name: 'Format', path: this.$router.resolve({ name: 'Format'}).href },
         { name: 'Angebotserstellung', path: this.$router.resolve({ name: 'Angebotserstellung'}).href },
       ],
       confirmed: false,
@@ -73,77 +63,70 @@ export default {
       selectedContract: null,
       selectedPerson: '',
       projectDays: 0,
+      company: '',
+      inputMissing: false,
+      inputInvalid: false
     }
   },
   methods: {
     logout,
     chooseTemplate() {
-
       if (this.projectHours < 0 || this.projectDays < 0) {
-        alert("Bitte geben Sie gültige Stundenangaben ein.");
-        return;
-      }
+        this.inputInvalid = true;
+      } else if (this.projectHours && this.projectDays && this.selectedPerson && this.company) {
+        this.inputInvalid = false;
+        this.inputMissing = false;
 
-      localStorage.setItem("projectHours", this.projectHours + " Stunden");
-      localStorage.setItem("selectedPerson", this.selectedPerson);
-      localStorage.setItem("projectDays", this.projectDays + " Tage");
+        localStorage.setItem("projectHours", this.projectHours + " Stunden");
+        localStorage.setItem("selectedPerson", this.selectedPerson);
+        localStorage.setItem("projectDays", this.projectDays + " Tage");
 
-      kuendigungsfristTranslator();
-      if (localStorage.getItem("verguetungssatz") === "Tagessatz") {
-        localStorage.setItem("stundensatzRemote", "-");
-        localStorage.setItem("stundensatzOnSite", "-");
-        tagessatzAgent();
-      } else {
-        calculateDailyPrice();
-        stundensatzAgent();
-      }
+        kuendigungsfristTranslator();
+        if (localStorage.getItem("verguetungssatz") === "Tagessatz") {
+          localStorage.setItem("stundensatzRemote", "-");
+          localStorage.setItem("stundensatzOnSite", "-");
+          tagessatzAgent();
+        } else {
+          calculateDailyPrice();
+          stundensatzAgent();
+        }
 
-      if (this.selectedContract) {
-        localStorage.setItem("docId", this.selectedContract);
+        switch (this.company) {
+          case "wm":
+            localStorage.setItem("docId", "docx-a");
+            break;
+          case "we":
+            localStorage.setItem("docId", "docx-a-e");
+            break;
+          case "proj":
+            localStorage.setItem("docId", "docx-a-p");
+            break;
+        }
         docxOffer();
+
+      } else {
+        this.inputMissing = true;
       }
     },
-    toggleSelection(contractId) {
-      if (this.selectedContract === contractId) {
-        this.selectedContract = contractId;
-      }
-      this.confirmed = true;
-    }
   },
   mounted() {
     document.getElementById("helpButton").addEventListener("click", function () {
       sendHelpMail();
     });
+
+    if(localStorage.getItem('permission') === '3'){
+      //Wenn der User ein Leader ist, wird das Breadcrumb Typ-Auswahl ergänzt
+      const path1 = { name: 'Typ', path: this.$router.resolve({ name: 'Typ' }).href }
+      this.breadcrumbs = [...this.breadcrumbs.slice(0,1),path1,...this.breadcrumbs.slice(1)]
+    } else if(localStorage.getItem('permission') === '2'){
+      const path2 = { name: 'Format', path: this.$router.resolve({ name: 'Format'}).href }
+      this.breadcrumbs = [...this.breadcrumbs.slice(0,1),path2,...this.breadcrumbs.slice(1)]
+    }
   },
 }
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.radio-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1rem;
-}
-
-.radio-item label {
-  cursor: pointer;
-  margin: 0 0.5rem 0 0.5rem;
-}
-
-.radio-item input[type="radio"] {
-  cursor: pointer;
-}
-
-
 #helpButton {
   margin-right: 10px;
 }
@@ -157,5 +140,9 @@ export default {
 .bestatigen-button {
   margin-top: 1rem;
   margin-bottom: 2rem;
+}
+
+.error {
+  color: red;
 }
 </style>
