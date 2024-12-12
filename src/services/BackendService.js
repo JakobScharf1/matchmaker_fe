@@ -2,6 +2,29 @@ import axios from "axios";
 
 class BackendService{
 
+   async verifyUser() {
+        try {
+            const BACKEND_BASE_URL = process.env.VUE_APP_BACKEND_URL;
+            const requestURI = BACKEND_BASE_URL + "/private/verifyUser";
+            const token = localStorage.getItem("token");
+            const requestBody = {
+                token: token
+            };
+
+            const response = await axios.post(requestURI, requestBody);
+            if(response.data === 200){
+                console.log("200 - VerifyUser successful")
+                return true;
+            } else if(response.data === 403){
+                console.log("403 - VerifyUser unsuccessful")
+                return false;
+            }
+        } catch (e) {
+            console.log("error catch in verifyUser")
+            throw new e;
+        }
+    }
+
     /**
      * Stellt eine Anfrage ans Backend, um die Match-Daten zu erhalten.
      * Hierbei wird eine Anfrage an matchmaker.wematch-intern.de/backend/match/xxx gestellt mit dem token im Body
@@ -9,21 +32,10 @@ class BackendService{
      * @param type "match" or "kunde" or "projektpartner"
      * @returns {Promise<axios.AxiosResponse<any>>} Der Return enthält die Daten des entsprechenden Matches.
      */
-    async getBullhornData(dataId, type){
+    async getBullhornData(dataId){
         try {
-            let customPath = "";
-            if(type === "match"){
-                customPath = "/match/";
-            } else if(type === "kunde"){
-                customPath = "/kunde/";
-            } else if(type === "projektpartner"){
-                customPath = "/projektpartner/";
-            } else {
-                return Response.error(500);
-            }
-
             const BACKEND_BASE_URL = process.env.VUE_APP_BACKEND_URL;
-            const requestURI = BACKEND_BASE_URL + customPath + dataId;
+            const requestURI = BACKEND_BASE_URL + "/match/" + dataId;
             const token = localStorage.getItem("token");
             const requestBody = {
                 token: token

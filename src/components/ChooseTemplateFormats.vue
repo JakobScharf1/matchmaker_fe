@@ -17,8 +17,8 @@
 <script>
 import router from "@/router";
 import { logout } from "@/firebase-config";
-import {sendHelpMail} from "@/services/MethodService";
 import BreadCrumbs from "@/elements/BreadCrumbs.vue";
+import {useGlobalStore} from "@/stores/global";
 
 export default {
   name: 'chooseTemplateFormats',
@@ -28,8 +28,12 @@ export default {
       breadcrumbs: [
         { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
         { name: 'Format', path: this.$router.resolve({ name: 'Format' }).href }
-      ]
+      ],
+      gStore: useGlobalStore()
     }
+  },
+  beforeMount() {
+    this.gStore.updateIsLogin(false)
   },
   methods: {
     logout,
@@ -48,11 +52,6 @@ export default {
     toAdditionalAgreement(){
       router.push('/legal/agreement')
     },
-  },
-  mounted() {
-    document.getElementById("helpButton").addEventListener("click", function() {
-      sendHelpMail();
-    })
   },
 }
 

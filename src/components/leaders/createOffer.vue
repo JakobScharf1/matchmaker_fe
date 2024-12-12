@@ -39,7 +39,6 @@ import {
   calculateDailyPrice,
   docxOffer,
   kuendigungsfristTranslator,
-  sendHelpMail
 } from "@/services/MethodService";
 import { logout } from "@/firebase-config";
 import BreadCrumbs from "@/elements/BreadCrumbs.vue";
@@ -105,10 +104,6 @@ export default {
     },
   },
   mounted() {
-    document.getElementById("helpButton").addEventListener("click", function () {
-      sendHelpMail();
-    });
-
     if(localStorage.getItem('permission') === '3'){
       //Wenn der User ein Leader ist, wird das Breadcrumb Typ-Auswahl ergänzt
       const path1 = { name: 'Typ', path: this.$router.resolve({ name: 'Typ' }).href }

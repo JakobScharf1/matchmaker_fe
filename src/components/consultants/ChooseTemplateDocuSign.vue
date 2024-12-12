@@ -64,7 +64,6 @@ import {
   projevppEng,
   kuendigungsfristTranslator,
   verguetungssatzSwitchPP,
-  sendHelpMail,
   crv,
   umbrellaMail
 } from "@/services/MethodService";
@@ -168,10 +167,6 @@ export default {
     localStorage.setItem("empfaengerMail", this.empfaengerMail);
     localStorage.setItem("absenderName", this.absenderName);
     localStorage.setItem("absenderMail", this.absenderMail);
-
-    document.getElementById("helpButton").addEventListener("click", function() {
-      sendHelpMail();
-    });
 
     this.checkAufgabenbeschreibung();
     window.addEventListener('storage', this.checkAufgabenbeschreibung);

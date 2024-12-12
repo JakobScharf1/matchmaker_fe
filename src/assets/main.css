@@ -4,6 +4,10 @@ body {
     font-family: Jost, sans-serif;
 }
 
+h3 {
+    margin: 40px 0 0;
+}
+
 .error {
     color: red;
 }

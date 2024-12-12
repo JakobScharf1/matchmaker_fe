@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from "@/router";
 import cors from 'cors';
 import DotLoader from 'vue-spinner/src/PulseLoader.vue';
+import {createPinia} from "pinia";
 
 import firebase from "firebase/compat/app";
 
@@ -19,9 +20,13 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+// Initialize Pinia for global storage (isLogin variable)
+const pinia = createPinia()
+
 // Launched die Spring Boot App inkl. Dot-loader für Ladesymbole
 createApp(App)
     .use(router)
     .use(cors)
+    .use(pinia)
     .component('dot-loader', DotLoader)
     .mount('#app',)

@@ -7,8 +7,8 @@
 <script>
 import router from "@/router";
 import { logout } from "@/firebase-config";
-import {sendHelpMail} from "@/services/MethodService";
 import BreadCrumbs from "@/elements/BreadCrumbs.vue";
+import {useGlobalStore} from "@/stores/global";
 
 export default {
   name: 'chooseType',
@@ -18,8 +18,12 @@ export default {
       breadcrumbs: [
         { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
         { name: 'Typ', path: this.$router.resolve({ name: 'Typ' }).href }
-      ]
+      ],
+      gStore: useGlobalStore()
     }
+  },
+  beforeMount() {
+    this.gStore.updateIsLogin(false)
   },
   methods: {
     logout,
@@ -29,11 +33,6 @@ export default {
     toOffer() {
       router.push('/leaders/offer');
     },
-  },
-  mounted() {
-    document.getElementById("helpButton").addEventListener("click", function() {
-      sendHelpMail();
-    })
   },
 }
 

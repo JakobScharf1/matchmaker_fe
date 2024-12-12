@@ -104,18 +104,22 @@
 import router from "@/router";
 import BackendService from "@/services/BackendService";
 import {logout} from "@/firebase-config";
-import {sendHelpMail} from "@/services/MethodService";
 import BreadCrumbs from "@/elements/BreadCrumbs.vue";
-
+import {provide} from "vue";
+import {useGlobalStore} from "@/stores/global";
 
 export default {
   name: 'MatchIDInput',
   components: {BreadCrumbs},
+  setup(){
+    provide('isLogin', false)
+  },
   data() {
     return {
       breadcrumbs: [
         { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
       ],
+      gStore: useGlobalStore(),
       matchIdFromInput: "",
       matches: [],
       confirmed: false,
@@ -148,6 +152,9 @@ export default {
       vkOnSite:"",
       hoursperDay:""
     }
+  },
+  beforeMount() {
+    this.gStore.updateIsLogin(false)
   },
   methods: {
     logout,
@@ -287,26 +294,10 @@ export default {
       return formatedValue;
     }
   },
-  mounted() {
-    document.getElementById("helpButton").addEventListener("click", function() {
-      sendHelpMail();
-    })
-  }
 }
 </script>
 
 <style scoped>
-
-#helpButton {
-  margin-right: 10px;
-}
-
-#buttonContainer {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-}
-
 .secondtitle {
   font-size: 0.8rem;
 }
@@ -339,6 +330,7 @@ td {
 
 .input-group input {
   border-radius: 0;
+  border: 0;
 }
 
 .valueTable {
@@ -357,20 +349,4 @@ td {
   margin-bottom: 1rem;
 }
 
-/*Pre-generated*/
-
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 </style>

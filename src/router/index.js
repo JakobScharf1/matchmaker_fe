@@ -1,4 +1,5 @@
-import { createRouter, createWebHistory } from "vue-router";
+/* eslint-disable no-unused-vars */
+import {createRouter, createWebHistory} from "vue-router";
 import MatchIDInput from "@/components/MatchIDInput.vue";
 import LoginSSO from "@/components/LoginSSO.vue";
 import chooseTemplateFormats from "@/components/ChooseTemplateFormats.vue";
@@ -10,6 +11,7 @@ import chooseTermination from "@/components/legal/ChooseTermination.vue";
 import createOffer from "@/components/leaders/createOffer.vue";
 import createAdditionalAgreements from "@/components/legal/createAdditionalAgreements.vue";
 import chooseType from "@/components/leaders/chooseType.vue";
+import BackendService from "@/services/BackendService";
 
 const routes = [
     {
@@ -93,6 +95,23 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes
+})
+
+router.beforeEach((to) => {
+    if(to.path !== '/login') {
+        if (localStorage.getItem("token") != null) {
+            BackendService.verifyUser().then(isValid => {
+                if(!isValid) {
+                    router.push("/login")
+                }
+            }).catch(error => {
+                console.log("Verification error in beforeEach: ", error);
+                router.push("/login")
+            })
+        } else {
+            router.push("/login");
+        }
+    }
 })
 
 export default router

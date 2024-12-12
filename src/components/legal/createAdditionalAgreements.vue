@@ -26,7 +26,6 @@
 <script>
 import {
   docxTermination,
-  sendHelpMail
 } from "@/services/MethodService";
 import {logout} from "@/firebase-config";
 import BreadCrumbs from "@/elements/BreadCrumbs.vue";
@@ -80,11 +79,6 @@ export default {
         this.inputMissing = true;
       }
     },
-  },
-  mounted() {
-    document.getElementById("helpButton").addEventListener("click", function() {
-      sendHelpMail();
-    });
   },
 }
 </script>
