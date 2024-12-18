@@ -14,6 +14,7 @@
           <option value="Carolin Lins">Carolin Lins</option>
           <option value="Hassan Berrada">Hassan Berrada</option>
           <option value="Anett Peikert">Anett Peikert</option>
+          <option value="Hanh Hoang">Hanh Hoang</option>
         </select>
 
         <label for="company-selection">Firmierung</label>
