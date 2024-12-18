@@ -31,6 +31,13 @@
          </select>
        </div>
 
+       <label for="person-selection">Person</label>
+       <select id="person-selection" v-model="selectedPerson">
+         <option value="Hanh Hoang">Hanh Hoang</option>
+         <option value="Veronica Wagner">Veronica Wagner</option>
+         <option value="Anett Peikert">Anett Peikert</option>
+       </select>
+
      </div>
    </div>
 
@@ -61,7 +68,8 @@ export default {
       frist: '',
       target: '',
       company: '',
-      inputMissing: false
+      inputMissing: false,
+      selectedPerson: ''
     }
   },
   methods: {
@@ -74,6 +82,8 @@ export default {
           this.inputMissing = false;
           verguetungssatzSwitchKunde();
           kuendigungsfristTranslator();
+
+          localStorage.setItem("selectedPerson", this.selectedPerson);
 
           if (this.docType === "confirmation") {
             this.frist = "";

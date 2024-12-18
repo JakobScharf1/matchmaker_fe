@@ -801,6 +801,7 @@ function docxTermination() {
         localStorage.getItem("daysPerWeek"),
         localStorage.getItem("ppGesellschaft"),
         localStorage.getItem("preFix"),
+        localStorage.getItem("selectedPerson")
     ]
 
     BackendService.postDocData(localStorage.getItem("docId"), data).then(response => {

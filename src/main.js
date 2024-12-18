@@ -4,6 +4,7 @@ import router from "@/router";
 import cors from 'cors';
 import DotLoader from 'vue-spinner/src/PulseLoader.vue';
 import {createPinia} from "pinia";
+//import VueCookies from 'vue-cookies'
 
 import firebase from "firebase/compat/app";
 
@@ -23,10 +24,12 @@ firebase.initializeApp(firebaseConfig);
 // Initialize Pinia for global storage (isLogin variable)
 const pinia = createPinia()
 
-// Launched die Spring Boot App inkl. Dot-loader für Ladesymbole
+// Launcht die Spring Boot App
 createApp(App)
     .use(router)
     .use(cors)
     .use(pinia)
+    //.use(require('vue-cookies'))
+    //.use(VueCookies, { expires: '15d' })
     .component('dot-loader', DotLoader)
     .mount('#app',)
