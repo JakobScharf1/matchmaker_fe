@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <button @click="pageBack()" class="btn btn-outline-primary">Zurück</button>
-  </div>
-  <h2>Bitte wähle die Vertragskategorie:</h2>
+  <BreadCrumbs :breadcrumbs="breadcrumbs"></BreadCrumbs>
+
   <button class="btn btn-primary chooseButtons" @click="toDocx()">Docx-Verträge</button><br/>
   <button class="btn btn-primary chooseButtons" @click="toDocusign()">DocuSign-Verträge</button><br/>
   <button class="btn btn-primary chooseButtons" @click="toAdditionalAgreement()">Zusatzvereinbarungen</button><br/>
@@ -19,51 +17,50 @@
 <script>
 import router from "@/router";
 import { logout } from "@/firebase-config";
-import {sendHelpMail} from "@/services/MethodService";
+import BreadCrumbs from "@/elements/BreadCrumbs.vue";
+import {useGlobalStore} from "@/stores/global";
 
 export default {
   name: 'chooseTemplateFormats',
+  components: {BreadCrumbs},
+  data() {
+    return {
+      breadcrumbs: [
+        { name: 'ID-Input', path: this.$router.resolve({ name: 'ID-Input' }).href },
+        { name: 'Format', path: this.$router.resolve({ name: 'Format' }).href }
+      ],
+      gStore: useGlobalStore()
+    }
+  },
+  beforeMount() {
+    this.gStore.updateIsLogin(false)
+  },
   methods: {
     logout,
     toDocx() {
-      router.push('chooseTemplateLegalDocx');
+      router.push('/legal/docx');
     },
     toDocusign() {
-      router.push('chooseTemplateLegalDocuSign');
+      router.push('/legal/docusign');
     },
     toAdditionalAgreement(){
       router.push('createAdditionalAgreements');
     },
     toTermination(){
-     router.push('chooseTermination');
+     router.push('/legal/termination');
     },
     toOffer(){
-      router.push('createOffer');
+      router.push('/leaders/offer');
     },
-    pageBack(){
-      router.go(-1);
+    toAdditionalAgreement(){
+      router.push('/legal/agreement')
     },
-  },
-  mounted() {
-    document.getElementById("helpButton").addEventListener("click", function() {
-      sendHelpMail();
-    })
   },
 }
 
 </script>
 
 <style>
-#helpButton {
-  margin-right: 10px;
-}
-
-#buttonContainer {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-}
-
 .chooseButtons {
   margin-top: 10px;
   width: 250px;

@@ -6,13 +6,23 @@
 
 <script>
 import {login} from "@/firebase-config";
+import {useGlobalStore} from "@/stores/global";
 
 export default {
   name: "LoginSSO",
+  data() {
+    return {
+      gStore: useGlobalStore()
+    }
+  },
   methods: {
     async login() {
       login();
     },
+  },
+  beforeMount() {
+    this.gStore.updateIsLogin(true)
+    this.path = "/login"
   },
 
 }

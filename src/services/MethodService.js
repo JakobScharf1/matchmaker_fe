@@ -1,5 +1,7 @@
 import BackendService from "@/services/BackendService";
 
+
+
 function sendHelpMail(){
     let subject = encodeURIComponent("Problem mit MatchMaker - MatchID: " + localStorage.getItem("matchID"));
     let body = encodeURIComponent("\n---\nmatch data: \n" +
@@ -86,8 +88,6 @@ function tagessatzAgent() {
     let vkRemote = localStorage.getItem("vk");
     let vkOnSite = localStorage.getItem("vkOnSite");
 
-
-
     if ((vkRemote !== null || vkRemote !== "") && (vkOnSite === null || vkOnSite === "")) {
         localStorage.setItem("tagessatzRemote", vkRemote + "€");
         localStorage.setItem("tagessatzOnSite", "-");
@@ -130,6 +130,7 @@ function stundensatzAgent() {
     return null;
 }
 
+
 function calculateDailyPrice(){
     var vkRemote = localStorage.getItem("vk");
     var vkOnSite = localStorage.getItem("vkOnSite");
@@ -165,64 +166,6 @@ function calculateDailyPrice(){
     }
     return null;
 }
-/*function calculateOfferPricewithDailyRate() {
-    let tagessatz = stundensatzAgent();
-    console.log(tagessatz);
-    let projectDays = localStorage.getItem("projectDays");
-
-    projectDays = projectDays !== null ? parseFloat(projectDays) : null;
-    console.log(projectDays);
-    let totalPrice = 0;
-
-
-    if (tagessatz !== null) {
-        if (tagessatz.stundensatz !== undefined) {
-
-            totalPrice = projectDays * tagessatz.stundensatz;
-        } else {
-
-            totalPrice = (tagessatz.stundensatzRemote * projectDays) * (projectDays * tagessatz.stundensatzOnSite);
-        }
-    }
-
-    totalPrice = totalPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-    localStorage.setItem("gesamtPreis", totalPrice);
-    console.log(totalPrice);
-    return totalPrice;
-}
-
-
-
-function calculateOfferPricewithHourlyRate(){
-    let vk = localStorage.getItem("vk");
-    let vkOnSite = localStorage.getItem("vkOnSite");
-    let hours = localStorage.getItem("projectHours");
-    let remoteHours = localStorage.getItem("remoteHours");
-    let onSiteHours = localStorage.getItem("OnSiteHours");
-
-    vk = vk !== "" ? parseFloat(vk) : null;
-    vkOnSite = vkOnSite !== "" ? parseFloat(vkOnSite) : null;
-    hours = hours !== "" ? parseFloat(hours) : null;
-    remoteHours = remoteHours !== 0 ? parseInt(remoteHours, 10) : 0;
-    onSiteHours = onSiteHours !== 0 ? parseInt(onSiteHours, 10) : 0;
-
-    let totalPrice = 0.00;
-    if (vk === null && vkOnSite !== null) {
-        totalPrice = vkOnSite * hours;
-
-    } else if (vkOnSite === null && vk !== null) {
-        totalPrice = vk * hours;
-
-    } else if (vk !== null && vkOnSite !== null) {
-        totalPrice = (vkOnSite * remoteHours) + (vkOnSite * onSiteHours);
-
-    }
-     totalPrice = totalPrice.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    console.log(totalPrice);
-    return localStorage.setItem("gesamtPreis", totalPrice);
-}*/
-
 
 
 function verguetungssatzSwitchKunde(){
@@ -563,6 +506,8 @@ function engevppEng(){
 }
 
 //EV Projektpartner Englisch - Projects
+/* Deprecated since 2.1
+
 function projevppEng(){
     let finalURL = "";
     let ppNameLocal = getPPName();
@@ -600,6 +545,7 @@ function projevppEng(){
             window.open(finalURL, "_blank");
         });
 }
+    */
 
 //RV Kunde
 function crvk(docId){
@@ -789,7 +735,7 @@ function cevkEng2(docId){
 
 }
 
-function docxEvk(){
+function docxContract(){
     let ppNameLocal = getPPName();
     let data = [
         localStorage.getItem("matchID"),
@@ -858,6 +804,7 @@ function docxTermination() {
         localStorage.getItem("daysPerWeek"),
         localStorage.getItem("ppGesellschaft"),
         localStorage.getItem("preFix"),
+        localStorage.getItem("selectedPerson")
     ]
 
     BackendService.postDocData(localStorage.getItem("docId"), data).then(response => {
@@ -909,20 +856,16 @@ export { cevppEng };
 export { engevpp };
 export { projevpp };
 export { engevppEng };
-export { projevppEng };
 export { cevk };
 export { valueMappingTest };
 export { cevkEng };
-export { docxEvk };
+export { docxContract };
 export { sendHelpMail };
 export { docxTermination };
 export { cevk2 };
 export { cevkEng2 };
-//export { absenderMail };
 export { crvk };
-//export { calculateOfferPricewithDailyRate };
 export { docxOffer };
-//export { calculateOfferPricewithHourlyRate };
 export { stundensatzAgent };
 export { tagessatzAgent };
 export { umbrellaMail };
