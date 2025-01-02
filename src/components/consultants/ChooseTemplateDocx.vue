@@ -14,7 +14,6 @@
         <select id="company-select" v-model="company">
           <option value="wm">WeMatch Consulting GmbH</option>
           <option value="we">WeMatch Engineering GmbH</option>
-          <option value="proj">WeMatch Projects GmbH</option>
         </select>
 
         <label for="contract-select">Vertragsart</label>
@@ -78,12 +77,6 @@ export default {
           case "de-we-ev":
             localStorage.setItem("docId", "docx-ev-k-e");
             break;
-          case "de-proj-rv":
-            localStorage.setItem("docId", "docx-rv-k-p");
-            break;
-          case "de-proj-ev":
-            localStorage.setItem("docId", "docx-ev-k-p");
-            break;
           case "en-wm-rv":
             localStorage.setItem("docId", "docx-rv-k-eng");
             break;
@@ -95,12 +88,6 @@ export default {
             break;
           case "en-we-ev":
             localStorage.setItem("docId", "docx-ev-k-e-eng");
-            break;
-          case "en-proj-rv":
-            localStorage.setItem("docId", "docx-rv-k-p-eng");
-            break;
-          case "en-proj-ev":
-            localStorage.setItem("docId", "docx-ev-k-p-eng");
             break;
         }
 

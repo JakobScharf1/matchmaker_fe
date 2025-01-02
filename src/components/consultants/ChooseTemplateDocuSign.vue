@@ -13,7 +13,6 @@
         <select id="company-select" v-model="company">
           <option value="wm">WeMatch Consulting GmbH</option>
           <option value="we">WeMatch Engineering GmbH</option>
-          <option value="proj">WeMatch Projects GmbH</option>
         </select>
 
         <label for="contract-select">Vertragsart</label>
@@ -59,9 +58,7 @@ import {
   cevpp,
   cevppEng,
   engevpp,
-  projevpp,
   engevppEng,
-  projevppEng,
   kuendigungsfristTranslator,
   verguetungssatzSwitchPP,
   crv,
@@ -115,17 +112,11 @@ export default {
           case "de-we-rv":
             crv("eng-rv-pp");
             break;
-          case "de-proj-rv":
-            crv("proj-rv-pp");
-            break;
           case "de-wm-ev":
             cevpp();
             break;
           case "de-we-ev":
             engevpp();
-            break;
-          case "de-proj-ev":
-            projevpp();
             break;
           case "en-wm-rv":
             crv("c-rv-pp-eng")
@@ -133,17 +124,11 @@ export default {
           case "en-we-rv":
             crv("eng-rv-pp-eng")
             break;
-            /*case "en-proj-rv":
-            crv("proj-rv-pp-eng")
-            break;*/
           case "en-wm-ev":
             cevppEng();
             break;
           case "en-we-ev":
             engevppEng();
-            break;
-          case "en-proj-ev":
-            projevppEng();
             break;
         }
       } else {

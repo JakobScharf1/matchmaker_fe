@@ -13,7 +13,6 @@
           <select id="company-select" v-model="company">
             <option value="wm">WeMatch Consulting GmbH</option>
             <option value="we">WeMatch Engineering GmbH</option>
-            <option value="proj">WeMatch Projects GmbH</option>
           </select>
 
           <label for="contract-select">Vertragsart</label>
@@ -132,17 +131,11 @@ export default {
           case "de-we-rv-false":
             crvk("c-rv-k-e");
             break;
-          case "de-proj-rv-false":
-            crvk("c-rv-k-p");
-            break;
           case "en-wm-rv-false":
             crvk("c-rv-k-eng");
             break;
           case "en-we-rv-false":
             crvk("c-rv-k-e-eng");
-            break;
-          case "en-proj-rv-false":
-            crvk("c-rv-k-p-eng");
             break;
           case "de-wm-ev-false":
             cevk("c-ev-k");
@@ -150,17 +143,11 @@ export default {
           case "de-we-ev-false":
             cevk("c-ev-k-e");
             break;
-          case "de-proj-ev-false":
-            cevk("c-ev-k-p");
-            break;
           case "en-wm-ev-false":
             cevkEng("c-ev-k-eng");
             break;
           case "en-we-ev-false":
             cevkEng("c-ev-k-e-eng");
-            break;
-          case "en-proj-ev-false":
-            cevkEng("c-ev-k-p-eng");
             break;
           case "de-wm-ev-true":
             cevk2("c-ev-k-2");

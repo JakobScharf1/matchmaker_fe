@@ -9,6 +9,21 @@ In the following you'll find the changelogs of the WeMatch MatchMaker **starting
 
 # Releases
 
+## Version 2.1 - 2.1.2024
+
+## Frontend/Backend
+Deleted WeMatch Projects GmbH as choice option
+
+## Backend
+Fixed saveUserInfo in PrivateEndpoint class to save user data in db correctly
+
+## Version 2 - 19.12.2024
+
+## Frontend
+- New and uniform design with dropdowns, breadcrumbs and a new background
+- Possibility to run via docker (not in use)
+- New folder structure with consultants, leaders and legal
+
 ## Version 1.2.7 - 25.10.2024
 
 ### Frontend

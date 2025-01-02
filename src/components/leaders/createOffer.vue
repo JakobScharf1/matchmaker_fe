@@ -21,7 +21,6 @@
         <select id="company-selection" v-model="company">
           <option value="wm">WeMatch Consulting GmbH</option>
           <option value="we">WeMatch Engineering GmbH</option>
-          <option value="proj">WeMatch Projects GmbH</option>
         </select>
       </div>
 
@@ -92,9 +91,6 @@ export default {
             break;
           case "we":
             localStorage.setItem("docId", "docx-a-e");
-            break;
-          case "proj":
-            localStorage.setItem("docId", "docx-a-p");
             break;
         }
         docxOffer();

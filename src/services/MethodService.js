@@ -506,6 +506,8 @@ function engevppEng(){
 }
 
 //EV Projektpartner Englisch - Projects
+/* Deprecated since 2.1
+
 function projevppEng(){
     let finalURL = "";
     let ppNameLocal = getPPName();
@@ -543,6 +545,7 @@ function projevppEng(){
             window.open(finalURL, "_blank");
         });
 }
+    */
 
 //RV Kunde
 function crvk(docId){
@@ -853,7 +856,6 @@ export { cevppEng };
 export { engevpp };
 export { projevpp };
 export { engevppEng };
-export { projevppEng };
 export { cevk };
 export { valueMappingTest };
 export { cevkEng };
