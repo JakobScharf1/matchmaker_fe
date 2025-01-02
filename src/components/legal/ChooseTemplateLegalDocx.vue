@@ -25,7 +25,6 @@
     </div>
   </div>
   <span class="error" v-if="inputMissing">Bitte fülle alle Felder aus.</span><br v-if="inputMissing"/>
-
   <button class="btn btn-primary bestatigen-button" @click="chooseTemplate()">Bestätigen</button>
 </template>
 

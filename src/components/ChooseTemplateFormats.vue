@@ -3,7 +3,7 @@
 
   <button class="btn btn-primary chooseButtons" @click="toDocx()">Docx-Verträge</button><br/>
   <button class="btn btn-primary chooseButtons" @click="toDocusign()">DocuSign-Verträge</button><br/>
-  <button class="btn btn-primary chooseButtons" @click="toAdditionalAgreement()">Zusatzvereinbarung</button><br/>
+  <button class="btn btn-primary chooseButtons" @click="toAdditionalAgreement()">Zusatzvereinbarungen</button><br/>
   <button class="btn btn-primary chooseButtons" @click="toTermination()">Kündigungen</button><br/>
   <button class="btn btn-primary chooseButtons" @click="toOffer()">Angebote</button><br/>
 
@@ -42,6 +42,9 @@ export default {
     },
     toDocusign() {
       router.push('/legal/docusign');
+    },
+    toAdditionalAgreement(){
+      router.push('createAdditionalAgreements');
     },
     toTermination(){
      router.push('/legal/termination');
