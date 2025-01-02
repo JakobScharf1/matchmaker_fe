@@ -9,6 +9,14 @@ In the following you'll find the changelogs of the WeMatch MatchMaker **starting
 
 # Releases
 
+## Version 2.1.1 - 2.1.2024
+
+## Frontend
+Hotfix: changed saveUser in firebase-config to match backend response
+
+## Backend
+Hotfix: wrong port in prod.properties
+
 ## Version 2.1 - 2.1.2024
 
 ## Frontend/Backend

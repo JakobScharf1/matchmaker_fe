@@ -43,9 +43,6 @@ export default {
     toDocusign() {
       router.push('/legal/docusign');
     },
-    toAdditionalAgreement(){
-      router.push('createAdditionalAgreements');
-    },
     toTermination(){
      router.push('/legal/termination');
     },

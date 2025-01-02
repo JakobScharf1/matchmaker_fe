@@ -35,16 +35,15 @@ function saveUser(url, requestBody) {
     axios.post(url, requestBody)
         .then(response => {
             console.log("saveUser reponse: ", response.data.toString())
-            if(response.status === 200 && response.data.toString().startsWith("Saved")){
-                var permissionUrl =  process.env.VUE_APP_BACKEND_URL + "/private/getPermission/" + requestBody.email;
-                axios.get(permissionUrl)
-                    .then(response => {
-                        console.log("permissionUrl response", response.data.toString())
-                        localStorage.setItem("permission", response.data.toString());
-                        if(response.data.toString() === "1" || response.data.toString() === "2" || response.data.toString() === "3"){
-                            router.push("/start");
-                        }
-                    })
+            if(response.status === 200){
+                const permission = response.data.toString().slice(-1)
+                if(permission === "1" || permission === "2" || permission === "3"){
+                    localStorage.setItem("permission", permission);
+                    router.push("/start");
+                } else {
+                    router.push("/login")
+                    alert("Login failed or permission denied.")
+                }
             } else {
                 router.push("/login")
                 alert("Login failed or permission denied.")
