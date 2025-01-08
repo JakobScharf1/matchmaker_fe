@@ -9,6 +9,14 @@ In the following you'll find the changelogs of the WeMatch MatchMaker **starting
 
 # Releases
 
+## Version 2.1.2 - 8.1.2024
+
+## Frontend
+Design Fix: Person-field in Termination-View
+
+## Backend
+Hotfix: addAgreement didn't work => IDs weren't in Map docxMapWeMatch
+
 ## Version 2.1.1 - 2.1.2024
 
 ## Frontend

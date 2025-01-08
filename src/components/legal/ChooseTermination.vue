@@ -21,6 +21,13 @@
            <option value="wm">WeMatch Consulting GmbH</option>
            <option value="we">WeMatch Engineering GmbH</option>
          </select>
+
+         <label for="person-selection">Person</label>
+         <select id="person-selection" v-model="selectedPerson">
+           <option value="Hanh Hoang">Hanh Hoang</option>
+           <option value="Veronica Wagner">Veronica Wagner</option>
+           <option value="Anett Peikert">Anett Peikert</option>
+         </select>
        </div>
 
        <div class="input-group" v-if="docType === 'termination'">
@@ -30,13 +37,6 @@
            <option value="los">Fristlos</option>
          </select>
        </div>
-
-       <label for="person-selection">Person</label>
-       <select id="person-selection" v-model="selectedPerson">
-         <option value="Hanh Hoang">Hanh Hoang</option>
-         <option value="Veronica Wagner">Veronica Wagner</option>
-         <option value="Anett Peikert">Anett Peikert</option>
-       </select>
 
      </div>
    </div>
@@ -75,7 +75,7 @@ export default {
   methods: {
     logout,
     chooseTemplate() {
-      if (this.docType && this.target && this.company) {
+      if (this.docType && this.target && this.company && this.selectedPerson) {
         if (this.docType === "termination" && !this.frist){
           this.inputMissing = true;
         } else {
