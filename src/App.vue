@@ -3,7 +3,7 @@
   <img alt="MatchMaker logo" src="@/assets/logo.png">
   <RouterView/>
   <div class="bottom-right">
-    <p>MatchMaker 2.1.1 made with &#10084;&#65039; by WeMatch Team Operations</p>
+    <p>MatchMaker 2.1.2 made with &#10084;&#65039; by WeMatch Team Operations</p>
   </div>
 
   <logout-help-buttons v-if="!this.gStore.isLogin"/>

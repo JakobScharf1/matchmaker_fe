@@ -24,26 +24,36 @@
 
       <h3>Vertrag Absender</h3>
       <div class="input-group">
+        <label>Name</label>
+        <select v-if="!absenderCustomInput" name="absenderName" v-model="absenderName">
+          <option value="" disabled>Bitte wählen</option>
+          <option value="custom">Eigenen Wert eingeben...</option>
+          <option v-for="option in nameOptions" :key="option" :value="option">{{ option }}</option>
+        </select>
+        <input v-if="absenderCustomInput" v-model="absenderName" type="text" id="absender_name">
         <label for="absender_mail">E-Mail</label>
         <input v-model="absenderMail" type="email" id="absender_mail">
-        <label for="absender_name">Name</label>
-        <input v-model="absenderName" type="text" id="absender_mail">
       </div>
 
       <h3>Vertrag Empfänger</h3>
       <div class="input-group">
-        <label for="empfaenger_mail">E-Mail</label>
-        <input v-model="empfaengerMail" type="email" id="empfaenger_mail">
         <label for="empfaenger_name">Name</label>
         <input v-model="empfaengerName" type="text" id="empfaenger_mail">
+        <label for="empfaenger_mail">E-Mail</label>
+        <input v-model="empfaengerMail" type="email" id="empfaenger_mail">
       </div>
 
       <h3>Consultant in CC</h3>
       <div class="input-group">
+        <label>Name</label>
+        <select v-if="!ccCustomInput" name="cc_name" v-model="ccName">
+          <option value="" disabled>Bitte wählen</option>
+          <option value="custom">Eigenen Wert eingeben...</option>
+          <option v-for="option in nameOptions" :key="option" :value="option">{{ option }}</option>
+        </select>
+        <input v-if="ccCustomInput" v-model="ccName" type="text" id="cc_name">
         <label for="cc_mail">E-Mail</label>
         <input v-model="ccMail" type="email" id="cc_mail">
-        <label for="cc_name">Name</label>
-        <input v-model="ccName" type="text" id="cc_name">
       </div>
     </div>
   </div>
@@ -87,7 +97,13 @@ export default {
       lang: "",
       company: "",
       contracttype: "",
-      inputMissing: false
+      inputMissing: false,
+      nameOptions: ["Alan Neumann-Pyszniak","Bastian Priegnitz","Carolin Lins","Charlyn Amaral","Finn Thesenvitz",
+        "Hassan Berrada","Jonas Joris","Luna Zlatoper","Narin Sahin","Nico Friedrich","Niklas Fiebig",
+        "Pelin Oeztuerk","Richard Russ","Sophie Pasewald","Tom Krueger","Tommy Haferkorn"
+      ],
+      absenderCustomInput: false,
+      ccCustomInput: false
     }
   },
   methods: {
@@ -171,13 +187,29 @@ export default {
       localStorage.setItem("empfaengerMail", newValue);
     },
     absenderName(newValue) {
+      if(newValue === "custom"){
+        this.absenderName = ""
+        this.absenderCustomInput = true
+      }
       localStorage.setItem("absenderName", newValue);
+      const [firstName, lastName] = this.absenderName.split(" ")
+      if(firstName && lastName){
+        this.absenderMail = `${firstName[0].toLowerCase()}.${lastName.toLowerCase()}@wematch.de`;
+      }
     },
     absenderMail(newValue) {
       localStorage.setItem("absenderMail", newValue);
     },
     ccName(newValue) {
+      if(newValue === "custom"){
+        this.ccName = ""
+        this.ccCustomInput = true
+      }
       localStorage.setItem("ccName", newValue);
+      const [firstName, lastName] = this.ccName.split(" ")
+      if(firstName && lastName){
+        this.ccMail = `${firstName[0].toLowerCase()}.${lastName.toLowerCase()}@wematch.de`;
+      }
     },
     ccMail(newValue) {
       localStorage.setItem("ccMail", newValue);

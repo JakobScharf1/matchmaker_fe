@@ -10,7 +10,7 @@ npm run serve
 npm run build:testing
 ```
 
-### Build for Production
+## Build for Production
 ```
 npm run build
 ```
