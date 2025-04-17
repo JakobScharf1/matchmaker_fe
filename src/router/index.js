@@ -98,20 +98,25 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
-    if(to.path !== '/login') {
+    if (process.env.VUE_APP_DEV_MODE === "true") {
+        console.log("Development mode enabled. Skipping user verification.");
+        return true; // Allow navigation without verification
+    }
+
+    if (to.path !== '/login') {
         if (localStorage.getItem("token") != null) {
             BackendService.verifyUser().then(isValid => {
-                if(!isValid) {
-                    router.push("/login")
+                if (!isValid) {
+                    router.push("/login");
                 }
             }).catch(error => {
                 console.log("Verification error in beforeEach: ", error);
-                router.push("/login")
-            })
+                router.push("/login");
+            });
         } else {
             router.push("/login");
         }
     }
-})
+});
 
 export default router

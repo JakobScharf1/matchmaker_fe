@@ -21,6 +21,10 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+if (process.env.VUE_APP_DEV_MODE === "true") {
+    console.warn("WARNING: Development mode is enabled. Firebase authentication is disabled.");
+}
+
 // Initialize Pinia for global storage (isLogin variable)
 const pinia = createPinia()
 
