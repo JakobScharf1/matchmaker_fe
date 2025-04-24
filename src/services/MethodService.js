@@ -1,854 +1,258 @@
 import BackendService from "@/services/BackendService";
+import {docxTypeToFields, contractTypeToFields} from "@/stores/PowerFormFields";
 
+function getEncodedLocalStorageValue(key) {
+    const value = localStorage.getItem(key);
+    return value ? encodeURIComponent(value) : "";
+}
 
+function constructQueryParams(keys) {
+    return keys
+        .map(key => `${key}=${getEncodedLocalStorageValue(key)}`)
+        .join("&");
+}
 
-function sendHelpMail(){
-    let subject = encodeURIComponent("Problem mit MatchMaker - MatchID: " + localStorage.getItem("matchID"));
-    let body = encodeURIComponent("\n---\nmatch data: \n" +
-        "User Permission Level=" + localStorage.getItem( `permission`) + "\n" +
-        "Absender_UserName=" + localStorage.getItem('absenderName') + "\n" +
-        "Absender_Email=" + localStorage.getItem('absenderMail') + "\n" +
-        "Projektpartner_UserName=" + localStorage.getItem('empfaengerName') + "\n" +
-        "Projektpartner_Email=" + localStorage.getItem('empfaengerMail') + "\n" +
-        "CC_UserName=" + localStorage.getItem("ccName") + "\n" +
-        "CC_Email=" + localStorage.getItem("ccMail") + "\n" +
+function openURL(url) {
+    window.open(url, "_blank");
+}
 
-        "Wematch_Ansprechpartner=" + localStorage.getItem('wematchAnsprechpartnerName') + "\n" +
-        "PPName=" + localStorage.getItem('ppGesellschaft') + " " + localStorage.getItem('projektpartnerName') + "\n" +
-        "MatchID=" + localStorage.getItem('matchID') + "\n" +
+function handlePowerFormRequest(docId, additionalParams = "") {
+    BackendService.getPowerForm(docId).then(response => {
+        const baseURL = response.data.toString();
+        openURL(`${baseURL}&${additionalParams}`);
+    });
+}
 
-        "Tagessatz=" + localStorage.getItem('tagessatz') + "\n" +
-        "Stundensatz=" + localStorage.getItem('stundensatz') + "\n" +
-        "Festpreis=" + localStorage.getItem('festpreis') + "\n" +
+function constructEmailBody(keys) {
+    return keys
+        .map(key => `${key}=${localStorage.getItem(key) || ""}`)
+        .join("\n");
+}
 
-        "Startdatum=" + localStorage.getItem('startdatum') + "\n" +
-        "Enddatum=" + localStorage.getItem('enddatum') + "\n" +
-        "Kuendigungsfrist=" + localStorage.getItem('kuendigungsfrist') + "\n" +
-
-        "Endkunde=" + localStorage.getItem('kunde') + "\n" +
-        "Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + " " + localStorage.getItem('adresseKundeCity') + "\n" +
-        "Einsatzort=" + localStorage.getItem('einsatzort') + "\n" +
-
-        "Position=" + localStorage.getItem('position') + "\n" +
-        "Aufgabenbeschreibung=" + localStorage.getItem('aufgabenbeschreibung')
+function sendHelpMail() {
+    const subject = encodeURIComponent(
+        `Problem mit MatchMaker - MatchID: ${localStorage.getItem("matchID")}`
     );
-    let mailtoLink = "mailto:teamoperations@wematch.de?subject=" + subject + "&body=" + body;
-    window.open(mailtoLink, '_blank');
+    const bodyKeys = [
+        "permission",
+        "absenderName",
+        "absenderMail",
+        "empfaengerName",
+        "empfaengerMail",
+        "ccName",
+        "ccMail",
+        "wematchAnsprechpartnerName",
+        "ppGesellschaft",
+        "projektpartnerName",
+        "matchID",
+        "tagessatz",
+        "stundensatz",
+        "festpreis",
+        "startdatum",
+        "enddatum",
+        "kuendigungsfrist",
+        "kunde",
+        "adresseKundeStr",
+        "adresseKundeCity",
+        "einsatzort",
+        "position",
+        "aufgabenbeschreibung"
+    ];
+    const body = encodeURIComponent(`\n---\nmatch data: \n${constructEmailBody(bodyKeys)}`);
+    const mailtoLink = `mailto:teamoperations@wematch.de?subject=${subject}&body=${body}`;
+    openURL(mailtoLink);
 }
 
-/* DEPRECATED SINCE 1.2.7
-function absenderMail(){
-    const name= localStorage.getItem('wematchAnsprechpartnerName');
-    if(name!= null){
-        const [firstName, lastName] = name.split(" "),
-            mail = `${firstName[0].toLowerCase()}.${lastName.toLowerCase()}@wematch.de`;
-        return mail;
+function umbrellaMail() {
+    if (localStorage.getItem("einstellungsArt") === "Umbrella") {
+        const email = localStorage.getItem("umbrellaMail");
+        localStorage.setItem("projektpartnerMail", email);
     }
-}
- */
-
-function umbrellaMail(){
-    if(localStorage.getItem('einstellungsArt') === "Umbrella"){
-        const email = localStorage.getItem('umbrellaMail');
-        localStorage.setItem('projektpartnerMail', email );
-
-        return localStorage.getItem('projektpartnerMail');
-    } else {
-        return localStorage.getItem('projektpartnerMail');
-    }
+    return localStorage.getItem("projektpartnerMail");
 }
 
-/**
- * Prüft die Variable verguetungssatz und setzt den Wert der entsprechenden Variable stundensatz, tagessatz oder festpreis auf den ek (Einkaufspreis).
- * Die anderen Variablen bleiben beim Wert "X".
- */
-function verguetungssatzSwitchPP(){
+function verguetungssatzSwitch(type) {
     localStorage.setItem("stundensatz", "X");
     localStorage.setItem("tagessatz", "X");
     localStorage.setItem("festpreis", "X");
 
-    let ek = localStorage.getItem("ek");
+    const value = localStorage.getItem(type === "PP" ? "ek" : "vk");
+    const verguetungssatz = localStorage.getItem("verguetungssatz").toLowerCase();
 
-    switch (localStorage.getItem('verguetungssatz')){
-        case "Stundensatz":
-            localStorage.setItem("stundensatz", ek);
-            break;
-        case "Tagessatz":
-            localStorage.setItem("tagessatz", ek);
-            break;
-        case "Festpreis":
-            localStorage.setItem("festpreis", ek);
-            break;
-        default:
-            break;
+    if (["stundensatz", "tagessatz", "festpreis"].includes(verguetungssatz)) {
+        localStorage.setItem(verguetungssatz, value);
     }
+}
+
+function kuendigungsfristTranslator() {
+    const translations = {
+        "Monatsende": "month end",
+        "Tage": "days",
+        "Wochen": "weeks",
+        "zum": "to",
+        "Keine": "none",
+        "Tage": "days",
+        "Wochen": "weeks"
+    };
+    const kuendigungsfrist = localStorage.getItem("kuendigungsfrist");
+    for (const [key, value] of Object.entries(translations)) {
+        if (kuendigungsfrist.includes(key)) {
+            kuendigungsfrist = kuendigungsfrist.replace(key, value);
+        }
+    }
+    localStorage.setItem("kuendigungsfristEnglisch", kuendigungsfrist);
+}
+
+function generatePowerForm(docId, exceptions) {
+    const keys = contractTypeToFields.get(docId) || [];
+    const queryParams = constructQueryParams(keys);
+    const additionalParams = exceptions.map(
+        ([key, value]) => `${key}=${encodeURIComponent(value)}`
+    ).join("&");
+    const allParams = additionalParams ? `${queryParams}&${additionalParams}` : queryParams;
+    handlePowerFormRequest(docId, allParams);
+}
+
+function setRates(remoteRate, onSiteRate, rateType) {
+    const formattedRemoteRate = remoteRate ? `${remoteRate}€` : "-";
+    const formattedOnSiteRate = onSiteRate ? `${onSiteRate}€` : "-";
+
+    localStorage.setItem(`${rateType}Remote`, formattedRemoteRate);
+    localStorage.setItem(`${rateType}OnSite`, formattedOnSiteRate);
+
+    return {
+        [`${rateType}Remote`]: formattedRemoteRate,
+        [`${rateType}OnSite`]: formattedOnSiteRate,
+    };
+}
+
+function generalRateAgent(rateType) {
+    const vkRemote = localStorage.getItem("vk");
+    const vkOnSite = localStorage.getItem("vkOnSite");
+    return setRates(vkRemote || null, vkOnSite || null, rateType);
 }
 
 function tagessatzAgent() {
-    let vkRemote = localStorage.getItem("vk");
-    let vkOnSite = localStorage.getItem("vkOnSite");
-
-    if ((vkRemote !== null || vkRemote !== "") && (vkOnSite === null || vkOnSite === "")) {
-        localStorage.setItem("tagessatzRemote", vkRemote + "€");
-        localStorage.setItem("tagessatzOnSite", "-");
-        return { tagessatz: parseFloat(localStorage.getItem("stundensatzRemote")) };
-    } else if ((vkRemote === null || vkRemote === "") && (vkOnSite !== null|| vkOnSite !== "")) {
-        localStorage.setItem("tagessatzOnSite", vkOnSite + "€");
-        localStorage.setItem("tagessatzRemote", "-");
-        return { taggessatz: parseFloat(localStorage.getItem("stundensatzOnSite")) };
-    } else if ((vkRemote !== null || vkRemote !== "") && (vkOnSite !== null|| vkOnSite !== "")) {
-        localStorage.setItem("tagessatzOnSite", vkOnSite + "€");
-        localStorage.setItem("tagessatzRemote", vkRemote + "€");
-        return {
-            stundensatzRemote: localStorage.getItem("tagessatzRemote"),
-            stundensatzOnSite: localStorage.getItem("tagessatzOnSite")
-        };
-    }
-    return null;
+    return generalRateAgent("tagessatz");
 }
 
 function stundensatzAgent() {
-    let vkRemote = localStorage.getItem("vk");
-    let vkOnSite = localStorage.getItem("vkOnSite");
-
-    if ((vkRemote !== null || vkRemote !== "") && (vkOnSite === null || vkOnSite === "")) {
-        localStorage.setItem("stundensatzRemote", vkRemote + "€");
-        localStorage.setItem("stundensatzOnSite", "-");
-        return { stundensatz: parseFloat(localStorage.getItem("stundensatzRemote")) };
-    } else if ((vkRemote === null || vkRemote === "") && (vkOnSite !== null|| vkOnSite !== "")) {
-        localStorage.setItem("stundensatzOnSite", vkOnSite + "€");
-        localStorage.setItem("stundensatzRemote", "-");
-        return { stundensatz: parseFloat(localStorage.getItem("stundensatzOnSite")) };
-    } else if ((vkRemote !== null || vkRemote !== "") && (vkOnSite !== null|| vkOnSite !== "")) {
-        localStorage.setItem("stundensatzOnSite", vkOnSite + "€");
-        localStorage.setItem("stundensatzRemote", vkRemote + "€");
-        return {
-            stundensatzRemote: localStorage.getItem("stundensatzRemote"),
-            stundensatzOnSite: localStorage.getItem("stundensatzOnSite")
-        };
-    }
-    return null;
+    return generalRateAgent("stundensatz");
 }
 
+function calculateDailyPrice() {
+    const vkRemote = parseFloat(localStorage.getItem("vk")) || null;
+    const vkOnSite = parseFloat(localStorage.getItem("vkOnSite")) || null;
 
-function calculateDailyPrice(){
-    var vkRemote = localStorage.getItem("vk");
-    var vkOnSite = localStorage.getItem("vkOnSite");
+    const formatRate = (rate) =>
+        rate
+            ? (rate * 8).toLocaleString("de-DE", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            }) + "€"
+            : "-";
 
-    vkRemote = vkRemote !== "" ? parseFloat(vkRemote) : null;
-    vkOnSite = vkOnSite !== "" ? parseFloat(vkOnSite) : null;
+    const tagessatzRemote = formatRate(vkRemote);
+    const tagessatzOnSite = formatRate(vkOnSite);
 
-    var tagessatz;
-    var tagessatzOnSite;
+    localStorage.setItem("tagessatzRemote", tagessatzRemote);
+    localStorage.setItem("tagessatzOnSite", tagessatzOnSite);
 
-    if ((vkRemote !== null || vkRemote !== "") && (vkOnSite === null || vkOnSite === "")){
-        tagessatz = vkRemote * 8;
-        tagessatz = tagessatz.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        localStorage.setItem("tagessatzRemote", tagessatz + "€");
-        localStorage.setItem("tagessatzOnSite", "-");
-
-    } else if ((vkRemote === null || vkRemote === "") && (vkOnSite !== null|| vkOnSite !== "")){
-        tagessatzOnSite= vkOnSite * 8;
-        tagessatzOnSite = tagessatzOnSite.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-        localStorage.setItem("tagessatzOnSite", tagessatzOnSite + "€");
-        localStorage.setItem("tagessatzRemote", "-");
-
-    }  else if ((vkRemote !== null || vkRemote !== "") && (vkOnSite !== null|| vkOnSite !== "")){
-        tagessatz = vkRemote * 8;
-        tagessatzOnSite = vkOnSite * 8;
-
-        tagessatz = tagessatz.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        tagessatzOnSite = tagessatzOnSite.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-        localStorage.setItem("tagessatzOnSite", tagessatz + "€");
-        localStorage.setItem("tagessatzRemote", tagessatzOnSite + "€");
-    }
-    return null;
-}
-
-
-function verguetungssatzSwitchKunde(){
-    localStorage.setItem("stundensatz", "X");
-    localStorage.setItem("tagessatz", "X");
-    localStorage.setItem("festpreis", "X");
-
-    let vk = localStorage.getItem("vk");
-
-    switch (localStorage.getItem('verguetungssatz')){
-        case "Stundensatz":
-            localStorage.setItem("stundensatz", vk);
-            break;
-        case "Tagessatz":
-            localStorage.setItem("tagessatz", vk);
-            break;
-        case "Festpreis":
-            localStorage.setItem("festpreis", vk);
-            break;
-        default:
-            break;
-    }
-}
-
-/**
- * Die Methode nimmt den Wert kuendigungsfrist und prüft, welcher Wert hinterlegt.
- * Entsprechend dem Wert, der hinterlegt ist wird das englischen Pendant in die Variable kuendigungsfristEnglisch geschrieben.
- */
-function kuendigungsfristTranslator(){
-    var kuendigungsfristEnglisch;
-
-    switch (localStorage.getItem("kuendigungsfrist")) {
-        case "Keine":
-            kuendigungsfristEnglisch = "none";
-            break;
-        case "0 Tage":
-            kuendigungsfristEnglisch = "0 days";
-            break;
-        case "5 Tage":
-            kuendigungsfristEnglisch = "5 days";
-            break;
-        case "7 Tage":
-            kuendigungsfristEnglisch = "7 days";
-            break;
-        case "14 Tage":
-            kuendigungsfristEnglisch = "14 days";
-            break;
-        case "14 Tage zum Monatsende":
-            kuendigungsfristEnglisch = "14 days to month end";
-            break;
-        case "28 Tage":
-            kuendigungsfristEnglisch = "28 days";
-            break;
-        case "30 Tage":
-            kuendigungsfristEnglisch = "30 days";
-            break;
-        case "6 Wochen":
-            kuendigungsfristEnglisch = "6 weeks";
-            break;
-        case "90 Tage":
-            kuendigungsfristEnglisch = "90 days";
-            break;
-    }
-    localStorage.setItem("kuendigungsfirstEnglisch", kuendigungsfristEnglisch);
-}
-
-/**
- * Eine Test-Methode für die Prod-Umgebung, um zu schauen, ob alle Werte im localStorage korrekt übertragen wurden.
- */
-function valueMappingTest(){
-    console.log(
-        "absenderName: " + localStorage.getItem('absenderName') + '\n' +
-        "absenderMail: " + localStorage.getItem('absenderMail') + '\n' +
-        "empfaengerName: " + localStorage.getItem('empfaengerName') + '\n' +
-        "empfaengerMail: " + localStorage.getItem('empfaengerMail') + '\n' +
-        "ccName: " + localStorage.getItem('ccName') + '\n' +
-        "ccMail: " + localStorage.getItem('ccMail') + '\n' +
-        "ppGesellschaft: " + localStorage.getItem('ppGesellschaft') + '\n' +
-        "projektpartnerName: " + localStorage.getItem('projektpartnerName') + '\n' +
-        "ppStreet: " + localStorage.getItem('ppStreet') + '\n' +
-        "ppCity: " + localStorage.getItem('ppCity') + '\n' +
-        "wematchAnsprechpartnerName: " + localStorage.getItem('wematchAnsprechpartnerName') + '\n' +
-        "matchID: " + localStorage.getItem('matchID') + '\n' +
-        "tagessatz: " + localStorage.getItem('tagessatz') + '\n' +
-        "stundensatz: " + localStorage.getItem('stundensatz') + '\n' +
-        "festpreis: " + localStorage.getItem('festpreis') + '\n' +
-        "startdatum: " + localStorage.getItem('startdatum') + '\n' +
-        "enddatum: " + localStorage.getItem('enddatum') + '\n' +
-        "kuendigungsfrist: " + localStorage.getItem('kuendigungsfrist') + '\n' +
-        "kuendigungsfristEnglisch: " + localStorage.getItem('kuendigungsfristEnglisch') + '\n' +
-        "kunde: " + localStorage.getItem('kunde') + '\n' +
-        "adresseKundeStr: " + localStorage.getItem('adresseKundeStr') + '\n' +
-        "adresseKundeCity: " + localStorage.getItem('adresseKundeCity') + '\n' +
-        "ccName: " + localStorage.getItem('ccName') + '\n' +
-        "einsatzort: " + localStorage.getItem('einsatzort') + '\n' +
-        "position: " + localStorage.getItem('position') + '\n' +
-        "aufgabenbeschreibung: " + localStorage.getItem('aufgabenbeschreibung')
-
-    );
+    return {
+        tagessatzRemote,
+        tagessatzOnSite,
+    };
 }
 
 //ToDO: Logik ändern
 function getPPName() {
-    if(localStorage.getItem("ppGesellschaft") == null || localStorage.getItem("ppGesellschaft") == ""){
+    if (localStorage.getItem("ppGesellschaft") == null || localStorage.getItem("ppGesellschaft") == "") {
         return localStorage.getItem("projektpartnerName");
     } else {
         return localStorage.getItem("ppGesellschaft") + " Projektinhaber: " + localStorage.getItem("projektpartnerName");
     }
 }
 
-function ppTermination(){
-    if(localStorage.getItem("ppGesellschaft" )== null || localStorage.getItem("ppGesellschaft") === ""){
+function ppTermination() {
+    if (localStorage.getItem("ppGesellschaft") == null || localStorage.getItem("ppGesellschaft") === "") {
         return localStorage.getItem("projektpartnerName");
-    } else{
+    } else {
 
         return localStorage.getItem("ppGesellschaft");
     }
 }
 
-/**
- * Alle nachfolgenden Methoden stellen mit Hilfe des BackendServices eine Anfrage an das Backend, um an den PowerForms-Link zu gelangen.
- * Anschließend werden an den erhaltenen Link alle benötigten Variablen aus dem localStorage angehangen und vorher encodiert, sodass die Übertragung per URI problemlos abläuft.
- * @param docId Beinhaltet die ID des zu erstellenden PDF-Dokuments (nur bei Rahmenverträgen (RV))
- */
-// Rahmenvertrag Projektpartner
-function crv(docId){
-    let finalURL = "";
-    let ppNameLocal = getPPName();
-    BackendService.getPowerForm(docId)
-        .then(response =>{
-            finalURL = response.data.toString() +
-                "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
-                "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
-                "&Projektpartner_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
-                "&Projektpartner_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
-                "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
-                "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
-                "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&Adresse1=" + encodeURIComponent(localStorage.getItem('ppStreet')) +
-                "&Adresse2=" + encodeURIComponent(localStorage.getItem('ppCity'));
-            window.open(finalURL, "_blank")
-        });
+function cevpp() {
+    generatePowerForm("c-ev-pp");
 }
 
-//EV Projektpartner
-function cevpp(){
-    let finalURL = "";
-    let ppNameLocal = getPPName();
-    BackendService.getPowerForm("c-ev-pp")
-        .then(response => {
-            finalURL = response.data.toString() +
-                "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
-                "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
-                "&Projektpartner_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
-                "&Projektpartner_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
-                "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
-                "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
-
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
-                "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
-
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
-
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfrist')) +
-
-                "&Endkunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
-                "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + " " + localStorage.getItem('adresseKundeCity') +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
-
-                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
-
-                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
-            ;
-            window.open(finalURL, "_blank");
-        });
+function crv() {
+    generatePowerForm("c-rv");
 }
 
-//EV Projektpartner - Engineering
-function engevpp(){
-    let finalURL = "";
-    let ppNameLocal = getPPName();
-    BackendService.getPowerForm("eng-ev-pp")
-        .then(response => {
-            finalURL = response.data.toString() +
-                "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
-                "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
-                "&Projektpartner_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
-                "&Projektpartner_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
-                "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
-                "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
-
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
-                "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
-
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
-
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfrist')) +
-
-                "&Endkunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
-                "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + " " + localStorage.getItem('adresseKundeCity') +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
-
-                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
-
-                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
-            ;
-            window.open(finalURL, "_blank");
-        });
+function engevpp() {
+    generatePowerForm("eng-ev-pp");
 }
 
-//EV Projektpartner - Projects
-function projevpp(){
-    let finalURL = "";
-    let ppNameLocal = getPPName();
-    BackendService.getPowerForm("proj-ev-pp")
-        .then(response => {
-            finalURL = response.data.toString() +
-                "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
-                "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
-                "&Projektpartner_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
-                "&Projektpartner_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
-                "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
-                "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
+function projevpp() {
+    generatePowerForm("proj-ev-pp");
+}   
 
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
-                "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
+function cevppEng() {
+    generatePowerForm("c-ev-pp-eng");
+}   
 
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
-
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfrist')) +
-
-                "&Endkunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
-                "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + " " + localStorage.getItem('adresseKundeCity') +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
-
-                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
-
-                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
-            ;
-            window.open(finalURL, "_blank");
-        });
+function engevppEng() {
+    generatePowerForm("eng-ev-pp-eng");
 }
 
-//EV Projektpartner Englisch
-function cevppEng(){
-    let finalURL = "";
-    let ppNameLocal = getPPName();
-    BackendService.getPowerForm("c-ev-pp-eng")
-        .then(response => {
-            finalURL = response.data.toString() +
-                "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
-                "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
-                "&Projektpartner_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
-                "&Projektpartner_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
-                "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
-                "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
-
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
-                "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
-
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
-
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfristEnglisch')) +
-
-                "&Endkunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
-                "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + " " + localStorage.getItem('adresseKundeCity') +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
-
-                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
-
-                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
-            ;
-            window.open(finalURL, "_blank");
-        });
+function crvk() {
+    generatePowerForm("c-rv-kunde");
 }
 
-//EV Projektpartner Englisch - Engineering
-function engevppEng(){
-    let finalURL = "";
-    let ppNameLocal = getPPName();
-    BackendService.getPowerForm("eng-ev-pp-eng")
-        .then(response => {
-            finalURL = response.data.toString() +
-                "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
-                "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
-                "&Projektpartner_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
-                "&Projektpartner_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
-                "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
-                "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
-
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
-                "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
-
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
-
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfristEnglisch')) +
-
-                "&Endkunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
-                "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + " " + localStorage.getItem('adresseKundeCity') +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
-
-                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
-
-                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
-            ;
-            window.open(finalURL, "_blank");
-        });
+function cevk() {
+    generatePowerForm("c-ev-kunde");
 }
 
-//EV Projektpartner Englisch - Projects
-/* Deprecated since 2.1
-
-function projevppEng(){
-    let finalURL = "";
-    let ppNameLocal = getPPName();
-    BackendService.getPowerForm("proj-ev-pp-eng")
-        .then(response => {
-            finalURL = response.data.toString() +
-                "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
-                "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
-                "&Projektpartner_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
-                "&Projektpartner_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
-                "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
-                "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
-
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
-                "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
-
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
-
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfristEnglisch')) +
-
-                "&Endkunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
-                "&Endkunde_Adresse=" + localStorage.getItem('adresseKundeStr') + " " + localStorage.getItem('adresseKundeCity') +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
-
-                "&addAgreements=" + encodeURIComponent(localStorage.getItem('addAgreements')) +
-
-                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
-            ;
-            window.open(finalURL, "_blank");
-        });
-}
-    */
-
-//RV Kunde
-function crvk(docId){
-    let finalURL = "";
-    BackendService.getPowerForm(docId)
-        .then(response =>{
-            finalURL = response.data.toString() +
-                "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
-                "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
-                "&Projektpartner_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
-                "&Projektpartner_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
-                "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
-                "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
-                "&PPName=" + encodeURIComponent(localStorage.getItem('kunde')) +
-                "&Adresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
-                "&Adresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity'));
-            window.open(finalURL, "_blank")
-        });
+function cevk2() {
+    generatePowerForm("c-ev-kunde", {
+        Auslastung: "Nach Abschätzung",
+    });
 }
 
-//EV Kunde
-function cevk(docId){
-    let finalURL = "";
-    let ppNameLocal = getPPName();
-    BackendService.getPowerForm(docId)
-        .then(response => {
-            finalURL = response.data.toString() +
-                "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
-                "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
-                "&Kunde_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
-                "&Kunde_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
-                "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
-                "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
-
-                "&Kunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
-                "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
-                "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
-
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
-                "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
-
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
-
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfrist')) +
-
-                "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&Auslastung=" + encodeURIComponent("Nach Abschätzung") +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
-
-                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
-            ;
-            window.open(finalURL, "_blank");
-        });
+function cevkEng() {
+    generatePowerForm("c-ev-kunde-eng", {
+        PPName: getPPName(),
+        Auslastung: "after estimation",
+    });
 }
 
-function cevk2(docId){
-    let finalURL = "";
+
+function generalDocxOperation(type) {
     let ppNameLocal = getPPName();
-    let absenderMail = localStorage.getItem('absenderMail');
-    BackendService.getPowerForm(docId)
-        .then(response => {
-            finalURL = response.data.toString() +
-                "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
-                "&Absender_Email=" + encodeURIComponent(absenderMail) +
-                "&Kunde_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
-                "&Kunde_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
-                "&Kunde2_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName2')) +
-                "&Kunde2_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail2')) +
-                "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
-                "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
-
-                "&Kunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
-                "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
-                "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
-
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
-                "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
-
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
-
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfrist')) +
-
-                "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&Auslastung=" + encodeURIComponent("Nach Abschätzung") +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
-
-                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
-            ;
-            window.open(finalURL, "_blank");
-        });
-}
-
-//EV Kunde Englisch
-function cevkEng(docId){
-    let finalURL = "";
-    let ppNameLocal = getPPName();
-    BackendService.getPowerForm(docId)
-        .then(response => {
-            finalURL = response.data.toString() +
-                "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
-                "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
-                "&Kunde_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
-                "&Kunde_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
-                "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
-                "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
-
-                "&Kunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
-                "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
-                "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
-
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
-                "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
-
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
-
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfristEng')) +
-
-                "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&Auslastung=" + encodeURIComponent("after estimation") +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
-
-                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
-            ;
-            window.open(finalURL, "_blank");
-        });
-
-}
-
-function cevkEng2(docId){
-    let finalURL = "";
-    let ppNameLocal = getPPName();
-    BackendService.getPowerForm(docId)
-        .then(response => {
-            finalURL = response.data.toString() +
-                "&Absender_UserName=" + encodeURIComponent(localStorage.getItem('absenderName')) +
-                "&Absender_Email=" + encodeURIComponent(localStorage.getItem('absenderMail')) +
-                "&Kunde_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName')) +
-                "&Kunde_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail')) +
-                "&Kunde2_UserName=" + encodeURIComponent(localStorage.getItem('empfaengerName2')) +
-                "&Kunde2_Email=" + encodeURIComponent(localStorage.getItem('empfaengerMail2')) +
-                "&CC_UserName=" + encodeURIComponent(localStorage.getItem("ccName")) +
-                "&CC_Email=" + encodeURIComponent(localStorage.getItem("ccMail")) +
-
-                "&Kunde=" + encodeURIComponent(localStorage.getItem('kunde')) +
-                "&KundeAdresse1=" + encodeURIComponent(localStorage.getItem('adresseKundeStr')) +
-                "&KundeAdresse2=" + encodeURIComponent(localStorage.getItem('adresseKundeCity')) +
-
-                "&Wematch_Ansprechpartner=" + encodeURIComponent(localStorage.getItem('wematchAnsprechpartnerName')) +
-                "&Ansprechpartner_Kunde=" + encodeURIComponent(localStorage.getItem('ansprechpartnerKunde')) +
-                "&MatchID=" + encodeURIComponent(localStorage.getItem('matchID')) +
-
-                "&Tagessatz=" + encodeURIComponent(localStorage.getItem('tagessatz')) +
-                "&Stundensatz=" + encodeURIComponent(localStorage.getItem('stundensatz')) +
-                "&Festpreis=" + encodeURIComponent(localStorage.getItem('festpreis')) +
-
-                "&Startdatum=" + encodeURIComponent(localStorage.getItem('startdatum')) +
-                "&Enddatum=" + encodeURIComponent(localStorage.getItem('enddatum')) +
-                "&Kuendigungsfrist=" + encodeURIComponent(localStorage.getItem('kuendigungsfristEng')) +
-
-                "&PPName=" + encodeURIComponent(ppNameLocal) +
-                "&Auslastung=" + encodeURIComponent("after estimation") +
-                "&Einsatzort=" + encodeURIComponent(localStorage.getItem('einsatzort')) +
-
-                "&Position=" + encodeURIComponent(localStorage.getItem('position')) +
-                "&Aufgabenbeschreibung=" + encodeURIComponent(localStorage.getItem('aufgabenbeschreibung').replace(/(\r\n|\n|\r)/gm, " "))
-            ;
-            window.open(finalURL, "_blank");
-        });
-
-}
-
-function docxContract(){
-    let ppNameLocal = getPPName();
-    let data = [
-        localStorage.getItem("matchID"),
-        ppNameLocal,
-        localStorage.getItem("wematchAnsprechpartnerName"),
-        localStorage.getItem("startdatum"),
-        localStorage.getItem("enddatum"),
-        localStorage.getItem("adresseKundeStr"),
-        localStorage.getItem("adresseKundeCity"),
-        localStorage.getItem("kunde"),
-        localStorage.getItem("kuendigungsfrist"),
-        localStorage.getItem("einsatzort"),
-        localStorage.getItem("position"),
-        localStorage.getItem("ansprechpartnerKunde"),
-        localStorage.getItem("tagessatz"),
-        localStorage.getItem("stundensatz"),
-        localStorage.getItem("festpreis"),
-        localStorage.getItem("auslastung"),
-        localStorage.getItem("auslastungEng"),
-        localStorage.getItem("aufgabenbeschreibung"),
-        localStorage.getItem("addAgreements"),
-        localStorage.getItem("ppStreet"),
-        localStorage.getItem("ppCity"),
-        localStorage.getItem("projektpartnerName"),//21
-        localStorage.getItem("projectHours"),
-        localStorage.getItem("remotePercentage"),
-        localStorage.getItem("daysPerWeek"),
-        localStorage.getItem("ppGesellschaft"),
-        localStorage.getItem("preFix"),
-        localStorage.getItem("kuendigungsfirstEnglisch")
-    ]
-
+    let fields = docxTypeToFields.get(type);
+    let data = fields.map(field => localStorage.getItem(field));
+    data.push(ppNameLocal);
+    
     BackendService.postDocData(localStorage.getItem("docId"), data).then(response => {
-            window.open(response.data.toString(), "_blank");
-        }
+        window.open(response.data.toString(), "_blank");
+    }
     );
+}
+
+function docxContract() {
+    generalDocxOperation("contract");
 }
 
 function docxTermination() {
-    let ppNameLocal = ppTermination();
-    let data = [
-        localStorage.getItem("matchID"),
-        ppNameLocal,
-        localStorage.getItem("wematchAnsprechpartnerName"),
-        localStorage.getItem("startdatum"),
-        localStorage.getItem("enddatum"),
-        localStorage.getItem("adresseKundeStr"),
-        localStorage.getItem("adresseKundeCity"),
-        localStorage.getItem("kunde"),
-        localStorage.getItem("kuendigungsfrist"),
-        localStorage.getItem("einsatzort"),
-        localStorage.getItem("position"),
-        localStorage.getItem("ansprechpartnerKunde"),
-        localStorage.getItem("tagessatz"),
-        localStorage.getItem("stundensatz"),
-        localStorage.getItem("festpreis"),
-        localStorage.getItem("auslastung"),
-        localStorage.getItem("auslastungEng"),
-        localStorage.getItem("aufgabenbeschreibung"),
-        localStorage.getItem("addAgreements"),
-        localStorage.getItem("ppStreet"),
-        localStorage.getItem("ppCity"),
-        localStorage.getItem("projektpartnerName"),//21
-        localStorage.getItem("projectHours"),
-        localStorage.getItem("remotePercentage"),
-        localStorage.getItem("daysPerWeek"),
-        localStorage.getItem("ppGesellschaft"),
-        localStorage.getItem("preFix"),
-        localStorage.getItem("selectedPerson")
-    ]
-
-    BackendService.postDocData(localStorage.getItem("docId"), data).then(response => {
-            window.open(response.data.toString(), "_blank");
-        }
-    );
+    generalDocxOperation("termination");
 }
 function docxOffer() {
-    let ppNameLocal = getPPName();
-    let data = [
-        localStorage.getItem("matchID"),
-        ppNameLocal,
-        localStorage.getItem("startdatum"),
-        localStorage.getItem("enddatum"),
-        localStorage.getItem("adresseKundeStr"),
-        localStorage.getItem("adresseKundeCity"),
-        localStorage.getItem("kunde"),
-        localStorage.getItem("kuendigungsfrist"),
-        localStorage.getItem("einsatzort"),
-        localStorage.getItem("position"),
-        localStorage.getItem("ansprechpartnerKunde"),
-        localStorage.getItem("tagessatz"),
-        localStorage.getItem("auslastung"),
-        localStorage.getItem("aufgabenbeschreibung"),
-        localStorage.getItem("projectHours"),
-        localStorage.getItem("gesamtPreis"),
-        localStorage.getItem("selectedPerson"),
-        localStorage.getItem("zahlungszielKunde"),
-        localStorage.getItem("stundensatzOnSite"),
-        localStorage.getItem("stundensatzRemote"),
-        localStorage.getItem("projectDays"),
-        localStorage.getItem("auslastung"),
-        localStorage.getItem("tagessatzOnSite"),
-        localStorage.getItem("tagessatzRemote"),
-        localStorage.getItem("prefixKunde")
-    ]
+    generalDocxOperation("offer");
 
-    BackendService.postDocDataOffer(localStorage.getItem("docId"), data).then(response => {
-            window.open(response.data.toString(), "_blank");
-        }
-    );
 }
-export { verguetungssatzSwitchPP };
-export { verguetungssatzSwitchKunde };
+
+export { verguetungssatzSwitch };
 export { kuendigungsfristTranslator };
 export { crv };
 export { cevpp };
@@ -869,4 +273,4 @@ export { docxOffer };
 export { stundensatzAgent };
 export { tagessatzAgent };
 export { umbrellaMail };
-export {calculateDailyPrice };
+export { calculateDailyPrice };
