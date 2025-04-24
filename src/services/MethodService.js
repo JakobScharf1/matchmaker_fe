@@ -1,5 +1,5 @@
 import BackendService from "@/services/BackendService";
-import {docxTypeToFields, contractTypeToFields} from "@/stores/PowerFormFields";
+import {docxTypeToFields, contractTypeToFields, fieldNameToDocusignParameterName} from "@/stores/PowerFormFields";
 
 function getEncodedLocalStorageValue(key) {
     const value = localStorage.getItem(key);
@@ -8,7 +8,7 @@ function getEncodedLocalStorageValue(key) {
 
 function constructQueryParams(keys) {
     return keys
-        .map(key => `${key}=${getEncodedLocalStorageValue(key)}`)
+        .map(key => `${fieldNameToDocusignParameterName.get(key) || ""}=${getEncodedLocalStorageValue(key)}`)
         .join("&");
 }
 
