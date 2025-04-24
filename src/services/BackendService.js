@@ -41,9 +41,7 @@ class BackendService {
       };
       const response = await axios.post(requestURI, requestBody);
 
-      if (response.status === 200) {
-        return response;
-      }
+      return response;
     } catch (error) {
       console.log("Error in getMatch BackendService: ", error);
     }

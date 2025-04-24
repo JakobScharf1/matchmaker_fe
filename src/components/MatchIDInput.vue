@@ -187,35 +187,37 @@ export default {
      * Wenn als Rückgabe ein HTML-Code kommt, wird dieser anhang "DOCTYPE html" erkannt und es wird eine Fehlermeldung geworfen.
      * Sonst werden die Daten aus der Response den lokalen Variablen zugeordnet und in den localStorage geschrieben.
      */
-    getMatch() {
+    async getMatch() {
       this.isLoading = true;
-      setTimeout(() => {
-        BackendService.getSalesforceData(this.matchIdFromInput).then(
-          (response) => {
+      setTimeout(async () => {
+        await BackendService.getSalesforceData(this.matchIdFromInput).then(
+          async (response) => {
             try {
-              this.matches = response.data;
+              // Convert Proxy(Object) to a plain JavaScript object
+              const responseData = JSON.parse(JSON.stringify(response.data));
+              this.matches = responseData; // Assign the plain object to `this.matches`
               console.log(this.matches);
               this.confirmClick();
 
-              this.matches.map(([key, value]) => {
+              // Iterate over the keys and values of the plain object
+              Object.entries(this.matches).forEach(([key, value]) => {
                 localStorage.setItem(key, value);
               });
 
+              // Map the data to local variables
               this.projektpartnerName = [
-                this.matches.get("candidateFirstName"),
-                this.matches.get("candidateLastName"),
+                this.matches.candidateFirstName,
+                this.matches.candidateLastName,
               ].join(" ");
-              this.projektpartnerMail = this.matches.get("candidateEmail");
+              this.projektpartnerMail = this.matches.candidateEmail;
 
               this.wematchAnsprechpartnerName = [
-                this.matches.get("ownerFirstName"),
-                this.matches.get("ownerLastName"),
+                this.matches.ownerFirstName,
+                this.matches.ownerLastName,
               ].join(" ");
-              this.wematchAnsprechpartnerMail = this.matches.get("ownerEmail");
-              this.startdatum = this.dateFormatter(
-                this.matches.get("dateBegin")
-              );
-              this.enddatum = this.dateFormatter(this.matches.get("dateEnd"));
+              this.wematchAnsprechpartnerMail = this.matches.ownerEmail;
+              this.startdatum = this.dateFormatter(this.matches.dateBegin);
+              this.enddatum = this.dateFormatter(this.matches.dateEnd);
 
               // TODO: field mapping
               this.adresseKunde = "";
@@ -228,8 +230,8 @@ export default {
               this.einsatzort = "";
               this.position = "";
               this.aufgabenbeschreibung = "";
-              this.ek = this.preisFormatter(this.matches.at(6));
-              this.vk = this.preisFormatter(this.matches.at(7));
+              this.ek = this.preisFormatter(this.matches.ek);
+              this.vk = this.preisFormatter(this.matches.vk);
               this.ansprechpartnerKunde = "";
               this.ppAdresse = "";
               this.auslastung = " Stunden pro Woche";
@@ -239,117 +241,6 @@ export default {
               this.preFix = "";
               this.vkOnSite = "";
               this.hoursperDay = "";
-
-              // REMOVE: 245 - 352 (nur behalten damit namen der felder einsehbar bleiben)
-
-              {
-                localStorage.setItem(
-                  "projektpartnerName",
-                  this.matches.at(0) + " " + this.matches.at(1)
-                );
-                localStorage.setItem("match", this.matches);
-                localStorage.setItem(
-                  "wematchAnsprechpartnerName",
-                  this.matches.at(33)
-                );
-                localStorage.setItem("projektpartnerMail", this.matches.at(22));
-                localStorage.setItem(
-                  "wematchAnsprechpartnerMail",
-                  this.matches.at(23)
-                );
-                localStorage.setItem(
-                  "startdatum",
-                  this.dateFormatter(this.matches.at(11))
-                );
-                localStorage.setItem(
-                  "enddatum",
-                  this.dateFormatter(this.matches.at(12))
-                );
-                localStorage.setItem(
-                  "adresseKundeStr",
-                  this.matches.at(15) + " " + this.matches.at(16)
-                );
-                localStorage.setItem(
-                  "adresseKundeCity",
-                  this.matches.at(18) + " " + this.matches.at(17)
-                );
-                localStorage.setItem(
-                  "adresseKunde",
-                  this.matches.at(15) +
-                    " " +
-                    this.matches.at(16) +
-                    " " +
-                    this.matches.at(18) +
-                    " " +
-                    this.matches.at(17)
-                );
-                localStorage.setItem("ppGesellschaft", this.matches.at(2));
-                localStorage.setItem("kunde", this.matches.at(14));
-                localStorage.setItem("kuendigungsfrist", this.matches.at(19));
-                localStorage.setItem("zahlungszielPP", this.matches.at(3));
-                localStorage.setItem(
-                  "zahlungszielKunde",
-                  this.matches.at(4) + " Tage"
-                );
-                localStorage.setItem("verguetungssatz", this.matches.at(5));
-                localStorage.setItem("einsatzort", this.matches.at(21));
-                localStorage.setItem("position", this.matches.at(13));
-                localStorage.setItem(
-                  "aufgabenbeschreibung",
-                  this.matches.at(8)
-                );
-                localStorage.setItem(
-                  "ek",
-                  this.preisFormatter(this.matches.at(6))
-                );
-                localStorage.setItem(
-                  "vk",
-                  this.preisFormatter(this.matches.at(7))
-                );
-                localStorage.setItem(
-                  "ansprechpartnerKunde",
-                  this.matches.at(24) + " " + this.matches.at(25)
-                );
-                localStorage.setItem("matchID", "EZ-" + this.matchIdFromInput);
-                localStorage.setItem(
-                  "ppStreet",
-                  this.matches.at(26) + " " + this.matches.at(27)
-                );
-                localStorage.setItem(
-                  "ppCity",
-                  this.matches.at(28) + " " + this.matches.at(29)
-                );
-                localStorage.setItem(
-                  "ppAdresse",
-                  this.matches.at(26) +
-                    " " +
-                    this.matches.at(27) +
-                    ", " +
-                    this.matches.at(28) +
-                    " " +
-                    this.matches.at(29)
-                );
-                localStorage.setItem(
-                  "auslastung",
-                  this.matches.at(31) * this.matches.at(30) +
-                    " Stunden pro Woche"
-                );
-                localStorage.setItem(
-                  "auslastungEng",
-                  this.matches.at(31) * this.matches.at(30) + " Hours per week"
-                );
-                localStorage.setItem("addAgreements", this.matches.at(32));
-                localStorage.setItem("jobOwnerFirstName", this.matches.at(33));
-                localStorage.setItem("preFix", this.matches.at(34));
-                localStorage.setItem(
-                  "vkOnSite",
-                  this.preisFormatter(this.matches.at(35))
-                );
-                localStorage.setItem("hoursperDay", this.matches.at(31));
-                localStorage.setItem("prefixKunde", this.matches.at(36));
-                localStorage.setItem("umbrellaMail", this.matches.at(37));
-                localStorage.setItem("einstellungsArt", this.matches.at(38));
-              }
 
               this.isLoading = false;
             } catch (error) {
