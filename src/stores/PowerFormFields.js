@@ -297,3 +297,29 @@ export const fieldNameToDocusignParameterName = {
     "aufgabenbeschreibung": "Aufgabenbeschreibung",
     "ppGesellschaft": "PP_Gesellschaft",
 };
+
+export const helpMailFields = [
+    "permission",
+    "absenderName",
+    "absenderMail",
+    "empfaengerName",
+    "empfaengerMail",
+    "ccName",
+    "ccMail",
+    "wematchAnsprechpartnerName",
+    "ppGesellschaft",
+    "projektpartnerName",
+    "matchID",
+    "tagessatz",
+    "stundensatz",
+    "festpreis",
+    "startdatum",
+    "enddatum",
+    "kuendigungsfrist",
+    "kunde",
+    "adresseKundeStr",
+    "adresseKundeCity",
+    "einsatzort",
+    "position",
+    "aufgabenbeschreibung"
+]

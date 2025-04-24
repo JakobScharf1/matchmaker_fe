@@ -1,5 +1,5 @@
 import BackendService from "@/services/BackendService";
-import {docxTypeToFields, contractTypeToFields, fieldNameToDocusignParameterName} from "@/stores/PowerFormFields";
+import {docxTypeToFields, contractTypeToFields, fieldNameToDocusignParameterName, helpMailFields} from "@/stores/PowerFormFields";
 
 function getEncodedLocalStorageValue(key) {
     const value = localStorage.getItem(key);
@@ -33,32 +33,7 @@ function sendHelpMail() {
     const subject = encodeURIComponent(
         `Problem mit MatchMaker - MatchID: ${localStorage.getItem("matchID")}`
     );
-    const bodyKeys = [
-        "permission",
-        "absenderName",
-        "absenderMail",
-        "empfaengerName",
-        "empfaengerMail",
-        "ccName",
-        "ccMail",
-        "wematchAnsprechpartnerName",
-        "ppGesellschaft",
-        "projektpartnerName",
-        "matchID",
-        "tagessatz",
-        "stundensatz",
-        "festpreis",
-        "startdatum",
-        "enddatum",
-        "kuendigungsfrist",
-        "kunde",
-        "adresseKundeStr",
-        "adresseKundeCity",
-        "einsatzort",
-        "position",
-        "aufgabenbeschreibung"
-    ];
-    const body = encodeURIComponent(`\n---\nmatch data: \n${constructEmailBody(bodyKeys)}`);
+    const body = encodeURIComponent(`\n---\nmatch data: \n${constructEmailBody(helpMailFields)}`);
     const mailtoLink = `mailto:teamoperations@wematch.de?subject=${subject}&body=${body}`;
     openURL(mailtoLink);
 }
