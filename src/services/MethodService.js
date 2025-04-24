@@ -59,23 +59,26 @@ function verguetungssatzSwitch(type) {
     }
 }
 
+function verguetungssatzSwitchPP(type) {
+    verguetungssatzSwitch(type);
+}
+
 function kuendigungsfristTranslator() {
     const translations = {
         "Monatsende": "month end",
         "Tage": "days",
-        "Wochen": "weeks",
         "zum": "to",
         "Keine": "none",
-        "Tage": "days",
         "Wochen": "weeks"
     };
     const kuendigungsfrist = localStorage.getItem("kuendigungsfrist");
+    var kuendigungsfristEnglisch = kuendigungsfrist;
     for (const [key, value] of Object.entries(translations)) {
-        if (kuendigungsfrist.includes(key)) {
-            kuendigungsfrist = kuendigungsfrist.replace(key, value);
+        if (kuendigungsfristEnglisch.includes(key)) {
+            kuendigungsfristEnglisch = kuendigungsfristEnglisch.replace(key, value);
         }
     }
-    localStorage.setItem("kuendigungsfristEnglisch", kuendigungsfrist);
+    localStorage.setItem("kuendigungsfristEnglisch", kuendigungsfristEnglisch);
 }
 
 function generatePowerForm(docId, exceptions) {
@@ -148,14 +151,14 @@ function getPPName() {
     }
 }
 
-function ppTermination() {
-    if (localStorage.getItem("ppGesellschaft") == null || localStorage.getItem("ppGesellschaft") === "") {
-        return localStorage.getItem("projektpartnerName");
-    } else {
+// function ppTermination() {
+//     if (localStorage.getItem("ppGesellschaft") == null || localStorage.getItem("ppGesellschaft") === "") {
+//         return localStorage.getItem("projektpartnerName");
+//     } else {
 
-        return localStorage.getItem("ppGesellschaft");
-    }
-}
+//         return localStorage.getItem("ppGesellschaft");
+//     }
+// }
 
 function cevpp() {
     generatePowerForm("c-ev-pp");
@@ -228,6 +231,7 @@ function docxOffer() {
 }
 
 export { verguetungssatzSwitch };
+export { verguetungssatzSwitchPP };
 export { kuendigungsfristTranslator };
 export { crv };
 export { cevpp };
@@ -236,13 +240,12 @@ export { engevpp };
 export { projevpp };
 export { engevppEng };
 export { cevk };
-export { valueMappingTest };
 export { cevkEng };
 export { docxContract };
 export { sendHelpMail };
 export { docxTermination };
 export { cevk2 };
-export { cevkEng2 };
+// export { cevkEng2 };
 export { crvk };
 export { docxOffer };
 export { stundensatzAgent };
