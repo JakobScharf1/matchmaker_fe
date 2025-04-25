@@ -193,18 +193,15 @@ export default {
         await BackendService.getSalesforceData(this.matchIdFromInput).then(
           async (response) => {
             try {
-              // Convert Proxy(Object) to a plain JavaScript object
               const responseData = JSON.parse(JSON.stringify(response.data));
-              this.matches = responseData; // Assign the plain object to `this.matches`
+              this.matches = responseData;
               console.log(this.matches);
               this.confirmClick();
 
-              // Iterate over the keys and values of the plain object
               Object.entries(this.matches).forEach(([key, value]) => {
                 localStorage.setItem(key, value);
               });
 
-              // Map the data to local variables
               this.projektpartnerName = [
                 this.matches.candidateFirstName,
                 this.matches.candidateLastName,
@@ -265,6 +262,7 @@ export default {
      * Permission 3: Nutzer haben Zugriff auf die Erstellung von Projektpartnerverträgen sowie Angeboten.
      */
     goToChooseTemplate() {
+      // TODO implement permission based routing
       if (localStorage.getItem("permission") === "2") {
         router.push("/format");
       } else if (localStorage.getItem("permission") === "3") {
@@ -295,16 +293,17 @@ export default {
      * @returns {string} Der umformatierte Wert im deutschen Format.
      */
     preisFormatter(preis) {
-      let formatedValue = preis.toString().replace(/\./g, ",");
-      if (formatedValue.indexOf(",") !== -1) {
-        const nachkomma = formatedValue.split(",")[1].length;
-        if (nachkomma === 1) {
-          formatedValue = formatedValue + "0";
-        } else if (nachkomma === 0) {
-          formatedValue += "00";
+      let formattedValue = preis.toString().replace(/\./g, ",");
+
+      if (formattedValue.includes(",")) {
+        const decimalPartLength = formattedValue.split(",")[1].length;
+
+        for (let i = decimalPartLength; i < 2; i++) {
+          formattedValue += "0";
         }
       }
-      return formatedValue;
+
+      return formattedValue;
     },
   },
 };

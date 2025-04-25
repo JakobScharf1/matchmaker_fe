@@ -47,6 +47,22 @@ class BackendService {
     }
   }
 
+  async getConsultantNames() {
+    try {
+      const BACKEND_BASE_URL = process.env.VUE_APP_BACKEND_URL;
+      const requestURI = BACKEND_BASE_URL + "/consultants/";
+      const token = localStorage.getItem("token");
+      const requestBody = {
+        token: token,
+      };
+      const response = await axios.get(requestURI, requestBody);
+
+      return response;
+    } catch (error) {
+      console.log("Error fetching consultant names: ", error);
+    }
+  }
+
   /**
    * Stellt wie auch getMatch eine Anfrage ans Backend, jedoch an die URL matchmaker.wematch-intern.de/backend/powerforms/xxx
    * Ebenfalls mit dem token aus Firebase im Request Body.
